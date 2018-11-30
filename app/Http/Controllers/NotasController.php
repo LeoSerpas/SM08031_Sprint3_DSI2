@@ -41,7 +41,7 @@ class NotasController extends Controller
     {
         $materias = Materias::all();
         $asignaAlumno = AsignacionAlumnosNotas::all();
-        return view('notas.create', compact('materias','asignaAlumno'));aaasdasd
+        return view('notas.create', compact('materias','asignaAlumno'));
     }
 
     /**
