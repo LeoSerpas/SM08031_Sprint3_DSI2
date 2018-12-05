@@ -23,12 +23,13 @@ class NotasController extends Controller
      */
     public function index(Request $request)
     {
-      $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
-
+        $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
+        $asignaDocente=Asignaciones::all();
         $materias = Materias::all();
+        $asignacionNotas=AsignacionNotas::all();
         $trimestral =$request->get('trimestral');
         $notas = AsignacionNotas::orderBy('id','ASC')->trimestral($trimestral)->paginate(10);
-        return view('notas.index',compact('notas', 'materias','asignacion_alumnos'));
+        return view('notas.index',compact('notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente'));
     }
 
     /**
@@ -162,20 +163,23 @@ class NotasController extends Controller
       return redirect()->route('notas.index')->with('success','Nota actualizado con exito');
     }
 
-    public function notasGrado($id)
+    public function notasGrado($id, $trimestre)
     {
       Asignaciones::all();
+      $asignacionNota=AsignacionNotas::all();
+      $materias = Materias::find($id);
       $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
-
-      return view('notas.por_materia',compact('nota','id','integradora','cotidiana','asignacion_alumnos'));
+      
+      return view('notas.por_materia',compact('nota','id','trimestre','asignacion_alumnos','materias','asignacionNota'));
     }
 
-    public function bulk(Request $request, $id)
+    public function bulk(Request $request, $id, $trimestre)
     {
       $notas = $request->get('notas');
       foreach ($notas['asignacion'] as $key => $nota) {
         $inputs = array(
           'nota_trimestral' => $nota['nota_trimestral'],
+          'trimestre' => $nota['trimestre'], //agregada
         );
         $filter = array(
           'id_asignacion_alumno' => $nota['id_asignacion_alumno'],

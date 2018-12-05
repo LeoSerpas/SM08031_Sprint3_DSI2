@@ -25,17 +25,17 @@ Route::get('/home', 'HomeController@index')->name('home');
 	Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
-  Route::resource('docentes','DocentesController');
-	Route::resource('grados','GradosController');
-	Route::resource('alumnos','AlumnosController');
-  Route::get('notas/grado/{id}', 'NotasController@notasGrado' )->name('notas.por_materia');
-  Route::post('notas/grado/{id}', 'NotasController@bulk' )->name('notas.bulk');
-	Route::resource('secretarias','SecretariasController');
-	Route::resource('materias','MateriasController');
-	Route::resource('notas','NotasController');
-	Route::resource('asignacionAlumnosNotas','AsignacionAlumnosNotasController');
-	Route::resource('asignaciones','AsignacionesController');
-	Route::resource('asignacionNotas','asignacionNotasController');
+Route::resource('docentes','DocentesController');
+Route::resource('grados','GradosController');
+Route::resource('alumnos','AlumnosController');
+Route::get('notas/materia/{id}/trimestre/{trimestre}', 'NotasController@notasGrado' )->name('notas.por_materia');
+Route::post('notas/materia/{id}/trimestre/{trimestre}', 'NotasController@bulk' )->name('notas.bulk');
+Route::resource('secretarias','SecretariasController');
+Route::resource('materias','MateriasController');
+Route::resource('notas','NotasController');
+Route::resource('asignacionAlumnosNotas','AsignacionAlumnosNotasController');
+Route::resource('asignaciones','AsignacionesController');
+Route::resource('asignacionNotas','asignacionNotasController');
   Route::get('gestion', function()
 	{
     return view('gestion');

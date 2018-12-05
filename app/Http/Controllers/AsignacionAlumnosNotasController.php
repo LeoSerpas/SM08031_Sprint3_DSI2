@@ -76,9 +76,11 @@ class AsignacionAlumnosNotasController extends Controller
     public function edit($id)
     {
         $asignaciones = Asignaciones::all();
+        $asignacion = Asignaciones::find($id);
         $alumnos = Alumnos::all();
+        $alumno = Alumnos::find($id);
         $asignacionAlumnoNota = AsignacionAlumnosNotas::find($id);
-        return view('asignacionAlumnosNotas.edit',compact('asignacionAlumnoNota','asignaciones','alumnos'));
+        return view('asignacionAlumnosNotas.edit',compact('asignacionAlumnoNota','asignaciones','alumnos','alumno','asignacion'));
     }
 
     /**

@@ -2,13 +2,13 @@
 @section('content')
 <style>
   .form-control {
-    width: 70px ;
+    width: 75px ;
   }
 </style>
   <div class="row">
     <div class ="col-sm-12">
       <div class="full.right">
-      <h2>GESTION DE ASIGNACION</h2>
+      <h2>Asignacion de Notas de {{$materias->nombre}} para el trimestre</h2>
       <br>
       </div>
     </div>
@@ -19,9 +19,11 @@
       </div>
   @endif
       
-      {!! Form::open(['method' => 'notas.bulk', $id, 'method'=>'POST', 'id' => 'notasForm'])!!}
+      {!! Form::open(['method' => 'notas.bulk', $id, $trimestre, 'method'=>'POST', 'id' => 'notasForm'])!!}
 
       <input  required type="hidden" name="id_materia" value="{{ $id }}">
+      <input  required type="hidden" name="trimestre" value="{{ $trimestre }}">
+
       <div class="table-responsive">
         <table class="table table-striped" style="text-align:center" >
           <thead>
@@ -56,6 +58,8 @@
 
                   <input  required type="hidden" name="notas[asignacion][{{ $key  }}][id_asignacion_alumno]" value="{{ $asignacion_alumno->id }}">
                   <input  required type="hidden" name="notas[asignacion][{{ $key  }}][id_materia]" value="{{ $id }}">
+                  <input  required type="hidden" name="notas[asignacion][{{ $key  }}][trimestre]" value="{{ $trimestre }}">
+ 
                   @php ($notasAsignada = $asignacion_alumno->AsignacionNotas->where('id_materia', $id )->first())
                   {{ $asignacion_alumno->alumno->nombres .' '. $asignacion_alumno->alumno->apellidos  }}
                 </td>
@@ -101,16 +105,16 @@
             @endforeach
           </tbody>
 
-
         </table>
       </div>
-      <button class="btn btn-success" type="submit" name="button">Guardar Notas</button>
+      <br>
+      
+  <div class="text-center">
+    <button class="btn btn-success" type="submit" name="button">Guardar Notas</button>
+    <a class="btn btn-primary" href="{{ route('notas.index') }}"> <i class=" glyphicon-arrow-left"> Regresar</i></a>
+  </div>
       {!! Form::close()!!}
       
-
- <div class="text-center">
-    <a class="btn btn-primary" href="{{ url('/gestion') }}">Regresar</a>
-  </div>
   <script>
   $('#notasForm').submit(function(event) {
 
@@ -170,4 +174,3 @@
 </script>
 
 @endsection
-

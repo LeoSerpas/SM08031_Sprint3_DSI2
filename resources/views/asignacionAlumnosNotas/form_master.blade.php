@@ -5,7 +5,7 @@
      <div class="col-sm-10">
       <div class="form-group">
       <i><select name="id_asignacion" class="form-control">
-                <option disabled selected>Seleccione docente, grado y materia</option>
+                <option selectedvalue="{{$asignacion->id}}">{{$asignacion->id}}. {{$asignacion->docentes->User->name}} - {{$asignacion->grados->nombre}} {{$asignacion->grados->seccion}}</option>
                 @foreach($asignaciones as $asignacion)
                       <option value="{{$asignacion->id}}">{{$asignacion->id}}. {{$asignacion->docentes->User->name}} - {{$asignacion->grados->nombre}} {{$asignacion->grados->seccion}}</option>
                  @endforeach
@@ -21,11 +21,11 @@
      <div class="col-sm-10">
       <div class="form-group">
       <i><select name="id_alumno" class="form-control">
-                <option disabled selected>Seleccione Alumno</option>
-                @foreach($alumnos as $alumno)
-                      <option value="{{$alumno->id}}">{{$alumno->id}}. {{$alumno->nombres}} {{$alumno->apellidos}}</option>
-                 @endforeach
-            </select></i>  
+        <option selected value="{{$alumno->id}}">{{$alumno->id}}. {{$alumno->nombres}} {{$alumno->apellidos}}</option>                
+            @foreach($alumnos as $alumno)
+              <option value="{{$alumno->id}}">{{$alumno->id}}. {{$alumno->nombres}} {{$alumno->apellidos}}</option>
+             @endforeach
+          </select></i>  
   </div>
 </div>
  </div>

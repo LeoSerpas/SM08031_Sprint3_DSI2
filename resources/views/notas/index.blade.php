@@ -10,20 +10,31 @@
       </div>
     </div>
   </div>
-  <form class="select_grado">
+  <div class ="col-sm-12">
+  <div class ="col-sm-6">
+  <form class="select_materia_trimestre">
   <h5>Seleccione la Materia a Ingresar Notas</h5>
-  <select name="id_grado" id='id_grado' class="form-control">
+  <select name="id_materia" id='id_materia' class="form-control">
     <option disabled selected>Seleccione la materia
     </option>
-    @foreach($materias as $asigAlumno)
-    <option value="{{$asigAlumno->id}}">{{$asigAlumno->nombre}}
+    @foreach($materias as $materia)
+    <option value="{{$materia->id}}">{{$materia->nombre}}
     </option>
     @endforeach
+  </select>
+  <br>
+   <select name="trimestre" id='trimestre' class="form-control">
+    <option disabled selected>Seleccione el Trimestre del año </option>
+    <option value="1">Primer Trimestre</option>
+    <option value="2">Segundo Trimestre</option>
+    <option value="3">Tercer Trimestre</option>
   </select>
 <br>
 <button class="btn btn-success btn-lg" type="submit" name="button">Ingresar Notas por Materia
 </button>
 </form>
+</div>
+</div>
 <br>
 <H4>Seleccione una Materia para consultar las Notas de los Alumnos</H4>
 <br>
@@ -75,13 +86,19 @@
               </thead>
               <tbody>
                 @foreach ($asignacion_alumnos as $key => $asignacion_alumno)
+                
                 <tr>
                   <td>
                     {{ $key+1 }}
                   </td>
                   <td>
+                  @foreach ($asignacionNotas as $key => $asignacionNota)
+                      
                     <input  required type="hidden" name="notas[asignacion][{{ $key  }}][id_materia]" value="{{ $materia->id }}">
                     <input  required type="hidden" name="notas[asignacion][{{ $key  }}][id_materia]" value="{{ $id }}">
+                    <input  required type="hidden" name="notas[asignacion][{{ $key  }}][trimestre]" value="{{ $asignacionNota->trimestre }}">
+
+                   @endforeach
                     @php ($notasAsignada = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->first())
                     {{ $asignacion_alumno->alumno->nombres .' '. $asignacion_alumno->alumno->apellidos  }}
                   </td>
@@ -142,10 +159,10 @@
   </a>
 </div>
 <script >
-  $('.select_grado').submit(function( event ) {
+  $('.select_materia_trimestre').submit(function( event ) {
     event.preventDefault();
-    if ($("#id_grado" ).val() !== null) {
-      window.location.href = "/notas/grado/"+$("#id_grado" ).val();
+    if ($("#id_materia" ).val() !== null && $("#trimestre" ).val() !== null) {
+      window.location.href = "/notas/materia/"+$("#id_materia" ).val()+"/trimestre/"+$("#trimestre" ).val();
     }
   }
                            )
