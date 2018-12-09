@@ -7,6 +7,17 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
+
+## Cambios 9/12/2018
+##1-) Menu
+- Se agrego el Menu a todas las vistas, se quitaron accesos que no correspondian y se mejoraron los nombres de los link para que coincidieran a donde corresponde, y se modifico el orden, para que correspondieran al flujo normal de eventos que debe de seguirse para una buena gestion.
+
+##2-) 
+- Se Modifico la "Asignacion Alumno Docente-Grado" en el index se agregaron dos pestañas que correponden a dos tablas en la primera se aprecian los alumnos asignados al doente logeado, la segunda corresponde a todos los alumnos asignados a los docentes, se modificaron todas las vistas del crud, se modifico el update ya que no cargaba automaticamente los datos de la fila a modificar y se agrego el año de la asignacion que es, (segun lo que le pregunte antes) el año actual o a lo sumo el año siguiente ->REVISAR.
+
+##3-)
+-Se modifico la base de datos, se agrego otro script adicional al que ya se tenia, denominado: "centroescolar_tablas_vacias.sql" el cual contiene todas las tablas pero sin datos, se recomienda cargar "CentroEscolar2.4.sql" ya que contiene datos, el correo y la pass siguen siendo las mismas Correo:leon_s054@hotmail.com Pass:leonardo
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:

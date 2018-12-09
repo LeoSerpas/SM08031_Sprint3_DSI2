@@ -21,6 +21,11 @@
       <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
       <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+      <style>
+         ul {list-style-type:none; margin:0; padding:0;}
+         li {display:inline;}
+         a.active {background:#191919;}
+      </style>
    </head>
    <body>
       <div id="app" style="overflow-y: auto; overflow-x: hidden;">
@@ -69,27 +74,27 @@
                      @endif
                   </ul>
                   <ul>
-                    @if (Auth::guest())<br><br><br>
-                    @else
-                    <br><br><br>
-                   <nav class=" navbar navbar-collapse " style="border-color: #222530;" >
-                       <div class="container">
-                          <div class="navbar-header">
-                             <!-- Branding Image -->
-                             <ul class="nav navbar-nav">
-                                <li><a href="{{ route('docentes.index') }}"><b>Docentes /</b></a></li>
-                                <li><a href="{{ route('alumnos.index') }}"><b> Estudiantes /</b></a></li>
-                                <li><a href="{{ route('grados.index') }}"><b>Grados / </b></a></li>
-                                <li><a href="{{ route('materias.index') }}"><b>Materias / </b></a></li>
-                                <li><a href="{{ route('notas.index') }}"><b>Gestion-Asignacion Notas / </b></a></li>
-                                <li><a href="{{ route('asignaciones.index') }}"><b>Asignacion Docentes-Grado</b></a></li>
-                                <li><a href="{{ route('asignacionAlumnosNotas.index') }}"><b>Asignacion Alumno Docente-Grado</b></a></li>
-                                <!--<li><a href="{{ route('asignacionNotas.index') }}"><b>Asignacion Materia a Notas</b></a></li>-->
-                             </ul>
-                          </div>
-                       </div>
-                    </nav>
-                    @endif
+                     @if (Auth::guest())<br><br><br>
+                     @else
+                     <br><br><br>
+                     <nav class=" nav navbar-collapse " style="border-color: #222530;" >
+                        <div class="container">
+                           <div class="navbar-header">
+                              <!-- Branding Image -->
+                              <ul class="nav navbar-nav">
+                                 <li><a href="{{ route('docentes.index') }}"><b>Docentes </b></a></li>
+                                 <li><a href="{{ route('alumnos.index') }}"><b> Estudiantes </b></a></li>
+                                 <li><a href="{{ route('grados.index') }}"><b>Grados</b></a></li>
+                                 <li><a href="{{ route('materias.index') }}"><b>Materias</b></a></li>
+                                 <li><a href="{{ route('asignaciones.index') }}"><b>Asignacion Docentes-Grado</b></a></li>
+                                 <li><a href="{{ route('asignacionAlumnosNotas.index') }}"><b>Asignacion Alumno Docente-Grado</b></a></li>
+                                 <li><a href="{{ route('notas.index') }}"><b>Gestion-Asignacion Notas</b></a></li>
+                                 <!--<li><a href="{{ route('asignacionNotas.index') }}"><b>Asignacion Materia a Notas</b></a></li>-->
+                              </ul>
+                           </div>
+                        </div>
+                     </nav>
+                     @endif
                   </ul>
                </div>
             </div>
@@ -103,10 +108,18 @@
          <br>
          <div>
             <nav class=" navbar navbar-fixed-bottom" style="background-color: #99C0E8 ; padding-top: 10px;">
-               <p> &emsp;<span class="glyphicon glyphicon-copyright-mark"></span> Centro Escolar Católico Santo Tomas, 2018</p>
+
+               <p> &emsp;<span class="glyphicon glyphicon-copyright-mark"></span> Centro Escolar Católico Santo Tomas, <?php echo date("Y");?></p>
             </nav>
          </div>
       </div>
       </div>
+      <script>
+         for (var i = 0; i < document.links.length; i++) {
+             if (document.links[i].href == document.URL) {
+                 document.links[i].className = 'active';
+             }
+         }
+      </script>
    </body>
 </html>

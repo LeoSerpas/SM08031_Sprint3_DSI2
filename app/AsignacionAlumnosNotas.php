@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AsignacionAlumnosNotas extends Model
 {
-    protected $fillable = ['id_asignacion','id_alumno','id_asignacion_alumno','id_materia'];
+    protected $fillable = ['id_asignacion','id_alumno','id_asignacion_alumno','id_materia','id_grado','anio'];
     protected $dates = ['created_at','updated_at'];
 
     public function scopeNombre($query, $id_alumno)
@@ -37,6 +37,8 @@ class AsignacionAlumnosNotas extends Model
     return $this->hasMany('App\Docentes', 'id_docente');
   }
 
-  
+  public function Grados(){
+    return $this->belongsTo('App\Grados', 'id_grado');
+  }
 
 }

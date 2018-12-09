@@ -50,6 +50,7 @@ class AsignacionAlumnosNotasController extends Controller
         $this->validate($request,[
           'id_asignacion'=>'required|numeric',  
           'id_alumno'=>'required|numeric',
+          'anio'=>'required|numeric',
           ]);
         AsignacionAlumnosNotas::create($request->all());
         return redirect()->route('asignacionAlumnosNotas.index')->with('success','Asignacion guardada con éxito');
@@ -76,11 +77,10 @@ class AsignacionAlumnosNotasController extends Controller
     public function edit($id)
     {
         $asignaciones = Asignaciones::all();
-        $asignacion = Asignaciones::find($id);
         $alumnos = Alumnos::all();
-        $alumno = Alumnos::find($id);
+        $al = Alumnos::find($id);
         $asignacionAlumnoNota = AsignacionAlumnosNotas::find($id);
-        return view('asignacionAlumnosNotas.edit',compact('asignacionAlumnoNota','asignaciones','alumnos','alumno','asignacion'));
+        return view('asignacionAlumnosNotas.edit',compact('asignacionAlumnoNota','asignaciones','alumnos','al'));
     }
 
     /**
