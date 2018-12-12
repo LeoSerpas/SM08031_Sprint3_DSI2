@@ -6,14 +6,13 @@
          <div class="full.right">
             <h2>GESTION DE NOTAS
             </h2>
-            <br>
          </div>
       </div>
    </div>
    <div class ="col-sm-12">
       <div class ="col-sm-6">
          <form class="select_materia_trimestre">
-            <h5>Seleccione la Materia a Ingresar Notas</h5>
+            <h4>Seleccione la Materia y el Trimestre a Ingresar Notas</h4>
             <select name="id_materia" id='id_materia' class="form-control">
                <option disabled selected>Seleccione la materia
                </option>
@@ -147,7 +146,8 @@
 </div>
 @endif
 <div class="text-center">
-   <a class="btn btn-primary" href="{{ url('/gestion') }}">Regresar
+   <a href="{{ url('/gestion') }}" class="btn btn-primary btn-lg">
+   <i class="glyphicon glyphicon-arrow-left"> CANCELAR</i>
    </a>
 </div>
 <script >

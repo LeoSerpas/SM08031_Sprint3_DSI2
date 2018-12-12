@@ -13,12 +13,14 @@
    <p>{{ $message }}</p>
 </div>
 @endif
+@if ($message = Session::get('error'))
+<div class="alert alert-danger">
+   <p>{{ $message }}</p>
+</div>
+@endif
 <div>
    <a href="{{route('asignacionAlumnosNotas.create')}}" class="btn btn-success btn-lg">
    <i class="glyphicon glyphicon-plus"> NUEVO</i>
-   </a>
-   <a href="{{ url('/gestion') }}" class="btn btn-primary btn-lg">
-   <i class="glyphicon glyphicon-arrow-left"> CANCELAR</i>
    </a>
    {!! Form::open(['route'=>'asignacionAlumnosNotas.index', 'method'=>'GET', 'class'=>'navbar-form pull-right', 'role'=>'search'])!!}
    <div class="input-group"> 

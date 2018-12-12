@@ -6,26 +6,24 @@
       <br>
       {{ Form::open(['route'=>'asignacionAlumnosNotas.store', 'method'=>'POST']) }}
       <div class="row">
-         <div class="col-sm-3">
+         <div class="col-sm-4">
             {!! form::label('Docente - Grado') !!}
          </div>
-         <div class="col-sm-9">
+         <div class="col-sm-8">
             <div class="form-group">
                <i>
                   <select name="id_asignacion" class="form-control">
-                     @foreach($asignaciones as $asignacion)
-                     <option value="{{$asignacion->id}}">{{$asignacion->id}}. {{$asignacion->docentes->User->name}} - {{$asignacion->grados->nombre}} {{$asignacion->grados->seccion}}</option>
-                     @endforeach
+                     <option value="{{$asignacion_alumnos->id}}">{{$asignacion_alumnos->id}}. {{$asignacion_alumnos->docentes->User->name}} - {{$asignacion_alumnos->grados->nombre}} {{$asignacion_alumnos->grados->seccion}} - {{$asignacion_alumnos->anio}}</option>
                   </select>
                </i>
             </div>
          </div>
       </div>
       <div class="row">
-         <div class="col-sm-3">
-            {!! form::label('Nombre del Alumno') !!}
+         <div class="col-sm-4">
+            {!! form::label('Alumno') !!}
          </div>
-         <div class="col-sm-9">
+         <div class="col-sm-8">
             <div class="form-group">
                <i>
                   <select name="id_alumno" class="form-control">
@@ -37,31 +35,31 @@
             </div>
          </div>
       </div>
-	<div class="row">
-	   <div class="col-sm-2">
-	      {!! form::label('Año') !!}
-	   </div>
-	   <div class="col-sm-10">
-	      <?php $Y= date("Y");
-	         $Y2=$Y+'1';
-	         // echo $Y2; 
-	         ?>
-	      <div class="form-group">
-	         <i>
-	            <select name="anio" class="form-control">
-	               <option selected value="<?php echo date("Y");?>"><?php echo date("Y");?></option>
-	               <option value="<?php echo $Y2;?>"><?php echo $Y2;?></option>
-	            </select>
-	         </i>
-	      </div>
-	   </div>
-	</div>
-   <br>
-   <div class="form-group text-center" >
-      {{ Form::button(isset($model)? 'Update' : 'Guardar' , ['class'=>'btn btn-success btn-lg','type'=>'submit']) }}
-      <a class="btn btn-danger btn-lg" href="{{ route('asignacionAlumnosNotas.index') }}">Cancelar</a>
+      <div class="row">
+         <div class="col-sm-4">
+            {!! form::label('Año') !!}
+         </div>
+         <div class="col-sm-5">
+            <?php $Y= date("Y");
+               $Y2=$Y+'1';
+               // echo $Y2; 
+               ?>
+            <div class="form-group">
+               <i>
+                  <select name="anio" class="form-control">
+                     <option selected value="<?php echo date("Y");?>"><?php echo date("Y");?></option>
+                     <!-- <option value="<?php echo $Y2;?>"><?php echo $Y2;?></option> ?-->
+                  </select>
+               </i>
+            </div>
+         </div>
+      </div>
+      <br>
+      <div class="form-group text-center" >
+         {{ Form::button(isset($model)? 'Update' : 'Guardar' , ['class'=>'btn btn-success btn-lg','type'=>'submit']) }}
+         <a class="btn btn-danger btn-lg" href="{{ route('asignacionAlumnosNotas.index') }}">Cancelar</a>
+      </div>
+      {{ form::close() }}
    </div>
-   {{ form::close() }}
-</div>
 </div>
 @endsection

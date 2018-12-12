@@ -3,7 +3,7 @@
 <div class="row"  >
     <div class="col-lg-12 margin-tb">
         <div class="pull-left ">
-            <h2 > DATOS DE LA ASIGNACION</h2>
+            <h2 > Datos de la Asignación: Docente a Grado</h2>
             <br>
         </div>
     </div>

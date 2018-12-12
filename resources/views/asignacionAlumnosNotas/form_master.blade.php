@@ -36,7 +36,7 @@
    <div class="col-sm-2">
       {!! form::label('Año') !!}
    </div>
-   <div class="col-sm-10">
+   <div class="col-sm-5">
       <?php $Y= date("Y");
          $Y2=$Y+'1';
          // echo $Y2; 
@@ -46,7 +46,7 @@
             <select name="anio" class="form-control">
                <option selected value="{{$asignacionAlumnoNota->anio}}">{{$asignacionAlumnoNota->anio}}</option>
                <option value="<?php echo date("Y");?>"><?php echo date("Y");?></option>
-               <option value="<?php echo $Y2;?>"><?php echo $Y2;?></option>
+               <!-- <option value="<?php echo $Y2;?>"><?php echo $Y2;?></option> ?-->
             </select>
          </i>
       </div>

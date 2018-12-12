@@ -63,7 +63,7 @@ create table ASIGNACIONES
    id                   int                            not null AUTO_INCREMENT,
    id_docente           int                            null,
    id_grado             int                            null,
-   anio                 int                            not null,
+   anio                 int                            null,
    created_at           timestamp,
    updated_at           timestamp,
    constraint PK_ASIGNACION primary key (id)
@@ -335,7 +335,3 @@ alter table TRIMESTRE add foreign key (id_asignacion_notas) references ASIGNACIO
 
 
 alter table GRADOS add constraint GRADO_UNICO unique (nombre, seccion);
-
-alter table ASIGNACIONES add constraint GRADO_UNICO unique (id_grado);
-
-alter table ASIGNACION_ALUMNOS_NOTAS add constraint ALUMNO_GRADO_UNICO unique (id_asignacion, id_alumno);

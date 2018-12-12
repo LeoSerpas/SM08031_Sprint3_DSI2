@@ -18,6 +18,22 @@
 ##3-)
 -Se modifico la base de datos, se agrego otro script adicional al que ya se tenia, denominado: "centroescolar_tablas_vacias.sql" el cual contiene todas las tablas pero sin datos, se recomienda cargar "CentroEscolar2.4.sql" ya que contiene datos, el correo y la pass siguen siendo las mismas Correo:leon_s054@hotmail.com Pass:leonardo
 
+## Cambios 12/12/2018
+
+##1-) Menu 
+Se cambio un poco agregando color, cuando este activo x menu. 
+
+##2-) Asignaciones 
+-Se agregaron los atributos "anio" a cada asignacion (que representan el año de la asignacion), en un principio queria establecer que el año fuera el año actual y el siguiente, pero a la hora de editar un registro se confundia mucho en inscribir a un alumno en un grado el 2018 cuando estaba asignado a un docente en el 2019, no habia congruencia en las dos asignaciones, asi que decidi que solo se hicieran asignaciones para el año actual.
+-Se realizaron todas las validaciones para que ningun docente pudiera estar asignado a dos grados a la misma vez en un año lectivo, solo al siguiente año si podra ingresarse una nueva asignacion para el mismo grado con el mismo docente pero ya será otra, porque el año cambiara. (No se si me explico :p)
+-Se realizaron validaciones en los actualizar de las asignaciones ya que aunque estuviera validado que no se pudiera ingresar un registro repetido, a la hora de actualizar, si permitia actualizar a un registro que ya estaba en la base, y daba como resultado registros duplicados, asi como se agregaron validaciones para que los alumnos no puedan actualizarce a otro registro de otro docente si ya esta creado.
+
+##3-) Base de datos
+Se agregaron atributos y se quito algunas clusulas de "unique" ya que por eso daban error de llaves, en los dos script, recordar cargar "CentroEscolar2.4.sql" ya que ese contiene datos con los que he estado trabajando.
+El otro script corresponde a la logica de las tablas vacias al cual le hare ingenieria inversa para generar el modelo logico (ya lo intente y si lo genera, pero ya que se modificará, dejare eso para el final cuando ya tenga todos los cambios.) 
+
+
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:

@@ -42,6 +42,7 @@ class AsignacionesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         $this->validate($request,[
@@ -49,8 +50,24 @@ class AsignacionesController extends Controller
           'id_grado'=>'required|numeric',
           'anio'=>'required|numeric',
         ]);
-        Asignaciones::create($request->all());
-        return redirect()->route('asignaciones.index')->with('success','Asignacion guardada con éxito');
+
+        $asignacion = Asignaciones::where('id_docente', $request->id_docente)
+        ->where('anio', $request->anio)
+        ->exists(); //true or false
+        if($asignacion)
+        {
+          return redirect()->route('asignaciones.index')
+          ->with('error','ERROR!. El docente ya ha sido asignado en un grado en este año!');
+        }
+        $asignacion2 = Asignaciones::where('id_grado', $request->id_grado)
+        ->where('anio', $request->anio)
+        ->exists(); //true or false
+        if($asignacion2){
+            return redirect()->route('asignaciones.index')
+            ->with('error','ERROR!. El Grado ya ha sido asignado a otro docente!');
+        }
+            Asignaciones::create($request->all());
+            return redirect()->route('asignaciones.index')->with('success','Asignacion guardada con éxito');       
     }
 
     /**
@@ -93,6 +110,15 @@ class AsignacionesController extends Controller
           'id_grado'=>'required|numeric',
           'anio'=>'required|numeric',
         ]);
+
+        $asignacion = Asignaciones::where('id_grado', $request->id_grado)
+        ->where('anio', $request->anio)
+        ->exists(); //true or false
+        if($asignacion)
+        {
+          return redirect()->route('asignaciones.index')
+          ->with('error','ERROR!. La asignacion no pudo actualizarse, el Grado ya tiene asignado un docente!');
+        }
         Asignaciones::find($id)->update($request->all());
         return redirect()->route('asignaciones.index')->with('success','Asignacion actualizada con exito');
     }
@@ -109,3 +135,4 @@ class AsignacionesController extends Controller
         return redirect()->route('asignaciones.index')->with('success','Asignacion eliminada con exito');
     }
 }
+

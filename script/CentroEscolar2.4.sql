@@ -27,10 +27,13 @@ CREATE TABLE IF NOT EXISTS `act_cotidianas` (
   PRIMARY KEY (`id`),
   KEY `id_asignacion_notas` (`id_asignacion_notas`),
   CONSTRAINT `act_cotidianas_ibfk_1` FOREIGN KEY (`id_asignacion_notas`) REFERENCES `asignacion_notas` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.act_cotidianas: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.act_cotidianas: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `act_cotidianas` DISABLE KEYS */;
+INSERT INTO `act_cotidianas` (`id`, `id_asignacion_notas`, `nota_cotidiana`, `nota_porcent`, `created_at`, `updated_at`) VALUES
+  (1, 1, 10, 3.5, '2018-12-11 22:29:32', '2018-12-11 22:29:32'),
+  (2, 2, 0, 0, '2018-12-11 22:29:33', '2018-12-11 22:29:33');
 /*!40000 ALTER TABLE `act_cotidianas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.act_integradoras
@@ -46,10 +49,13 @@ CREATE TABLE IF NOT EXISTS `act_integradoras` (
   PRIMARY KEY (`id`),
   KEY `id_asignacion_notas` (`id_asignacion_notas`),
   CONSTRAINT `act_integradoras_ibfk_1` FOREIGN KEY (`id_asignacion_notas`) REFERENCES `asignacion_notas` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.act_integradoras: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.act_integradoras: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `act_integradoras` DISABLE KEYS */;
+INSERT INTO `act_integradoras` (`id`, `id_asignacion_notas`, `activi_1`, `activi_2`, `promedio_i`, `prom_i_porcent`, `created_at`, `updated_at`) VALUES
+  (1, 1, 10, 10, 10, 3.5, '2018-12-11 22:29:32', '2018-12-11 22:29:32'),
+  (2, 2, 0, 0, 0, 0, '2018-12-11 22:29:33', '2018-12-11 22:29:33');
 /*!40000 ALTER TABLE `act_integradoras` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.alumnos
@@ -64,15 +70,16 @@ CREATE TABLE IF NOT EXISTS `alumnos` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `no_nie` (`no_nie`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.alumnos: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.alumnos: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `alumnos` DISABLE KEYS */;
 INSERT INTO `alumnos` (`id`, `nombres`, `apellidos`, `no_nie`, `f_nacimiento`, `edad`, `created_at`, `updated_at`) VALUES
-  (1, 'Emely Valeria', 'Serpas', 1111111, '1999-07-22', NULL, '2018-12-09 00:51:20', '2018-12-09 00:51:20'),
-  (2, 'Denis Alejandro', 'Martinez', 3453445, '2001-05-15', NULL, '2018-12-09 00:51:44', '2018-12-09 00:51:44'),
-  (3, 'Christopher Alexander', 'Sanchez', 1231231, '2007-02-03', NULL, '2018-12-09 00:55:55', '2018-12-09 00:55:55'),
-  (4, 'Alexander Bladimir', 'Sanchez', 7676777, '2005-03-17', NULL, '2018-12-09 02:29:48', '2018-12-09 02:29:48');
+  (1, 'Emely Valeria', 'Martinez', 1231412, '1999-05-20', NULL, '2018-12-11 01:49:33', '2018-12-11 01:49:33'),
+  (2, 'Denis Alejandro', 'Serpas', 4564547, '2001-05-16', NULL, '2018-12-11 01:49:55', '2018-12-11 01:49:55'),
+  (3, 'Christopher Alexander', 'Sanchez', 9789795, '2002-02-03', NULL, '2018-12-11 01:50:52', '2018-12-11 01:50:52'),
+  (4, 'Katerine Maria', 'Figueroa', 7676567, '2005-04-19', NULL, '2018-12-11 01:51:25', '2018-12-11 01:51:25'),
+  (5, 'Manuel Antonio', 'Sanchez', 4545345, '2008-04-10', NULL, '2018-12-11 08:26:28', '2018-12-11 08:26:28');
 /*!40000 ALTER TABLE `alumnos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.asignaciones
@@ -80,21 +87,22 @@ CREATE TABLE IF NOT EXISTS `asignaciones` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_docente` int(11) DEFAULT NULL,
   `id_grado` int(11) DEFAULT NULL,
-  `anio` int(11) NOT NULL,
+  `anio` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `GRADO_UNICO` (`id_grado`),
+  KEY `id_grado` (`id_grado`),
   KEY `id_docente` (`id_docente`),
   CONSTRAINT `asignaciones_ibfk_1` FOREIGN KEY (`id_grado`) REFERENCES `grados` (`id`),
   CONSTRAINT `asignaciones_ibfk_2` FOREIGN KEY (`id_docente`) REFERENCES `docentes` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.asignaciones: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.asignaciones: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `asignaciones` DISABLE KEYS */;
 INSERT INTO `asignaciones` (`id`, `id_docente`, `id_grado`, `anio`, `created_at`, `updated_at`) VALUES
-  (2, 1, 4, 2018, '2018-12-09 00:59:27', '2018-12-09 00:59:27'),
-  (3, 2, 3, 2018, '2018-12-09 01:48:36', '2018-12-09 01:48:36');
+  (18, 1, 1, 2018, '2018-12-11 06:42:59', '2018-12-12 00:38:19'),
+  (19, 6, 4, 2018, '2018-12-11 06:43:35', '2018-12-11 06:43:35'),
+  (20, 7, 7, 2018, '2018-12-11 23:59:50', '2018-12-11 23:59:50');
 /*!40000 ALTER TABLE `asignaciones` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.asignacion_alumnos_notas
@@ -106,20 +114,20 @@ CREATE TABLE IF NOT EXISTS `asignacion_alumnos_notas` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `ALUMNO_GRADO_UNICO` (`id_asignacion`,`id_alumno`),
+  KEY `id_asignacion` (`id_asignacion`),
   KEY `id_alumno` (`id_alumno`),
   CONSTRAINT `asignacion_alumnos_notas_ibfk_1` FOREIGN KEY (`id_asignacion`) REFERENCES `asignaciones` (`id`),
   CONSTRAINT `asignacion_alumnos_notas_ibfk_2` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- Volcando datos para la tabla centroescolar.asignacion_alumnos_notas: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `asignacion_alumnos_notas` DISABLE KEYS */;
 INSERT INTO `asignacion_alumnos_notas` (`id`, `id_asignacion`, `id_alumno`, `anio`, `created_at`, `updated_at`) VALUES
-  (3, 2, 1, 2018, '2018-12-09 01:45:07', '2018-12-09 05:32:45'),
-  (4, 3, 2, 2018, '2018-12-09 01:45:13', '2018-12-09 06:21:14'),
-  (5, 3, 3, 2019, '2018-12-09 01:49:05', '2018-12-09 05:22:36'),
-  (6, 3, 1, 2018, '2018-12-09 01:49:12', '2018-12-09 04:40:47'),
-  (8, 3, 4, 2018, '2018-12-09 02:36:02', '2018-12-09 02:36:02');
+  (13, 19, 1, 2018, '2018-12-11 07:46:50', '2018-12-11 07:46:50'),
+  (14, 19, 3, 2018, '2018-12-11 08:16:11', '2018-12-11 08:16:11'),
+  (15, 19, 5, 2018, '2018-12-11 08:24:23', '2018-12-12 01:30:52'),
+  (16, 18, 5, 2018, '2018-12-11 08:26:41', '2018-12-12 02:16:14'),
+  (18, 18, 2, 2018, '2018-12-12 01:59:46', '2018-12-12 02:26:14');
 /*!40000 ALTER TABLE `asignacion_alumnos_notas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.asignacion_docentes_materias
@@ -155,10 +163,13 @@ CREATE TABLE IF NOT EXISTS `asignacion_notas` (
   KEY `id_materia` (`id_materia`),
   CONSTRAINT `asignacion_notas_ibfk_1` FOREIGN KEY (`id_asignacion_alumno`) REFERENCES `asignacion_alumnos_notas` (`id`),
   CONSTRAINT `asignacion_notas_ibfk_2` FOREIGN KEY (`id_materia`) REFERENCES `materias` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.asignacion_notas: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.asignacion_notas: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `asignacion_notas` DISABLE KEYS */;
+INSERT INTO `asignacion_notas` (`id`, `id_materia`, `id_asignacion_alumno`, `nota_trimestral`, `trimestre`, `created_at`, `updated_at`) VALUES
+  (1, 1, 15, 10, 1, '2018-12-11 22:29:32', '2018-12-11 22:29:32'),
+  (2, 1, 16, 0, 1, '2018-12-11 22:29:33', '2018-12-11 22:29:33');
 /*!40000 ALTER TABLE `asignacion_notas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.conductas
@@ -194,13 +205,14 @@ CREATE TABLE IF NOT EXISTS `docentes` (
   UNIQUE KEY `no_dui` (`no_dui`),
   KEY `id_usuario` (`id_usuario`),
   CONSTRAINT `docentes_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.docentes: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.docentes: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `docentes` DISABLE KEYS */;
 INSERT INTO `docentes` (`id`, `id_usuario`, `no_escalafon`, `no_dui`, `telefono`, `direccion`, `created_at`, `updated_at`) VALUES
-  (1, 1, 1458799, '1234565498', '72781466', 'Km. 11.5, casa  4,  El Porvenir, Caserío Cuesta de la Cruz.', '2018-12-09 00:50:55', '2018-12-09 00:50:55'),
-  (2, 2, 7567567, '1665499877', '72781466', 'Km. 11.5, casa  4,  El Porvenir, Caserío Cuesta de la Cruz.', '2018-12-09 01:47:29', '2018-12-09 01:47:29');
+  (1, 1, 1458799, '1234565498', '72781466', 'Km. 11.5, casa  4,  El Porvenir, Caserío Cuesta de la Cruz.', '2018-12-11 01:44:56', '2018-12-11 01:44:56'),
+  (6, 2, 7533333, '2342222222', '72781466', 'Km. 11.5, casa  4,  El Porvenir, Caserío Cuesta de la Cruz.', '2018-12-11 04:34:40', '2018-12-11 04:34:40'),
+  (7, 4, 6666666, '4564566666', '77777777', 'San Salvador 8 calle poniente.', '2018-12-11 23:57:27', '2018-12-11 23:57:27');
 /*!40000 ALTER TABLE `docentes` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.grados
@@ -213,15 +225,17 @@ CREATE TABLE IF NOT EXISTS `grados` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `GRADO_UNICO` (`nombre`,`seccion`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.grados: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.grados: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `grados` DISABLE KEYS */;
 INSERT INTO `grados` (`id`, `nombre`, `seccion`, `capacidad`, `created_at`, `updated_at`) VALUES
-  (1, 'Kinder', 'A', 30, '2018-12-09 00:56:20', '2018-12-09 00:56:20'),
-  (2, 'Kinder', 'B', 40, '2018-12-09 00:56:33', '2018-12-09 00:56:33'),
-  (3, 'Octavo', 'A', 40, '2018-12-09 00:56:54', '2018-12-09 00:56:54'),
-  (4, 'Noveno', 'A', 60, '2018-12-09 00:57:07', '2018-12-09 00:57:07');
+  (1, 'Noveno', 'A', 30, '2018-12-11 01:52:37', '2018-12-11 01:52:37'),
+  (3, 'Noveno', 'B', 30, '2018-12-11 01:53:24', '2018-12-11 01:53:24'),
+  (4, 'Octavo', 'A', 40, '2018-12-11 01:53:41', '2018-12-11 01:53:41'),
+  (5, 'Octavo', 'B', 40, '2018-12-11 01:53:50', '2018-12-11 01:53:50'),
+  (6, 'Kinder', 'A', 40, '2018-12-11 08:23:25', '2018-12-11 08:23:25'),
+  (7, 'Séptimo', 'A', 30, '2018-12-11 23:51:27', '2018-12-11 23:51:27');
 /*!40000 ALTER TABLE `grados` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.materias
@@ -237,10 +251,10 @@ CREATE TABLE IF NOT EXISTS `materias` (
 -- Volcando datos para la tabla centroescolar.materias: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `materias` DISABLE KEYS */;
 INSERT INTO `materias` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
-  (1, 'Ciencias Naturales', '2018-12-09 00:57:27', '2018-12-09 00:57:27'),
-  (2, 'Matematica', '2018-12-09 00:57:33', '2018-12-09 00:57:33'),
-  (3, 'Lenguaje', '2018-12-09 00:57:39', '2018-12-09 00:57:39'),
-  (4, 'Ciencias Sociales', '2018-12-09 00:57:44', '2018-12-09 00:57:44');
+  (1, 'Ciencias Naturales', '2018-12-11 01:53:59', '2018-12-11 01:53:59'),
+  (2, 'Matematica', '2018-12-11 01:54:05', '2018-12-11 01:54:05'),
+  (3, 'Lenguaje', '2018-12-11 01:54:10', '2018-12-11 01:54:10'),
+  (4, 'Ciencias Sociales', '2018-12-11 01:54:15', '2018-12-11 01:54:15');
 /*!40000 ALTER TABLE `materias` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.permisos
@@ -287,10 +301,13 @@ CREATE TABLE IF NOT EXISTS `pruebas` (
   PRIMARY KEY (`id`),
   KEY `id_asignacion_notas` (`id_asignacion_notas`),
   CONSTRAINT `pruebas_ibfk_1` FOREIGN KEY (`id_asignacion_notas`) REFERENCES `asignacion_notas` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.pruebas: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.pruebas: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `pruebas` DISABLE KEYS */;
+INSERT INTO `pruebas` (`id`, `id_asignacion_notas`, `laboratorio`, `examen`, `promedio_p`, `prom_p_porcent`, `created_at`, `updated_at`) VALUES
+  (1, 1, 10, 10, 10, 3, '2018-12-11 22:29:33', '2018-12-11 22:29:33'),
+  (2, 2, 0, 0, 0, 0, '2018-12-11 22:29:33', '2018-12-11 22:29:33');
 /*!40000 ALTER TABLE `pruebas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.roles
@@ -352,13 +369,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `usuario` (`usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.users: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.users: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `usuario`, `name`, `password`, `email`, `remember_token`, `created_at`, `updated_at`) VALUES
-  (1, 'LeoSerpas', 'Leonardo Serpas', '$2y$10$f5oGFnIl5sGKx5m02gpS1OCvfvpBL8xQDzFTil725e0E/tSnPpwrS', 'leon_s054@hotmail.com', 'QAe7zRLI67c6p8sHKF5wRpYPjKZgecQR3yqPo97wtmY3m51eeyIpsBuwibTR', '2018-12-09 00:50:39', '2018-12-09 00:50:39'),
-  (2, 'Corena', 'Martha Julia Corena', '$2y$10$wsQlEJOkjrWFdlzDeKZkU.bnxolF/037S/VBeyzGdUf3Mdezocfjy', 'corena123@hotmail.com', NULL, '2018-12-09 01:47:11', '2018-12-09 01:47:11');
+  (1, 'LeoSerpas', 'Leonardo Serpas', '$2y$10$/IdNnIiCTTJ.77iMitR3eO1vPil.UaNQqcOJaCm2J0IsuY9yE/Z..', 'leon_s054@hotmail.com', 'NM7nizBEQwm6kpmgx3Vd4FoZbvE0MZdgjy7NojrmFbYkUC5QDoCkv0KcpM4E', '2018-12-11 01:41:50', '2018-12-11 01:41:50'),
+  (2, 'MarthaCorena', 'Martha Julia Corena', '$2y$10$sZ.GQA122Aw8ddLjvHv1zucKvxdd/xIRWf6zcwqQd.V7xu.vkcvje', 'martha123@hotmail.com', 'c0IotMa5QNpq96dUYh7R5MUeDERtUmrFxzzHffzbc1cqtDZEb44zQb6Zx8a9', '2018-12-11 04:34:01', '2018-12-11 04:34:01'),
+  (3, 'LeonSerpas', 'Leonardo Serpas', '$2y$10$Icr61jnDjNH039I3QIMsh.IMiuMiyR2xHPIrMkgLtPL1ASslm7xUC', 'leon_s050@hotmail.com', 'NmRczcQL4BmwE6KDzP8uAhDJI39chdRE03etMBNkg8FgYVprSJAZSdtVDmuO', '2018-12-11 23:51:07', '2018-12-11 23:51:07'),
+  (4, 'Leonardo', 'Leonardo Serpas Martinez', '$2y$10$KR2qGv5Ds3b7MPLhaQEZI.krf3MPpvu1AGmQgZnMf5i2WRuC6IPlm', 'leon_s056@hotmail.com', '3xo6uBpfuss4MqpHWCfhPI9rbTyHEuUsbMiew9Qd73VuZ0SbTYUGqhM4NoQe', '2018-12-11 23:53:16', '2018-12-11 23:53:16');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

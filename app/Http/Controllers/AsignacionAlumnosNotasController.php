@@ -36,7 +36,8 @@ class AsignacionAlumnosNotasController extends Controller
     {
         $asignaciones = Asignaciones::all();
         $alumnos = Alumnos::all();
-        return view('asignacionAlumnosNotas.create', compact('asignaciones','alumnos'));
+        $asignacion_alumnos = \Auth::user()->docente->asignacion;
+        return view('asignacionAlumnosNotas.create', compact('asignaciones','alumnos','asignacion_alumnos'));
     }
 
     /**
@@ -52,6 +53,22 @@ class AsignacionAlumnosNotasController extends Controller
           'id_alumno'=>'required|numeric',
           'anio'=>'required|numeric',
           ]);
+        $asignacionAlumno = AsignacionAlumnosNotas::where('id_alumno', $request->id_alumno)
+        ->where('anio', $request->anio)
+        ->exists(); //true or false
+        if($asignacionAlumno)
+        {
+          return redirect()->route('asignacionAlumnosNotas.index')
+          ->with('error','ERROR!. El Alumno ya ha sido asignado en otro grado en este año!');
+        }
+        //$asignacionAlumno2 = AsignacionAlumnosNotas::where('id_asignacion', $request->id_asignacion)
+        //->where('anio', $request->anio)
+        //->exists(); //true or false
+        //if($asignacionAlumno2)
+        //{
+        //  return redirect()->route('asignacionAlumnosNotas.index')
+        //  ->with('error','ERROR!. El Alumno ya ha sido asignado en un grado que imparte otro Docente!');
+        //}
         AsignacionAlumnosNotas::create($request->all());
         return redirect()->route('asignacionAlumnosNotas.index')->with('success','Asignacion guardada con éxito');
     }
@@ -95,7 +112,16 @@ class AsignacionAlumnosNotasController extends Controller
         $this->validate($request,[
           'id_asignacion'=>'required|numeric',  
           'id_alumno'=>'required|numeric',
+          'anio'=>'required|numeric',
           ]);
+        $asignacion = AsignacionAlumnosNotas::where('id_asignacion', $request->id_asignacion)
+        ->where('id_alumno', $request->id_alumno)
+        ->exists(); //true or false
+        if($asignacion)
+        {
+          return redirect()->route('asignacionAlumnosNotas.index')
+          ->with('error','¡ERROR! La asignación no pudo actualizarse,  Registro repetido!!');
+        }
         AsignacionAlumnosNotas::find($id)->update($request->all());
         return redirect()->route('asignacionAlumnosNotas.index')->with('success','Asignacion actualizada con exito');
     }
