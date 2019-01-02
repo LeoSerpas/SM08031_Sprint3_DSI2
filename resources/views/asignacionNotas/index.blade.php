@@ -14,7 +14,7 @@
       </div>
   @endif
       <div>
-        <a href="{{route('asignacionNotas.create')}}" class="btn btn-success btn-lg">
+        <a href="{{route('asignacionNotas.create')}}" class="btn btn-success">
             <i class="glyphicon glyphicon-plus"> NUEVO</i>
         </a>
         {!! Form::open(['route'=>'asignacionNotas.index', 'method'=>'GET', 'class'=>'navbar-form pull-right', 'role'=>'search'])!!}
@@ -47,9 +47,9 @@
         <td>{{ $value->observaciones }}</td>
 
         <td>
-          <a class="btn btn-info btn-lg" data-toggle="tooltip" data-placement="top" title="Detalles" href="{{route('asignacionNotas.show',$value->id)}}">
+          <a class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Detalles" href="{{route('asignacionNotas.show',$value->id)}}">
               <i class="glyphicon glyphicon-list-alt"></i></a>
-          <a class="btn btn-primary btn-lg" data-toggle="tooltip" data-placement="top" title="Editar" href="{{route('asignacionNotas.edit',$value->id)}}">
+          <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar" href="{{route('asignacionNotas.edit',$value->id)}}">
               <i class="glyphicon glyphicon-pencil"></i></a>
 
             {!! Form::close() !!}<br>

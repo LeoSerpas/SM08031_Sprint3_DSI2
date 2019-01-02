@@ -39,6 +39,8 @@ drop table if exists ASIGNACION_NOTAS;
 
 drop table if exists TRIMESTRE;
 
+drop table if exists ASIGNACION_CONDUCTAS;
+
 /*==============================================================*/
 /* Table: ALUMNOS                                               */
 /*==============================================================*/
@@ -47,7 +49,7 @@ create table ALUMNOS
    id                   int                            not null AUTO_INCREMENT,
    nombres              varchar(150)                   not null,
    apellidos            varchar(150)                   not null,
-   no_nie               int                            not null UNIQUE,
+   no_nie               int                            not null,
    f_nacimiento         date                           not null,
    edad                 int                            null,
    created_at           timestamp,
@@ -90,8 +92,8 @@ create table DOCENTES
 (
    id                   int                            not null AUTO_INCREMENT,
    id_usuario           int                            not null,
-   no_escalafon         numeric                        not null UNIQUE,
-   no_dui               char(10)                       not null UNIQUE,
+   no_escalafon         numeric                        not null,
+   no_dui               char(10)                       not null,
    telefono             char(8)                        not null,
    direccion            varchar(150)                   not null,
    created_at           timestamp,
@@ -119,7 +121,7 @@ create table GRADOS
 create table MATERIAS 
 (
    id                   int                            not null AUTO_INCREMENT,
-   nombre               varchar(150)                   null UNIQUE,
+   nombre               varchar(150)                   null,
    created_at           timestamp,
    updated_at           timestamp,
    constraint PK_MATERIA primary key (id)
@@ -181,7 +183,7 @@ create table ROL_USUARIO
 create table USERS 
 (
    id                   int                            not null AUTO_INCREMENT,
-   usuario              char(255)                      not null UNIQUE,
+   usuario              char(255)                      not null,
    name                 varchar(150)                   not null,
    password             varchar(191)                   not null,
    email                varchar(30)                    not null,
@@ -211,13 +213,13 @@ create table ASIGNACION_DOCENTES_MATERIAS
 create table CONDUCTAS 
 (
    id                   int                            not null AUTO_INCREMENT,
-   id_asignacion_notas  int                            null,
+   id_asignacion_conductas  int                        null,
    moral_civica         varchar(30)                    null,
    nota_conducta        int                            null,
    observaciones        varchar(500)                   null,
    created_at           timestamp,
    updated_at           timestamp,
-   constraint PK_CONDUCTA primary key (id)
+   constraint PK_CONDUCTAS primary key (id)
 );
 
 /*==============================================================*/
@@ -229,8 +231,8 @@ create table PRUEBAS
    id_asignacion_notas  int                            null,
    laboratorio          float                          null,
    examen               float                          null,
-   promedio_p             float                        null,
-   prom_p_porcent         float                        null,
+   promedio_p           float                          null,
+   prom_p_porcent       float                          null,
    created_at           timestamp,
    updated_at           timestamp,
    constraint PK_PRUEBAS primary key (id)
@@ -274,6 +276,7 @@ create table ASIGNACION_NOTAS
    id                   int                            not null AUTO_INCREMENT,
    id_materia           int                            null,
    id_asignacion_alumno int                            null,
+   id_trimestre         int                            null,
    nota_trimestral      float                          null,
    trimestre            int                            null,
    created_at           timestamp,
@@ -284,14 +287,31 @@ create table ASIGNACION_NOTAS
 /*==============================================================*/
 /* Table: TRIMESTRE                                             */
 /*==============================================================*/
-create table TRIMESTRE 
+create table TRIMESTRES 
 (
    id                   int                            not null AUTO_INCREMENT,
-   id_asignacion_notas  int                            null,
-   no_trimestre         int                            null,
+   nombre               varchar(30)                    null,
    created_at           timestamp,
    updated_at           timestamp,
    constraint PK_TRIMESTRE primary key (id)
+);
+
+INSERT INTO `trimestres` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
+  (1, 'Primer', '2018-12-11 01:53:59', '2018-12-11 01:53:59'),
+  (2, 'Segundo', '2018-12-11 01:54:05', '2018-12-11 01:54:05'),
+  (3, 'Tercer', '2018-12-11 01:54:15', '2018-12-11 01:54:15');
+
+/*==============================================================*/
+/* Table: ASIGNACION_CONDUCTAS                                      */
+/*==============================================================*/
+create table ASIGNACION_CONDUCTAS 
+(
+   id                   int                            not null AUTO_INCREMENT,
+   id_asignacion_alumno int                            null,
+   id_trimestre         int                            null,
+   created_at           timestamp,
+   updated_at           timestamp,
+   constraint PK_ASIGNACION_CONDUCTAS primary key (id)
 );
 
 
@@ -322,16 +342,18 @@ alter table ASIGNACION_NOTAS add foreign key (id_asignacion_alumno) references A
 
 alter table ASIGNACION_NOTAS add foreign key (id_materia) references MATERIAS (id);
 
+alter table ASIGNACION_NOTAS add foreign key (id_trimestre) references TRIMESTRES (id);
 
-alter table CONDUCTAS add foreign key (id_asignacion_notas) references ASIGNACION_NOTAS (id);
+
+alter table ASIGNACION_CONDUCTAS add foreign key (id_asignacion_alumno) references ASIGNACION_ALUMNOS_NOTAS (id);
+
+alter table ASIGNACION_CONDUCTAS add foreign key (id_trimestre) references TRIMESTRES (id);
+
+
+alter table CONDUCTAS add foreign key (id_asignacion_conductas) references ASIGNACION_CONDUCTAS (id);
 
 alter table PRUEBAS add foreign key (id_asignacion_notas) references ASIGNACION_NOTAS (id);
 
 alter table ACT_INTEGRADORAS add foreign key (id_asignacion_notas) references ASIGNACION_NOTAS (id);
 
 alter table ACT_COTIDIANAS add foreign key (id_asignacion_notas) references ASIGNACION_NOTAS (id);
-
-alter table TRIMESTRE add foreign key (id_asignacion_notas) references ASIGNACION_NOTAS (id);
-
-
-alter table GRADOS add constraint GRADO_UNICO unique (nombre, seccion);

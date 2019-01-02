@@ -13,8 +13,13 @@
    <p>{{ $message }}</p>
 </div>
 @endif
+@if ($message = Session::get('error'))
+<div class="alert alert-danger">
+   <p>{{ $message }}</p>
+</div>
+@endif
 <div>
-   <a href="{{route('docentes.create')}}" class="btn btn-success btn-lg">
+   <a href="{{route('docentes.create')}}" class="btn btn-success ">
    <i class="glyphicon glyphicon-plus"> NUEVO</i>
    </a>
    {!! Form::open(['route'=>'docentes.index', 'method'=>'GET', 'class'=>'navbar-form pull-right', 'role'=>'search'])!!}
@@ -47,12 +52,12 @@
       <td>{{ $value->direccion }}</td>
       <td>{{ $value->User->email }}</td>
       <td>
-         <a class="btn btn-info btn-lg" data-toggle="tooltip" data-placement="top" title="Detalles" href="{{route('docentes.show',$value->id)}}">
+         <a class="btn btn-info " data-toggle="tooltip" data-placement="top" title="Detalles" href="{{route('docentes.show',$value->id)}}">
          <i class="glyphicon glyphicon-list-alt"></i></a>
-         <a class="btn btn-primary btn-lg" data-toggle="tooltip" data-placement="top" title="Editar" href="{{route('docentes.edit',$value->id)}}">
+         <a class="btn btn-primary " data-toggle="tooltip" data-placement="top" title="Editar" href="{{route('docentes.edit',$value->id)}}">
          <i class="glyphicon glyphicon-pencil"></i></a>
          {!! Form::open(['method' => 'DELETE','route' => ['docentes.destroy', $value->id],'style'=>'display:inline']) !!}
-         <button type="submit" data-toggle="tooltip" data-placement="top" title="Eliminar" style="display: inline;" class="btn btn-danger btn-lg" onclick="return confirm('¿Esta seguro de eliminar este Registro?')"><i class="glyphicon glyphicon-trash" ></i></button>
+         <button type="submit" data-toggle="tooltip" data-placement="top" title="Eliminar" style="display: inline;" class="btn btn-danger " onclick="return confirm('¿Esta seguro de eliminar este Registro?')"><i class="glyphicon glyphicon-trash" ></i></button>
          {!! Form::close() !!}
       </td>
    </tr>
@@ -60,7 +65,7 @@
 </table>
 {!!$docentes->render()!!}
 <div class="text-center">
-   <a href="{{ url('/gestion') }}" class="btn btn-primary btn-lg">
+   <a href="{{ url('/gestion') }}" class="btn btn-primary ">
    <i class="glyphicon glyphicon-arrow-left"> CANCELAR</i>
    </a>
 </div>

@@ -33,6 +33,18 @@ class AsignacionAlumnosNotas extends Model
     return $this->hasMany('App\AsignacionNotas', 'id_asignacion_alumno');
   }
 
+    public function Notas(){
+    return $this->belongsTo('App\AsignacionNotas', 'id_asignacion_notas');
+  }
+
+    public function AsignacionConductas(){
+    return $this->hasMany('App\AsignacionConductas', 'id_asignacion_alumno');
+  }
+
+    public function Conductas(){
+    return $this->belongsTo('App\AsignacionConductas', 'id_asignacion_conductas');
+  }
+
   public function Docentes(){
     return $this->hasMany('App\Docentes', 'id_docente');
   }

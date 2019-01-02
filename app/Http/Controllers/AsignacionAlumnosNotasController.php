@@ -140,10 +140,16 @@ class AsignacionAlumnosNotasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($id)
     {
-        AsignacionAlumnosNotas::find($id)->delete();
-        return redirect()->route('asignacionAlumnosNotas.index')->with('success','Asignacion eliminada con exito');
+        try {
+            AsignacionAlumnosNotas::find($id)->delete();
+            return redirect()->route('asignacionAlumnosNotas.index')->with('success','Asignacion eliminada con exito');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('asignacionAlumnosNotas.index')
+            ->with('error','¡ERROR! La asignación Contiene notas asignadas, no se puede borrar!!');
+        }  
     }
 }
  

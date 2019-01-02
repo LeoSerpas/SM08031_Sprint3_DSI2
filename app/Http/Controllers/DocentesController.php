@@ -44,13 +44,28 @@ class DocentesController extends Controller
     {
         $this->validate($request,[
 
-           'id_usuario' => 'required|numeric',
+          'id_usuario' => 'required|numeric',
           'no_escalafon'=>'required|numeric|digits:7',
           'no_dui'=>'required|min:10|max:10',
           'direccion'=>'required',
           'telefono'=>'required|numeric|digits:8',
         ]);
-        
+        $docentesUs = Docentes::where('id_usuario', $request->id_usuario)->exists(); //true or false
+        $docentesEsc = Docentes::where('no_escalafon', $request->no_escalafon)->exists(); //true or false
+        $docentesDui = Docentes::where('no_dui', $request->no_dui)->exists(); //true or false
+
+        if($docentesUs)
+            {
+              return redirect()->back()->with('error','ERROR!. El Usuario ya esta en el sistema!');
+            }
+            elseif ($docentesEsc) 
+                {
+                  return redirect()->back()->with('error','ERROR!. El Escalafon del docente ya esta en el sistema!');
+                }
+                elseif ($docentesDui) 
+                    {
+                      return redirect()->back()->with('error','ERROR!. DUI de Docente ya esta en el sistema!');    
+                    }        
         Docentes::create($request->all());
         return redirect()->route('docentes.index')->with('success','Docente guardado con éxito');
     }
@@ -96,6 +111,7 @@ class DocentesController extends Controller
           'direccion'=>'required',
           'telefono'=>'required|numeric|digits:8',
         ]);
+
         Docentes::find($id)->update($request->all());
         return redirect()->route('docentes.index')->with('success','Docente actualizado con exito');
     }
@@ -108,8 +124,17 @@ class DocentesController extends Controller
      */
     public function destroy($id)
     {
-        Docentes::find($id)->delete();
-        return redirect()->route('docentes.index')->with('success','Docente eliminado con exito');
+
+         try {
+            Docentes::find($id)->delete();
+            return redirect()->route('docentes.index')->with('success','Docente eliminado con exito');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('docentes.index')
+            ->with('error','¡ERROR! El Docente esta asignado a un grado, no se puede borrar!!');
+        } 
+
+        
+        
     }
 }
  

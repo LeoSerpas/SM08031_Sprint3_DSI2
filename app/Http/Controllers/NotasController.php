@@ -12,7 +12,10 @@ use App\Materias;
 use App\AsignacionAlumnosNotas;
 use App\Asignaciones;
 Use App\Alumnos;
+Use App\Trimestre;
 use notas1\http\Request\NotasRequest;
+use App\Conductas;
+use App\AsignacionConductas;
 
 class NotasController extends Controller
 {
@@ -26,10 +29,12 @@ class NotasController extends Controller
         $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
         $asignaDocente=Asignaciones::all();
         $materias = Materias::all();
+        $trimestres = Trimestre::all();
+        $asignacionConductas = AsignacionConductas::all();
         $asignacionNotas=AsignacionNotas::all();
         $trimestral =$request->get('trimestral');
         $notas = AsignacionNotas::orderBy('id','ASC')->trimestral($trimestral)->paginate(10);
-        return view('notas.index',compact('notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente'));
+        return view('notas.index',compact('notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente','trimestres', 'asignacionConductas'));
     }
 
     /**
@@ -70,6 +75,7 @@ class NotasController extends Controller
           'moral_civica'=>'',
           'nota_conducta'=>'',
           'id_materia'=>'',
+          'id_trimestre'=>'',
           'id_asignacion_alumno'=>'',
         ]);
 
@@ -168,9 +174,10 @@ class NotasController extends Controller
       Asignaciones::all();
       $asignacionNota=AsignacionNotas::all();
       $materias = Materias::find($id);
+      $trimestres = Trimestre::find($trimestre);
       $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
       
-      return view('notas.por_materia',compact('nota','id','trimestre','asignacion_alumnos','materias','asignacionNota'));
+      return view('notas.por_materia',compact('nota','id','trimestre','trimestres','asignacion_alumnos','materias','asignacionNota'));
     }
 
     public function bulk(Request $request, $id, $trimestre)
@@ -179,17 +186,19 @@ class NotasController extends Controller
       foreach ($notas['asignacion'] as $key => $nota) {
         $inputs = array(
           'nota_trimestral' => $nota['nota_trimestral'],
-          'trimestre' => $nota['trimestre'], //agregada
         );
         $filter = array(
           'id_asignacion_alumno' => $nota['id_asignacion_alumno'],
-          'id_materia' => $nota['id_materia']
+          'id_materia' => $nota['id_materia'],
+          'id_trimestre' => $nota['id_trimestre'],
         );
         $valor = '';
         $valor = AsignacionNotas::updateOrCreate($filter, $inputs);
         print_r($valor->id);
         echo "<br>";
         print_r($valor->id_asignacion_alumno);
+        echo "<br>";
+        print_r($valor->trimestre);
         echo "<br>";
 
         $integradora=$notas['integradora'][$key];
@@ -239,6 +248,48 @@ class NotasController extends Controller
       return redirect()->route('notas.index')->with('success','Notas guardado con éxito');
     }
 
+      public function notasConducta($trimestre)
+    {
+      Asignaciones::all();
+      $asignacionNota=AsignacionNotas::all();
+      $trimestres = Trimestre::find($trimestre);
+      $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
+      $conductas= Conductas::all();
+      
+      return view('notas.conductas',compact('nota','trimestre','trimestres','asignacion_alumnos','asignacionNota','conductas'));
+    }
+
+        public function cond(Request $request, $trimestre)
+    {
+      $conductas = $request->get('conductas');
+      foreach ($conductas['asignacion'] as $key => $conducta) {
+
+        $filter = array(
+          'id_asignacion_alumno' => $conducta['id_asignacion_alumno'],
+          'id_trimestre' => $conducta['id_trimestre'],
+        );
+        $valor = '';
+        $valor = AsignacionConductas::updateOrCreate($filter);
+        print_r($valor->id_asignacion_alumno);
+        echo "<br>";
+        print_r($valor->trimestre);
+        echo "<br>";
+
+        $notas_conducta=$conductas['conductas'][$key];
+        $inputs = array(
+          'moral_civica' => $notas_conducta['moral_civica'],
+          'nota_conducta' => $notas_conducta['nota_conducta'],
+          'observaciones' => $notas_conducta['observaciones'],
+        );
+        $filter = array(
+          'id_asignacion_conductas' => $valor->id,
+        );
+        $valor1 = '';
+        $valor1 = Conductas::updateOrCreate($filter, $inputs);
+      }
+      return redirect()->route('notas.index')->with('success','conductas guardado con éxito');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -249,8 +300,6 @@ class NotasController extends Controller
     {
         $nota = AsignacionNotas::find($id)->delete();
         Conducta::find($nota->conducta->id)->delete();
-
-
         return redirect()->route('notas.index')->with('success','Nota eliminado con exito');
     }
 }

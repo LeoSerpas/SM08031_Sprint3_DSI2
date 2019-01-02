@@ -3,11 +3,11 @@
       {!! form::label('nombre','Grado') !!}
     </div>
 
-    <div class="col-sm-10">
+    <div class="col-sm-4">
     <div class="form-group {{ $errors->has('nombre') ? 'has-error' : "" }}">
       
             <select name="nombre" class="form-control">
-                <option value="" disabled selected>Seleccione uno</option>
+                <option value="{{old('nombre')}}"  >{{old('nombre')}}</option>
                 <option>Kinder</option>
                 <option>Preparatoria</option>
                 <option>Primero</option>
@@ -26,6 +26,7 @@
            </div>
         </div>
     </div>
+    <div class="col-sm-4">* Seleccione una opcion</div>
   </div>
 
    <div class="row">
@@ -34,16 +35,17 @@
     </div>
     <div class="col-sm-4">
          <div class="form-group {{ $errors->has('seccion') ? 'has-error' : "" }}">
-           <select name="seccion" id="seccion" class="form-control" >
-                <option value="" disabled selected>Seleccione uno</option>
+           <select name="seccion" id="seccion" class="form-control">
+                <option value="{{old('seccion')}}">{{old('seccion')}}</option>
                 <option>A</option>
                 <option>B</option>
-            </select>
+            </select >
             <div class="help-block" >
         <strong>{{ $errors->first('seccion', 'Obligatorio') }}</strong> 
       </div>
         </div>
    </div>
+   <div class="col-sm-4">* Seleccione una opcion</div>
   </div>
 
   <div class="row">
@@ -61,6 +63,6 @@
     </div>
 
     <div class="form-group text-center">
-      {{ Form::button(isset($model)? 'Update' : 'Guardar' , ['class'=>'btn btn-success btn-lg','type'=>'submit']) }}
-      <a class="btn btn-danger btn-lg" href="{{ route('grados.index') }}">Cancelar</a>
+      {{ Form::button(isset($model)? 'Update' : 'Guardar' , ['class'=>'btn btn-success','type'=>'submit']) }}
+      <a class="btn btn-danger" href="{{ route('grados.index') }}">Cancelar</a>
     </div>

@@ -2,7 +2,7 @@
     <div class="col-sm-2">
       {!! form::label('Nombre') !!}
     </div>
-     <div class="col-sm-10">
+     <div class="col-sm-8">
       <div class="form-group {{ $errors->has('id_usuario') ? 'has-error' : "" }}">
       <i><select name="id_usuario" class="form-control">
                <option disabled selected>Seleccione el docente</option>
@@ -69,7 +69,7 @@
  
     <br>
        <div class="form-group text-center" >
-      {{ Form::button(isset($model)? 'Update' : 'Guardar' , ['class'=>'btn btn-success btn-lg','type'=>'submit']) }}
-      <a class="btn btn-danger btn-lg" href="{{ route('docentes.index') }}">Cancelar</a>
+      {{ Form::button(isset($model)? 'Update' : 'Guardar' , ['class'=>'btn btn-success ','type'=>'submit']) }}
+      <a class="btn btn-danger " href="{{ route('docentes.index') }}">Cancelar</a>
     </div>
  

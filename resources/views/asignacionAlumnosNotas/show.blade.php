@@ -34,7 +34,7 @@
       </div>
    </div>
    <br/>
-   <a href="{{ route('asignacionAlumnosNotas.index')}}" class="btn btn-primary btn-lg">
+   <a href="{{ route('asignacionAlumnosNotas.index')}}" class="btn btn-primary">
    <i class="glyphicon glyphicon-arrow-left"> Regresar</i>
    </a>
 </div>

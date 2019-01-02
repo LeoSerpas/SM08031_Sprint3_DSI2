@@ -9,6 +9,9 @@ use App\Conducta;
 use App\AsignacionNotas;
 use App\Materias;
 use asignacionNotas1\http\Request\AsignacionNotasRequest;
+use App\Conducta;
+use App\AsignacionConductas;
+
 
 class AsignacionNotasController extends Controller
 {

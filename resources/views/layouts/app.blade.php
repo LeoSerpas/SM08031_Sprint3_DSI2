@@ -86,9 +86,9 @@
                                  <li><a href="{{ route('alumnos.index') }}"><b> Estudiantes </b></a></li>
                                  <li><a href="{{ route('grados.index') }}"><b>Grados</b></a></li>
                                  <li><a href="{{ route('materias.index') }}"><b>Materias</b></a></li>
-                                 <li><a href="{{ route('asignaciones.index') }}"><b>Asignacion Docentes-Grado</b></a></li>
-                                 <li><a href="{{ route('asignacionAlumnosNotas.index') }}"><b>Asignacion Alumno Docente-Grado</b></a></li>
-                                 <li><a href="{{ route('notas.index') }}"><b>Gestion-Asignacion Notas</b></a></li>
+                                 <li><a href="{{ route('asignaciones.index') }}"><b>Asignacion Docente - Grado</b></a></li>
+                                 <li><a href="{{ route('asignacionAlumnosNotas.index') }}"><b>Asignacion Alumno - Grado</b></a></li>
+                                 <li><a href="{{ route('notas.index') }}"><b>Gestion / Asignacion Notas</b></a></li>
                                  <!--<li><a href="{{ route('asignacionNotas.index') }}"><b>Asignacion Materia a Notas</b></a></li>-->
                               </ul>
                            </div>

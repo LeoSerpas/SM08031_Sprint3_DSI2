@@ -31,6 +31,13 @@ class MateriasController extends Controller
         $this->validate($request,[
           'nombre'=>'required|alpha_spaces',
         ]);
+        $materia = Materias::where('nombre', $request->nombre)
+        ->exists(); //true or false
+        if($materia)
+        {
+          return redirect()->route('materias.index')
+          ->with('error','¡ERROR! ¡Materia ya está en el sistema, registro duplicado!');
+        }
         Materias::create($request->all());
         return redirect()->route('materias.index')->with('success','Materia guardada con éxito');
     }
@@ -71,6 +78,13 @@ class MateriasController extends Controller
         $this->validate($request,[
           'nombre'=>'required|alpha_spaces',
         ]);
+        $materia = Materias::where('nombre', $request->nombre)
+        ->exists(); //true or false
+        if($materia)
+        {
+          return redirect()->route('materias.index')
+          ->with('error','¡ERROR! ¡Materia ya está en el sistema, registro duplicado!');
+        }
         Materias::find($id)->update($request->all());
         return redirect()->route('materias.index')->with('success','Materia actualizada con exito');
     }
@@ -83,7 +97,12 @@ class MateriasController extends Controller
      */
     public function destroy($id)
     {
-        Materias::find($id)->delete();
-        return redirect()->route('materias.index')->with('success','Materia eliminado con exito');
+    	try {
+            Materias::find($id)->delete();
+        	return redirect()->route('materias.index')->with('success','Materia eliminada con exito');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('materias.index')
+            ->with('error','¡ERROR! ¡La Materia Contiene notas asignadas, no se puede borrar!');
+        }
     }
 }

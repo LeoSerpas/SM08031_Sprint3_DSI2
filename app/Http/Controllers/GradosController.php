@@ -34,6 +34,14 @@ class GradosController extends Controller
           'seccion'=>'required|alpha_spaces',
           'capacidad'=>'required|numeric',
         ]);
+        $grado = Grados::where('nombre', $request->nombre)
+        ->where('seccion', $request->seccion)
+        ->exists(); //true or false
+        if($grado)
+        {
+          return redirect()->back()
+          ->with('error','¡ERROR!. El grado ya se encuentra en el sistema, ¡Registro repetido!');
+        }
         Grados::create($request->all());
         return redirect()->route('grados.index')->with('success','Grado guardado con éxito');
     }
@@ -76,6 +84,14 @@ class GradosController extends Controller
           'seccion'=>'required|alpha_spaces',
           'capacidad'=>'required|numeric',
         ]);
+        $grado = Grados::where('nombre', $request->nombre)
+        ->where('seccion', $request->seccion)
+        ->exists(); //true or false
+        if($grado)
+        {
+          return redirect()->route('grados.index')
+          ->with('error','¡ERROR! No se pudo actualizar, el Grado ya se encuentra en el sistema, ¡Registro repetido!');
+        }
         Grados::find($id)->update($request->all());
         return redirect()->route('grados.index')->with('success','Grado actualizado con exito');
     }
@@ -88,7 +104,12 @@ class GradosController extends Controller
      */
     public function destroy($id)
     {
+        try {
         Grados::find($id)->delete();
         return redirect()->route('grados.index')->with('success','Grado eliminado con exito');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('grados.index')->with('error','¡ERROR! El grado ha sido asignado a un Docente, no se puede borrar!! Borre la asignacion Docente Grado e intentelo de nuevo.');
+        }
+        
     }
 }

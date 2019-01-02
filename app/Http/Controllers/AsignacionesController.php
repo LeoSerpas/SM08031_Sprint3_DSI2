@@ -131,8 +131,14 @@ class AsignacionesController extends Controller
      */
     public function destroy($id)
     {
-        Asignaciones::find($id)->delete();
+        
+        try {
+            Asignaciones::find($id)->delete();
         return redirect()->route('asignaciones.index')->with('success','Asignacion eliminada con exito');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('asignaciones.index')->with('error','¡ERROR! Al grado de esta asignacion se le agregaron alumnos, no se puede borrar!! Intente borar la asignacion Alumnos Grado e intentelo de nuevo.');
+        }  
+        
     }
 }
 

@@ -8,7 +8,7 @@
   <div class="row">
     <div class ="col-sm-12">
       <div class="full.right">
-      <h2>Asignacion de Notas de {{$materias->nombre}} para el trimestre</h2>
+      <h2>Asignacion de Notas de {{$materias->nombre}} para el {{$trimestres->nombre}} Trimestre </h2>
       <br>
       </div>
     </div>
@@ -18,9 +18,7 @@
           <p>{{ $message }}</p>
       </div>
   @endif
-      
-      {!! Form::open(['method' => 'notas.bulk', $id, $trimestre, 'method'=>'POST', 'id' => 'notasForm'])!!}
-
+      {!! Form::open(['method' => 'notas.bulk', $id, $trimestre, 'method'=>'POST', 'id', 'trimestre' => 'notasForm'])!!}
       <input  required type="hidden" name="id_materia" value="{{ $id }}">
       <input  required type="hidden" name="trimestre" value="{{ $trimestre }}">
 
@@ -58,9 +56,9 @@
 
                   <input  required type="hidden" name="notas[asignacion][{{ $key  }}][id_asignacion_alumno]" value="{{ $asignacion_alumno->id }}">
                   <input  required type="hidden" name="notas[asignacion][{{ $key  }}][id_materia]" value="{{ $id }}">
-                  <input  required type="hidden" name="notas[asignacion][{{ $key  }}][trimestre]" value="{{ $trimestre }}">
+                  <input  required type="hidden" name="notas[asignacion][{{ $key  }}][id_trimestre]" value="{{ $trimestre }}">
  
-                  @php ($notasAsignada = $asignacion_alumno->AsignacionNotas->where('id_materia', $id )->first())
+                  @php ($notasAsignada = $asignacion_alumno->AsignacionNotas->where('id_materia', $id )->where('id_trimestre', $trimestre )->first())
                   {{ $asignacion_alumno->alumno->nombres .' '. $asignacion_alumno->alumno->apellidos  }}
                 </td>
                 <td>
@@ -111,7 +109,7 @@
       
   <div class="text-center">
     <button class="btn btn-success" type="submit" name="button">Guardar Notas</button>
-    <a class="btn btn-primary" href="{{ route('notas.index') }}"> <i class=" glyphicon-arrow-left"> Regresar</i></a>
+    <a class="btn btn-primary" href="{{ route('notas.index') }}"> <i class="glyphicon glyphicon-arrow-left"> Regresar</i></a>
   </div>
       {!! Form::close()!!}
       
