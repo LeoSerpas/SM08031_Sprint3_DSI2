@@ -51,14 +51,13 @@
    </div>
    <div class="col-sm-10">
       <?php $Y= date("Y");
-         $Y2=$Y+'1';
-         // echo $Y2; 
+         $Y2=$Y+'1'; // echo $Y2; 
          ?>
       <div class="form-group">
          <i>
             <select name="anio" class="form-control">
                <option selected value="<?php echo date("Y");?>"><?php echo date("Y");?></option>
-               <!--<option value="<?php echo $Y2;?>"><?php echo $Y2;?></option> -->
+               <option value="<?php echo $Y2;?>"><?php echo $Y2;?></option> 
             </select>
          </i>
       </div>

@@ -413,10 +413,13 @@
                            @php ($notasAsignada1 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 1 )->first())
                            @php ($notasAsignada2 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 2 )->first())
                            @php ($notasAsignada3 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 3 )->first())
+                           
                            {{ $asignacion_alumno->alumno->nombres .' '. $asignacion_alumno->alumno->apellidos  }}
                         </td>
                         <td>
+                           
                            {{ is_null($notasAsignada1) ? '0' : $notasAsignada1->nota_trimestral }}
+                           
                         </td>
                         <td>
                            {{ is_null($notasAsignada2) ? '0' : $notasAsignada2->nota_trimestral }}
@@ -424,6 +427,7 @@
                         <td>
                            {{ is_null($notasAsignada3) ? '0' : $notasAsignada3->nota_trimestral }}
                         </td>
+            
                      </tr>
                      @endforeach
                   </tbody>
@@ -513,10 +517,6 @@
          </div>
       </div>
 </div> 
-
-
-
-
 </div>  
 </div>
 

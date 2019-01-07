@@ -245,7 +245,7 @@ class NotasController extends Controller
         $valor3= Pruebas::updateOrCreate($filter, $inputs);
 
       }
-      return redirect()->route('notas.index')->with('success','Notas guardado con éxito');
+      return redirect()->route('notas.index')->with('success','Notas ingresadas con éxito');
     }
 
       public function notasConducta($trimestre)
@@ -270,10 +270,6 @@ class NotasController extends Controller
         );
         $valor = '';
         $valor = AsignacionConductas::updateOrCreate($filter);
-        print_r($valor->id_asignacion_alumno);
-        echo "<br>";
-        print_r($valor->trimestre);
-        echo "<br>";
 
         $notas_conducta=$conductas['conductas'][$key];
         $inputs = array(
@@ -287,7 +283,7 @@ class NotasController extends Controller
         $valor1 = '';
         $valor1 = Conductas::updateOrCreate($filter, $inputs);
       }
-      return redirect()->route('notas.index')->with('success','conductas guardado con éxito');
+      return redirect()->route('notas.index')->with('success','Notas de Conducta ingresadas con éxito');
     }
 
     /**
@@ -300,6 +296,6 @@ class NotasController extends Controller
     {
         $nota = AsignacionNotas::find($id)->delete();
         Conducta::find($nota->conducta->id)->delete();
-        return redirect()->route('notas.index')->with('success','Nota eliminado con exito');
+        return redirect()->route('notas.index')->with('success','Nota eliminada con exito');
     }
 }

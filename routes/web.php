@@ -36,6 +36,7 @@ Route::resource('secretarias','SecretariasController');
 Route::resource('materias','MateriasController');
 Route::resource('notas','NotasController');
 Route::resource('asignacionAlumnosNotas','AsignacionAlumnosNotasController');
+
 Route::resource('asignaciones','AsignacionesController');
 Route::resource('asignacionNotas','asignacionNotasController');
 Route::get('gestion', function()
@@ -44,4 +45,5 @@ Route::get('gestion', function()
 	});
 
 Route::post('asignacionAlumnosNotas/{id}', 'AsignacionAlumnosNotasController@deleted' )->name('asignacionAlumnosNotas.deleted');
+
 });

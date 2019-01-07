@@ -1,10 +1,21 @@
 @extends ('layouts.app')
 @section('content')
+<?php $Y= date("Y");
+   $Y2=$Y+'1';
+   $Y3=$Y-'1';
+   ?>
 <div class="row">
    <div class ="col-sm-12">
       <div class="full.right">
-         <h2>Gestionar la Asignacion Alumno Docente-Grado</h2>
+         @if ($grado_actual == null)
+         <h2>Gestion de Asignacion: Alumno-Grado, año {{$Y}}.</h2>
+         <h3>Usted no tiene un grado asignado para el año {{$Y}}. </h3>
+         <h3>Para poder gestionar sus alumnos, solicite un Grado al administrador</h3>
+         @endif
+         @if ($grado_actual !== null)
+         <h2>Gestion de Asignacion: Alumno-Grado, año {{$Y}}, {{$grado_actual->nombre}} {{$grado_actual->seccion}}</h2>
          <br>
+         @endif
       </div>
    </div>
 </div>
@@ -19,9 +30,11 @@
 </div>
 @endif
 <div>
+   @if ($asig_alumno !== null)
    <a href="{{route('asignacionAlumnosNotas.create')}}" class="btn btn-success">
-   <i class="glyphicon glyphicon-plus"> NUEVO</i>
+   <i class="glyphicon glyphicon-plus"> Asignacn. Alumnos Nuevos</i>
    </a>
+   @endif
    {!! Form::open(['route'=>'asignacionAlumnosNotas.index', 'method'=>'GET', 'class'=>'navbar-form pull-right', 'role'=>'search'])!!}
    <div class="input-group"> 
       {!! Form::text('nombre', null, ['class'=>'form-control', 'placeholder'=>'Buscar'])!!}
@@ -34,8 +47,15 @@
 <br>
 <div class="container">
    <ul class="nav nav-tabs">
-      <li class="active"><a data-toggle="tab" href="#home">Mis Asigns. Alumnos</a></li>
-      <li><a data-toggle="tab" href="#menu1">Todas las Asigns.</a></li>
+      @if ($grado_actual == null)
+      <li class="active"><a data-toggle="tab" href="#home">Mis Asigns. Año {{$Y}}</a></li>
+      @endif
+      @if($grado_actual !== null)
+      <li class="active"><a data-toggle="tab" href="#home">Mis Asigns. Año {{$Y}} {{$grado_actual->nombre}} {{$grado_actual->seccion}}</a></li>
+      @endif
+      <li><a data-toggle="tab" href="#menu">Reasignaciones alumnos Aprobados</a></li>
+      <li><a data-toggle="tab" href="#menu1">Reasignaciones alumnos Reprobados</a></li>
+      <li><a data-toggle="tab" href="#menu2">Todas las Asignaciones.</a></li>
    </ul>
    <div class="tab-content">
       <div id="home" class="tab-pane fade in active">
@@ -54,10 +74,12 @@
                         </tr>
                      </thead>
                      <tbody>
-                        @foreach ($asignacion_alumnos as $key => $asignacion_alumno)
+                        @if($asig_alumno !== null)
+                        <?php $no=1; ?>
+                        @foreach ($asig_alumno as $key => $asignacion_alumno)
                         <tr>
                            <td>
-                              {{ $key+1 }}
+                             {{$no++}}
                            </td>
                            <td>
                               {{ $asignacion_alumno->alumno->nombres .' '. $asignacion_alumno->alumno->apellidos  }}
@@ -84,13 +106,196 @@
                            </td>
                         </tr>
                         @endforeach
+                        @endif
+                        @if ($asig_alumno == null)
+                        <tr>
+                           <td>
+                              1
+                           </td>
+                           <td>
+                              No hay alumnos año {{$Y}}
+                           </td>
+                           <td>
+                              No hay asignaciones el año {{$Y}}
+                           </td>
+                           <td>
+                              Ingrese asignaciones Alumnos
+                           </td>
+                           <td>
+                           </td>
+                           <td>
+                           </td>
+                        </tr>
+                        @endif
                      </tbody>
                   </table>
                </div>
             </div>
          </div>
       </div>
-      <div id="menu1" class="tab-pane fade">
+      <div id="menu" class="tab-pane fade ">
+         <div>
+            <div class="tab-content">
+               <div class="table-responsive " name="id_docente">
+                  <table class="table table-striped" style="text-align:center" >
+                     <thead>
+                        <tr>
+                           <th with="80px">No</th>
+                           <th style="text-align:center">Alumno</th>
+                           <th style="text-align:center">Docente</th>
+                           <th style="text-align:center">Grado</th>
+                           <th style="text-align:center">Año</th>
+                           <th style="text-align:center">Acciones</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @if($grado_anterior !== null)
+                        <?php $no=1; ?>
+                        @foreach($grado_anterior as $key => $g_an)
+                        @php ($asignacion_anterior = $asignaciones->where('id_grado', $g_an->id)->where('anio', $Y3 ))
+                        @foreach($asignacion_anterior as $key => $as_an)
+                        @php ($asignacionAl_anterior = $asignacionAl->where('id_asignacion', $as_an->id))
+                        @foreach($asignacionAl_anterior as $key => $asAl_an)
+                        <tr>
+                           <td>
+                              {{$no++}}
+                           </td>
+                           <td>
+                              {{ $asAl_an->alumno->nombres .' '. $asAl_an->alumno->apellidos  }}
+                           </td>
+                           <td>
+                              {{ $asAl_an->asignaciones->docentes->User->name  }}
+                           </td>
+                           <td>
+                              {{ $asAl_an->asignaciones->Grados->nombre }} {{ $asAl_an->asignaciones->Grados->seccion }}
+                           </td>
+                           <td>
+                              {{ $asAl_an->anio }} 
+                           </td>
+                           <td>
+                              <a class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Detalles" 
+                                 href="{{route('asignacionAlumnosNotas.show',$asAl_an->id)}}">
+                              <i class="glyphicon glyphicon-list-alt"></i></a>
+                              <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar" 
+                                 href="{{route('asignacionAlumnosNotas.edit',$asAl_an->id)}}">
+                              <i class="glyphicon glyphicon-pencil"></i></a>
+                              {!! Form::open(['method' => 'DELETE','route' => ['asignacionAlumnosNotas.destroy', $asAl_an->id],'style'=>'display:inline']) !!}
+                              <button type="submit" data-toggle="tooltip" data-placement="top" title="Eliminar" style="display: inline;" class="btn btn-danger" onclick="return confirm('¿Esta seguro de eliminar este Registro?')"><i class="glyphicon glyphicon-trash" ></i></button>
+                              {!! Form::close() !!}<br>
+                           </td>
+                        </tr>
+                        @endforeach
+                        @endforeach
+                        @endforeach
+                        @endif
+                        @if ($grado_anterior == null)
+                        <tr>
+                           <td>
+                              1
+                           </td>
+                           <td>
+                              No hay alumnos Anteriores
+                           </td>
+                           <td>
+                              No hay Docentes Anteriores
+                           </td>
+                           <td>
+                              No hay Grados Anteriores
+                           </td>
+                           <td>
+                           </td>
+                           <td>
+                           </td>
+                        </tr>
+                        @endif
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="menu1" class="tab-pane fade ">
+         <div>
+            <div class="tab-content">
+               <div class="table-responsive " name="id_docente">
+                  <table class="table table-striped" style="text-align:center" >
+                     <thead>
+                        <tr>
+                           <th with="80px">No</th>
+                           <th style="text-align:center">Alumno</th>
+                           <th style="text-align:center">Docente</th>
+                           <th style="text-align:center">Grado</th>
+                           <th style="text-align:center">Año</th>
+                           <th style="text-align:center">Acciones</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @if($mismo_grado_año_anterior !== null)
+                        <?php $no=1; ?>
+                        @foreach($mismo_grado_año_anterior as $key => $g_an)
+                        @php ($asignacion_anterior = $asignaciones->where('id_grado', $g_an->id)->where('anio', $Y3 ))
+                        @foreach($asignacion_anterior as $key => $as_an)
+                        @php ($asignacionAl_anterior = $asignacionAl->where('id_asignacion', $as_an->id))
+                        @foreach($asignacionAl_anterior as $key => $asAl_an)
+                        <tr>
+                           <td>
+                              {{$no++}}
+                           </td>
+                           <td>
+                              {{ $asAl_an->alumno->nombres .' '. $asAl_an->alumno->apellidos  }}
+                           </td>
+                           <td>
+                              {{ $asAl_an->asignaciones->docentes->User->name  }}
+                           </td>
+                           <td>
+                              {{ $asAl_an->asignaciones->Grados->nombre }} {{ $asAl_an->asignaciones->Grados->seccion }}
+                           </td>
+                           <td>
+                              {{ $asAl_an->anio }} 
+                           </td>
+                           <td>
+                              <a class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Detalles" 
+                                 href="{{route('asignacionAlumnosNotas.show',$asAl_an->id)}}">
+                              <i class="glyphicon glyphicon-list-alt"></i></a>
+                              <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar" 
+                                 href="{{route('asignacionAlumnosNotas.edit',$asAl_an->id)}}">
+                              <i class="glyphicon glyphicon-pencil"></i></a>
+                              {!! Form::open(['method' => 'DELETE','route' => ['asignacionAlumnosNotas.destroy', $asAl_an->id],'style'=>'display:inline']) !!}
+                              <button type="submit" data-toggle="tooltip" data-placement="top" title="Eliminar" style="display: inline;" class="btn btn-danger" onclick="return confirm('¿Esta seguro de eliminar este Registro?')"><i class="glyphicon glyphicon-trash" ></i></button>
+                              {!! Form::close() !!}<br>
+                           </td>
+                        </tr>
+                        @endforeach
+                        @endforeach
+                        @endforeach
+                        @endif
+                        @if ($mismo_grado_año_anterior == null)
+                        <tr>
+                           <td>
+                              1
+                           </td>
+                           <td>
+                              No hay alumnos Anteriores
+                           </td>
+                           <td>
+                              No hay Docentes Anteriores
+                           </td>
+                           <td>
+                              No hay Grados Anteriores
+                           </td>
+                           <td>
+                           </td>
+                           <td>
+                           </td>
+                        </tr>
+                        @endif
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="menu2" class="tab-pane fade">
          <table class="table table-striped" style="text-align:center" >
             <tr>
                <th with="80px">No</th>
@@ -120,13 +325,15 @@
             </tr>
             @endforeach
          </table>
+         <h4>Paginacion de Todas las asignaciones</h4>
+         {!!$asignacionAlumnosNotas->render()!!}
       </div>
    </div>
-   {!!$asignacionAlumnosNotas->render()!!}
+   
    <div class="text-center">
-   <a href="{{ url('/gestion') }}" class="btn btn-primary">
-   <i class="glyphicon glyphicon-arrow-left"> CANCELAR</i>
-   </a>
+      <a href="{{ url('/gestion') }}" class="btn btn-primary">
+      <i class="glyphicon glyphicon-arrow-left"> CANCELAR</i>
+      </a>
    </div>
 </div>
 @endsection

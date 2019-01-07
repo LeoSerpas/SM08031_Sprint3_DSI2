@@ -1,13 +1,28 @@
-## Cambios 2/1/2019
-##1-) Validaciones
-- Se han agregado todas las validaciones que crei pertinentes para todas las tablas, excepto la de alumnos ya que se meodificara, agregando atributos extra.
+## Cambios 7/1/2019 02:32 AM
+## Se Han Modificado las asignaciones ambas, Docente-Grado y Alumno-Grado
+##1-) Validaciones en Asignaciones
+- se agregaron validaciones para que solo se puedan ingresar y modificar asignaciones para el año actual.
 
-##2-) Notas
-- Se ha terminado la insercion y detalle de las notas, se ha agregado la insersion de las notas de Conductas y las taclas de detalles, se me habia solicitado solo agregar una tabla resumen, pero dado que ya tenia la tabla del detalle de notas, crei pertimente hacer detalles para cada trimestre asi como la tabla resumen, 
--Referente a la tabla de detalle de Conductas revisar si le parece la presentacion de las mismas o me dice si las pongo de otra forma.
--No he agreagado cambios a alumnos porque no podria probar las notas, cuando termine los alumnos volvere a hacer commit en unos dos dias, (primero Dios).
+##2-) Filtros en tablas
 
-##3-) Base de datos
--Se modifico la base de datos, se agrego otro script adicional al que ya se tenia, denominado: "centroescolar_tablas_vacias.sql" el cual contiene todas las tablas pero sin datos, se recomienda cargar "CentroEscolar2.4.sql" ya que contiene datos, el correo y la pass siguen siendo las mismas Correo:leon_s054@hotmail.com Pass:leonardo
+##3-) Asignacion Docente-Grado
+- Se Filtraron los registros para que solo se muestre asignaciones del año actual en la primera pestaña de la primer tabla, en la segunda muestra todas las asignaciones ordenadas segun el id, o la fecha de ingreso.
+-No se cambio nada en el ingreso ni la modificasion de registros ya que considero qeu asi estan bien, las validacione ys estan echas.
+
+##4-) Asignacion Alumno-Grado
+- Se Filtraron los registros para que solo se muestre asignaciones del año actual en la primera pestaña de la primer tabla.
+- La segunda pestaña es para los aprobados del año y grado anterior, ahun falta filtrarlos ya que no he agregado el atributo de estado academico, pero ya filtra todos los alumnos del año y grado anterior, sin importar la seccion (si tengo asignado noveno en el 2019, se mostraran las asignaciones de alumnos aprobados de octavo del año 2018).
+- La tercera pestaña es para los alumnos reprobados del año anterior pero del mismo grado, (si tengo asignado noveno en el 2019, se mostraran los reprobados de noveno del año 2018) sin importar la seccion.
+- La ultima pestaña muestra todas las asignaciones de Alumno-Grado.
+- Se modifico el ingreso de la asigacion para que solo se pueda para alumnos de Nuevo ingreso, asi evitamos estar buscando al alumno, ya que los alumnos de nuevo ingreso no estaran en el sistema todabia y seran menos, (osea si ingreso un nuevo alumno, me lo listara para asignarlo a mi grado en el año actual)
+- Al editar un registro solo se puede cambiar a lo sumo a la otra seccion, y solo puedo seleccionar a los alumnos que llevan el mismo grado que yo imparto, (si tengo asignado noveno A solo puedo mandarle mis alumnos a Noveno B, y puedo quitarle alumnos a ese mismo grado), las validaciones estan echas, no se puede ingresar un registro repetido. (Estaria mal poder mandar alumnos a otro grado que no fuera el mismo que imparte el docente, como mandar de noveno a primer grado por ejemplo.)
+
+##3-) Cosas que Faltan por modificar
+- Las Notas se deben modificar porque listan a los alumnos del año anterior, no del año actual, aunque las notas ya estan terminadas y funcionan bien, no ingresan para los alumnos del periodo actual año 2019.
+- Agregar un atributo en las asignaciones de alumno-Grado denominado "estado academico" que debe ir calculado desde las notas, que servira para hcer las listas de aprobados y reprobados con la clausula ->where('estado', aprobado), las listas ya estan echas solo falta agregar el filtro extra.
+-Los reportes.
+
+##P.D. Base de datos
+- El correo y la pass siguen siendo las mismas Correo:leon_s054@hotmail.com Pass:leonardo
+-Las pruebas las he hecho con mi usuario, ya que cree docentes para ambas secciones del grado que tengo asignado y cree asignaciones de un grado y año anterior con alumnos.
 -Su usuario es su correo karen.penate@ues.edu.sv y su contraseña es: Disenio123
--Solo tiene asignados dos alumnos, sin notas, puede acceder con mi usuario, el mio si tienen notas (no todas), o puede probar el agregar notas desde su usuario.

@@ -1,12 +1,14 @@
 <?php
 namespace App\Http\Controllers;
-
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\AsignacionAlumnosNotas;
 use App\Asignaciones;
 use App\Alumnos;
 use App\Docentes;
+use Auth;
+use App\Grados;
 use asignacionAlumnosNotas1\http\Request\AsignacionesRequest;
 
 class AsignacionAlumnosNotasController extends Controller
@@ -16,15 +18,91 @@ class AsignacionAlumnosNotasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index(Request $request)
     {
+        $Y= date("Y");
         $asignaciones = Asignaciones::all();
         $alumnos = Alumnos::all();
         $nombre =$request->get('nombre');
         $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
-        $asignacionAlumnosNotas = AsignacionAlumnosNotas::orderBy('id','ASC')->nombre($nombre)->paginate(10);
+        $asi = \Auth::user()->docente;
+        $asignacionAl = AsignacionAlumnosNotas::all();
+        $asignacionAlumnosNotas = AsignacionAlumnosNotas::orderBy('id','desc')->nombre($nombre)->paginate(10);
         $docentes= Docentes::all();
-        return view('asignacionAlumnosNotas.index',compact('asignacionAlumnosNotas','asignaciones','alumnos','asignacion_alumnos','docentes'));
+        $grados = Grados::all();
+
+        //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
+        $asig_docente = $asignaciones->where('id_docente', $asi->id)->where('anio', $Y )->first();
+        if ($asig_docente !== null){
+            $asig_alumno = $asignacionAl->where('id_asignacion', $asig_docente->id);
+            $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
+        }
+        elseif ($asig_docente == null) {
+           $asig_alumno = null;
+           $grado_actual = null;
+        }
+
+        //Para mostrar las asignacione de alumnos del año y grado Anterior de todos los docentes que los impartieron
+
+        if ($grado_actual == null){
+            $grado_anterior=null;
+        }
+        elseif ($grado_actual !== null) {
+        if ($grado_actual->nombre == 'Kinder')
+          $grado_anterior = $grados->where('nombre', 'Kinder');
+        if ($grado_actual->nombre == 'Preparatoria')
+          $grado_anterior = $grados->where('nombre', 'Kinder');
+        if ($grado_actual->nombre == 'Primero')
+          $grado_anterior = $grados->where('nombre', 'Preparatoria');
+        if($grado_actual->nombre == 'Segundo') 
+          $grado_anterior = $grados->where('nombre', 'Primero'); 
+        if($grado_actual->nombre == 'Tercero') 
+          $grado_anterior = $grados->where('nombre', 'Segundo');
+        if($grado_actual->nombre == 'Cuarto') 
+          $grado_anterior = $grados->where('nombre', 'Tercero');
+        if($grado_actual->nombre == 'Quinto') 
+          $grado_anterior = $grados->where('nombre', 'Cuarto');
+        if($grado_actual->nombre == 'Sexto') 
+          $grado_anterior = $grados->where('nombre', 'Quinto');
+        if($grado_actual->nombre == 'Séptimo') 
+          $grado_anterior = $grados->where('nombre', 'Sexto');
+        if($grado_actual->nombre == 'Octavo') 
+          $grado_anterior = $grados->where('nombre', 'Séptimo');
+        if($grado_actual->nombre == 'Noveno') 
+          $grado_anterior = $grados->where('nombre', 'Octavo');
+                  }     
+
+        //Para mostrar las asignacione de alumnos del año Anterior y Grado actual impartido, de todos los docentes que los impartieron    
+        
+        if ($grado_actual == null){
+        $mismo_grado_año_anterior=null;
+        }
+        elseif ($grado_actual !== null) {
+        if ($grado_actual->nombre == 'Kinder')
+          $mismo_grado_año_anterior = $grados->where('nombre', 'Kinder');
+        if ($grado_actual->nombre == 'Preparatoria')
+          $mismo_grado_año_anterior = $grados->where('nombre', 'Preparatoria');
+        if ($grado_actual->nombre == 'Primero')
+          $mismo_grado_año_anterior = $grados->where('nombre', 'Primero');
+        if($grado_actual->nombre == 'Segundo') 
+          $mismo_grado_año_anterior = $grados->where('nombre', 'Segundo'); 
+        if($grado_actual->nombre == 'Tercero') 
+          $mismo_grado_año_anterior = $grados->where('nombre', 'Tercero');
+        if($grado_actual->nombre == 'Cuarto') 
+          $mismo_grado_año_anterior = $grados->where('nombre', 'Cuarto');
+        if($grado_actual->nombre == 'Quinto') 
+          $mismo_grado_año_anterior = $grados->where('nombre', 'Quinto');
+        if($grado_actual->nombre == 'Sexto') 
+          $mismo_grado_año_anterior = $grados->where('nombre', 'Sexto');
+        if($grado_actual->nombre == 'Séptimo') 
+          $mismo_grado_año_anterior = $grados->where('nombre', 'Séptimo');
+        if($grado_actual->nombre == 'Octavo') 
+          $mismo_grado_año_anterior = $grados->where('nombre', 'Octavo');
+        if($grado_actual->nombre == 'Noveno') 
+          $mismo_grado_año_anterior = $grados->where('nombre', 'Noveno');
+                  } 
+        return view('asignacionAlumnosNotas.index',compact('asignacionAlumnosNotas','asignaciones','alumnos','asignacion_alumnos','docentes','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior'));
     }
 
     /**
@@ -35,9 +113,19 @@ class AsignacionAlumnosNotasController extends Controller
     public function create()
     {
         $asignaciones = Asignaciones::all();
-        $alumnos = Alumnos::all();
+        //$alumnos = Alumnos::all();
+         $alumnos = DB::table('alumnos')
+                ->whereNotExists(function ($query)
+                    {
+                        $query->select(DB::raw(1))
+                        ->from('asignacion_alumnos_notas')
+                        ->whereRaw('asignacion_alumnos_notas.id_alumno = alumnos.id');
+                    })
+                    ->get();
+
+        $asig_Alumno_all =AsignacionAlumnosNotas::all();
         $asignacion_alumnos = \Auth::user()->docente->asignacion;
-        return view('asignacionAlumnosNotas.create', compact('asignaciones','alumnos','asignacion_alumnos'));
+        return view('asignacionAlumnosNotas.create', compact('asignaciones','alumnos','asignacion_alumnos','asig_Alumno_all'));
     }
 
     /**
@@ -54,8 +142,7 @@ class AsignacionAlumnosNotasController extends Controller
           'anio'=>'required|numeric',
           ]);
         $asignacionAlumno = AsignacionAlumnosNotas::where('id_alumno', $request->id_alumno)
-        ->where('anio', $request->anio)
-        ->exists(); //true or false
+        ->where('anio', $request->anio)->exists(); //true or false
         if($asignacionAlumno)
         {
           return redirect()->route('asignacionAlumnosNotas.index')
@@ -93,11 +180,30 @@ class AsignacionAlumnosNotasController extends Controller
      */
     public function edit($id)
     {
+        $Y= date("Y");
         $asignaciones = Asignaciones::all();
         $alumnos = Alumnos::all();
         $al = Alumnos::find($id);
         $asignacionAlumnoNota = AsignacionAlumnosNotas::find($id);
-        return view('asignacionAlumnosNotas.edit',compact('asignacionAlumnoNota','asignaciones','alumnos','al'));
+        $asignacionAl = AsignacionAlumnosNotas::all();
+        $asi = \Auth::user()->docente;
+        $docentes= Docentes::all();
+        $grados = Grados::all();
+         //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
+        $asig_docente = $asignaciones->where('id_docente', $asi->id)->where('anio', $Y )->first();
+        if ($asig_docente !== null){
+            $asig_alumno = $asignacionAl->where('id_asignacion', $asig_docente->id);
+            $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
+            $grados_actual = $grados->where('nombre', $grado_actual->nombre);
+        }
+        elseif ($asig_docente == null) {
+           $asig_alumno = null;
+           $grado_actual = null;
+           $grados_actual = null;
+           $AsigDocente_paraCambio = null;
+        }
+
+        return view('asignacionAlumnosNotas.edit',compact('asignacionAlumnoNota','asignaciones','alumnos','al','asi','asig_docente','asig_alumno','grado_actual','Y','grados_actual','asignacionAl'));
     }
 
     /**
@@ -141,7 +247,7 @@ class AsignacionAlumnosNotasController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy($id)
+     public function destroy($id)
     {
         try {
             AsignacionAlumnosNotas::find($id)->delete();

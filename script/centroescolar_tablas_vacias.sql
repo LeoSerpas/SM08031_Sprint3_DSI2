@@ -80,6 +80,7 @@ create table ASIGNACION_ALUMNOS_NOTAS
    id_asignacion        int                            null,
    id_alumno            int                            null,
    anio                 int                            null,
+   estado_academico     char(10)                       null,
    created_at           timestamp,
    updated_at           timestamp,
    constraint PK_ASIGNACION_ALUMNO primary key (id)

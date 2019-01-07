@@ -17,10 +17,12 @@ class Docentes extends Model
   public function user(){
     return $this->belongsTo('App\User', 'id_usuario');
   }
+  
   public function asignacion(){
     return $this->hasOne('App\Asignaciones', 'id_docente');
   }
-    public function AsignacionesAlumnos(){
+  
+  public function AsignacionesAlumnos(){
     return $this->hasOne('App\AsignacionAlumnosNotas', 'id_asignacion');
   }
 
