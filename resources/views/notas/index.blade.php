@@ -4,8 +4,15 @@
    <div class="row">
       <div class ="col-sm-12">
          <div class="full.right">
-            <h2>GESTION DE NOTAS
-            </h2>
+         @if ($grado_actual == null)
+         <h2>Gestion de Asignacion de Notas, año {{$Y}}.</h2>
+         <h3>Usted no tiene Alumno para el año {{$Y}}. </h3>
+         <h3>Inscriba alumnos en el menu asignacion Alumnos-Grado</h3>
+         @endif
+         @if ($grado_actual !== null)
+         <h2>Gestion de Asignacion de Notas, año {{$Y}}, {{$grado_actual->nombre}} {{$grado_actual->seccion}}</h2>
+         <br>
+         @endif
          </div>
          @if ($message = Session::get('success'))
          <div class="alert alert-success">
@@ -113,7 +120,7 @@
                      </tr>
                   </thead>
                   <tbody>
-                     @foreach ($asignacion_alumnos as $key => $asignacion_alumno)
+                     @foreach ($asig_alumno as $key => $asignacion_alumno)
                      <tr>
                         <td>
                            {{ $key+1 }}
@@ -214,7 +221,7 @@
                      </tr>
                   </thead>
                   <tbody>
-                     @foreach ($asignacion_alumnos as $key => $asignacion_alumno)
+                     @foreach ($asig_alumno as $key => $asignacion_alumno)
                      <tr>
                         <td>
                            {{ $key+1 }}
@@ -315,7 +322,7 @@
                      </tr>
                   </thead>
                   <tbody>
-                     @foreach ($asignacion_alumnos as $key => $asignacion_alumno)
+                     @foreach ($asig_alumno as $key => $asignacion_alumno)
                      <tr>
                         <td>
                            {{ $key+1 }}
@@ -400,7 +407,7 @@
                      </tr>
                   </thead>
                   <tbody>
-                     @foreach ($asignacion_alumnos as $key => $asignacion_alumno)
+                     @foreach ($asig_alumno as $key => $asignacion_alumno)
                      <tr>
                         <td>
                            {{ $key+1 }}
@@ -470,7 +477,7 @@
                      </tr>
                   </thead>
                   <tbody>
-                     @foreach ($asignacion_alumnos as $key => $asignacion_alumno)
+                     @foreach ($asig_alumno as $key => $asignacion_alumno)
                      <tr>
                         <td>
                            {{ $key+1 }}

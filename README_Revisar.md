@@ -17,8 +17,12 @@
 - Se modifico el ingreso de la asigacion para que solo se pueda para alumnos de Nuevo ingreso, asi evitamos estar buscando al alumno, ya que los alumnos de nuevo ingreso no estaran en el sistema todabia y seran menos, (osea si ingreso un nuevo alumno, me lo listara para asignarlo a mi grado en el año actual)
 - Al editar un registro solo se puede cambiar a lo sumo a la otra seccion, y solo puedo seleccionar a los alumnos que llevan el mismo grado que yo imparto, (si tengo asignado noveno A solo puedo mandarle mis alumnos a Noveno B, y puedo quitarle alumnos a ese mismo grado), las validaciones estan echas, no se puede ingresar un registro repetido. (Estaria mal poder mandar alumnos a otro grado que no fuera el mismo que imparte el docente, como mandar de noveno a primer grado por ejemplo.)
 
-##3-) Cosas que Faltan por modificar
-- Las Notas se deben modificar porque listan a los alumnos del año anterior, no del año actual, aunque las notas ya estan terminadas y funcionan bien, no ingresan para los alumnos del periodo actual año 2019.
+## Cambios 7/1/2019 22:40 PM
+
+##3-) Las notas
+Las Notas se han modificado para que listen a los alumnos del año Actual. El ingreso de notas y el de Conducta ya esta arreglado tambien.
+
+##Cosas que Faltan por modificar
 - Agregar un atributo en las asignaciones de alumno-Grado denominado "estado academico" que debe ir calculado desde las notas, que servira para hcer las listas de aprobados y reprobados con la clausula ->where('estado', aprobado), las listas ya estan echas solo falta agregar el filtro extra.
 -Los reportes.
 

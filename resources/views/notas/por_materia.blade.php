@@ -28,7 +28,7 @@
             <tr>
               <th with="80px">No</th>
               <th style="text-align:center">Alumno</th>
-              <!-- {{ $asignacion_alumnos}} -->
+              <!-- {{ $asig_alumno}} -->
               <th style="text-align:center">Act. Integradora 1</th>
               <th style="text-align:center">Act. Integradora 2</th>
               <th style="text-align:center">Promedio</th>
@@ -47,7 +47,7 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($asignacion_alumnos as $key => $asignacion_alumno)
+            @foreach ($asig_alumno as $key => $asignacion_alumno)
               <tr>
                 <td>
                   {{ $key+1 }}

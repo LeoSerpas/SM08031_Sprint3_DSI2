@@ -15,6 +15,8 @@ Use App\Alumnos;
 Use App\Trimestre;
 use notas1\http\Request\NotasRequest;
 use App\Conductas;
+use App\Docentes;
+use App\Grados;
 use App\AsignacionConductas;
 
 class NotasController extends Controller
@@ -27,14 +29,32 @@ class NotasController extends Controller
     public function index(Request $request)
     {
         $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
-        $asignaDocente=Asignaciones::all();
         $materias = Materias::all();
         $trimestres = Trimestre::all();
         $asignacionConductas = AsignacionConductas::all();
         $asignacionNotas=AsignacionNotas::all();
         $trimestral =$request->get('trimestral');
         $notas = AsignacionNotas::orderBy('id','ASC')->trimestral($trimestral)->paginate(10);
-        return view('notas.index',compact('notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente','trimestres', 'asignacionConductas'));
+
+        $asignaDocente=Asignaciones::all();
+        $Y= date("Y");
+        $asi = \Auth::user()->docente;
+        $asignacionAl = AsignacionAlumnosNotas::all();
+        $docentes= Docentes::all();
+        $grados = Grados::all();
+
+        //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
+        $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $Y )->first();
+        if ($asig_docente !== null){
+            $asig_alumno = $asignacionAl->where('id_asignacion', $asig_docente->id);
+            $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
+        }
+        elseif ($asig_docente == null) {
+           $asig_alumno = null;
+           $grado_actual = null;
+        }
+
+        return view('notas.index',compact('notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente','trimestres', 'asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y'));
     }
 
     /**
@@ -176,8 +196,25 @@ class NotasController extends Controller
       $materias = Materias::find($id);
       $trimestres = Trimestre::find($trimestre);
       $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
-      
-      return view('notas.por_materia',compact('nota','id','trimestre','trimestres','asignacion_alumnos','materias','asignacionNota'));
+
+      $asignaDocente=Asignaciones::all();
+      $Y= date("Y");
+      $asi = \Auth::user()->docente;
+      $asignacionAl = AsignacionAlumnosNotas::all();
+      $docentes= Docentes::all();
+      $grados = Grados::all();
+
+      //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
+      $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $Y )->first();
+      if ($asig_docente !== null){
+          $asig_alumno = $asignacionAl->where('id_asignacion', $asig_docente->id);
+          $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
+      }
+      elseif ($asig_docente == null) {
+         $asig_alumno = null;
+         $grado_actual = null;
+      }
+      return view('notas.por_materia',compact('nota','id','trimestre','trimestres','asignacion_alumnos','materias','asignacionNota','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y'));
     }
 
     public function bulk(Request $request, $id, $trimestre)
@@ -255,8 +292,26 @@ class NotasController extends Controller
       $trimestres = Trimestre::find($trimestre);
       $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
       $conductas= Conductas::all();
+
+      $asignaDocente=Asignaciones::all();
+      $Y= date("Y");
+      $asi = \Auth::user()->docente;
+      $asignacionAl = AsignacionAlumnosNotas::all();
+      $docentes= Docentes::all();
+      $grados = Grados::all();
+
+      //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
+      $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $Y )->first();
+      if ($asig_docente !== null){
+          $asig_alumno = $asignacionAl->where('id_asignacion', $asig_docente->id);
+          $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
+      }
+      elseif ($asig_docente == null) {
+         $asig_alumno = null;
+         $grado_actual = null;
+      }
       
-      return view('notas.conductas',compact('nota','trimestre','trimestres','asignacion_alumnos','asignacionNota','conductas'));
+      return view('notas.conductas',compact('nota','trimestre','trimestres','asignacion_alumnos','asignacionNota','conductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y'));
     }
 
         public function cond(Request $request, $trimestre)
