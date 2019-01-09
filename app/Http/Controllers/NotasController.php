@@ -28,7 +28,7 @@ class NotasController extends Controller
      */
     public function index(Request $request)
     {
-        $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
+        
         $materias = Materias::all();
         $trimestres = Trimestre::all();
         $asignacionConductas = AsignacionConductas::all();
@@ -195,7 +195,7 @@ class NotasController extends Controller
       $asignacionNota=AsignacionNotas::all();
       $materias = Materias::find($id);
       $trimestres = Trimestre::find($trimestre);
-      $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
+      
 
       $asignaDocente=Asignaciones::all();
       $Y= date("Y");
@@ -231,6 +231,7 @@ class NotasController extends Controller
         );
         $valor = '';
         $valor = AsignacionNotas::updateOrCreate($filter, $inputs);
+
         print_r($valor->id);
         echo "<br>";
         print_r($valor->id_asignacion_alumno);
@@ -290,7 +291,7 @@ class NotasController extends Controller
       Asignaciones::all();
       $asignacionNota=AsignacionNotas::all();
       $trimestres = Trimestre::find($trimestre);
-      $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
+      
       $conductas= Conductas::all();
 
       $asignaDocente=Asignaciones::all();

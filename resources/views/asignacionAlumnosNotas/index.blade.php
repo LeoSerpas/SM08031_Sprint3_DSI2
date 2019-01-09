@@ -10,7 +10,7 @@
          @if ($grado_actual == null)
          <h2>Gestion de Asignacion: Alumno-Grado, año {{$Y}}.</h2>
          <h3>Usted no tiene un grado asignado para el año {{$Y}}. </h3>
-         <h3>Para poder gestionar sus alumnos, solicite un Grado al administrador</h3>
+         <h4>Para poder gestionar sus alumnos, solicite un Grado al administrador</h4>
          @endif
          @if ($grado_actual !== null)
          <h2>Gestion de Asignacion: Alumno-Grado, año {{$Y}}, {{$grado_actual->nombre}} {{$grado_actual->seccion}}</h2>

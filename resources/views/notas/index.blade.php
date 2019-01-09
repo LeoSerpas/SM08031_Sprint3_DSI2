@@ -4,15 +4,23 @@
    <div class="row">
       <div class ="col-sm-12">
          <div class="full.right">
-         @if ($grado_actual == null)
+         @if($grado_actual == null || $asig_alumno == null)
          <h2>Gestion de Asignacion de Notas, año {{$Y}}.</h2>
-         <h3>Usted no tiene Alumno para el año {{$Y}}. </h3>
-         <h3>Inscriba alumnos en el menu asignacion Alumnos-Grado</h3>
          @endif
-         @if ($grado_actual !== null)
+         @if ($grado_actual !== null || $asig_alumno !== null)
          <h2>Gestion de Asignacion de Notas, año {{$Y}}, {{$grado_actual->nombre}} {{$grado_actual->seccion}}</h2>
          <br>
          @endif
+         @if ($grado_actual == null)
+         <h3>Usted no tiene un grado asignado para el año {{$Y}}. </h3>
+         <h4>Para poder gestionar sus alumnos, solicite un Grado al administrador</h4>
+         @endif
+         @if ($asig_alumno !== [])
+         <h3>Usted no tiene Alumnos en su grado para el año {{$Y}}. </h3>
+         <h4>Inscriba alumnos en el menu asignacion Alumnos-Grado</h4>
+         <br>
+         @endif
+
          </div>
          @if ($message = Session::get('success'))
          <div class="alert alert-success">
@@ -43,8 +51,10 @@
                @endforeach
             </select>
             <br>
+            @if ($grado_actual !== null || $asig_alumno !== null)
             <button class="btn btn-success" type="submit" name="button">Ingresar Notas por Materia
             </button>
+            @endif
             <br><br>
          </form>
       </div>
@@ -60,8 +70,10 @@
                @endforeach
             </select>
             <br>
+            @if ($grado_actual !== null || $asig_alumno !== null)
             <button class="btn btn-success" type="submit" name="button">Ingresar Notas de Conducta
             </button>
+            @endif
             <br><br>
          </form>
       </div>
@@ -74,7 +86,8 @@
          <li><a data-toggle="tab" href="#trim_3">Detalle Trimestre 3.</a></li>
          <li><a data-toggle="tab" href="#resumen_conducta">Detalle Conducta.</a></li>
       </ul>
-      <div class="tab-content">
+   @if($asig_alumno !== null)
+   <div class="tab-content">
    <div id="trim_1" class="tab-pane fade"><!-- Tabla para Primer Trimestre -->
       <ul class="nav nav-tabs" role="tablist">
          @php($indice = 0)
@@ -389,6 +402,13 @@
       <div class="tab-content">
          @php($indice = 0)
          @foreach ($materias as $ids => $materia)
+         @foreach ($asig_alumno as $key => $asignacion_alumno)
+         @foreach ($asignacionNotas as $key => $asignacionNota)
+          @php ($notasAsignada1 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 1 )->first())
+         @endforeach
+         @endforeach
+         @endforeach
+         @foreach ($materias as $ids => $materia)
          <div role="tabpanel" class="tab-pane {{ $indice === 0 ? 'active' : ''}}" id="mat_{{ $materia->id }}">
             <div class="table-responsive ">
                <table class="table table-striped" id= "{{ $materia->nombre }}" style="text-align:center" >
@@ -424,9 +444,7 @@
                            {{ $asignacion_alumno->alumno->nombres .' '. $asignacion_alumno->alumno->apellidos  }}
                         </td>
                         <td>
-                           
                            {{ is_null($notasAsignada1) ? '0' : $notasAsignada1->nota_trimestral }}
-                           
                         </td>
                         <td>
                            {{ is_null($notasAsignada2) ? '0' : $notasAsignada2->nota_trimestral }}
@@ -523,13 +541,15 @@
             </div>
          </div>
       </div>
-</div> 
+</div>
+@endif
 </div>  
 </div>
 
 <div class="text-center">
+   <br>
    <a href="{{ url('/gestion') }}" class="btn btn-primary">
-   <i class="glyphicon glyphicon-arrow-left"> CANCELAR</i>
+   <i class="glyphicon glyphicon-arrow-left"> Cancelar</i>
    </a>
 </div>
 <script >

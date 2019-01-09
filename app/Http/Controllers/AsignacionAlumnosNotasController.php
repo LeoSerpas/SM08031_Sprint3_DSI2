@@ -25,7 +25,6 @@ class AsignacionAlumnosNotasController extends Controller
         $asignaciones = Asignaciones::all();
         $alumnos = Alumnos::all();
         $nombre =$request->get('nombre');
-        $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
         $asi = \Auth::user()->docente;
         $asignacionAl = AsignacionAlumnosNotas::all();
         $asignacionAlumnosNotas = AsignacionAlumnosNotas::orderBy('id','desc')->nombre($nombre)->paginate(10);
