@@ -39,6 +39,12 @@ Route::resource('asignacionAlumnosNotas','AsignacionAlumnosNotasController');
 
 Route::resource('asignaciones','AsignacionesController');
 Route::resource('asignacionNotas','asignacionNotasController');
+
+Route::get('asignacionAlumnosNotas/aprobar/reprobar', 'AsignacionAlumnosNotasController@apro_repro' )->name('asignacionAlumnosNotas.aprobar_reprobar');
+Route::post('asignacionAlumnosNotas/aprobar/reprobar', 'AsignacionAlumnosNotasController@calc_aprobacion' )->name('asignacionAlumnosNotas.calc_aprobacion');
+
+Route::get('asignacionAlumnosNotas/reasignar/{id}', 'AsignacionAlumnosNotasController@reasig' )->name('asignacionAlumnosNotas.reasignar');
+
 Route::get('gestion', function()
 	{
     return view('gestion');

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AsignacionAlumnosNotas extends Model
 {
-    protected $fillable = ['id_asignacion','id_alumno','id_asignacion_alumno','id_materia','id_grado','anio'];
+    protected $fillable = ['id_asignacion','id_alumno','id_asignacion_alumno','id_materia','id_grado','anio','estado_academico'];
     protected $dates = ['created_at','updated_at'];
 
     public function scopeNombre($query, $id_alumno)

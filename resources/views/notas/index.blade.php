@@ -15,7 +15,7 @@
          <h3>Usted no tiene un grado asignado para el año {{$Y}}. </h3>
          <h4>Para poder gestionar sus alumnos, solicite un Grado al administrador</h4>
          @endif
-         @if ($asig_alumno !== [])
+         @if ($asig_alumno == [])
          <h3>Usted no tiene Alumnos en su grado para el año {{$Y}}. </h3>
          <h4>Inscriba alumnos en el menu asignacion Alumnos-Grado</h4>
          <br>
@@ -33,7 +33,7 @@
    <div class ="col-sm-12">
       <div class ="col-sm-5"><!-- Boton de seleccion de materia y Trimestre -->
          <form class="select_materia_trimestre">
-            <h4>Seleccione la Materia y el Trimestre a Ingresar Notas</h4>
+            <h4>Seleccione Materia y Trimestre e Ingrese Notas</h4>
             <select required name="id_materia" id='id_materia' class="form-control">
                <option disabled selected>Seleccione la materia
                </option>
@@ -44,7 +44,7 @@
             </select>
             <br>
             <select required name="trimestre" id='trimestre' class="form-control">
-               <option disabled selected>Seleccione el Trimestre del año </option>
+               <option disabled selected>Seleccione el Trimestre del año {{$Y}} </option>
                @foreach($trimestres as $trimestre)
                <option value="{{$trimestre->id}}">{{$trimestre->nombre}}
                </option>
@@ -58,12 +58,11 @@
             <br><br>
          </form>
       </div>
-      <div class ="col-sm-1"></div>
       <div class ="col-sm-5"><!-- Boton de seleccion de Trimestre para Conductas-->
          <form class="select_conducta_trimestre">
             <h4>Seleccione Trimestre a ingresar Notas de Conducta</h4>
             <select required name="trim" id='trim' class="form-control">
-               <option disabled selected>Seleccione el Trimestre del año </option>
+               <option disabled selected>Seleccione el Trimestre del año {{$Y}}</option>
                @foreach($trimestres as $trimestre)
                <option value="{{$trimestre->id}}">{{$trimestre->nombre}}
                </option>
@@ -78,6 +77,7 @@
          </form>
       </div>
    </div>
+
    <H4>Seleccione una Materia para consultar las Notas de los Alumnos</H4>
       <ul class="nav nav-tabs">
          <li class="active"><a data-toggle="tab" href="#resumen">Promedios</a></li>

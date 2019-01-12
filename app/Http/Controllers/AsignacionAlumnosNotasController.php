@@ -9,6 +9,9 @@ use App\Alumnos;
 use App\Docentes;
 use Auth;
 use App\Grados;
+use App\Materias;
+use App\AsignacionNotas;
+use App\Trimestre;
 use asignacionAlumnosNotas1\http\Request\AsignacionesRequest;
 
 class AsignacionAlumnosNotasController extends Controller
@@ -113,7 +116,7 @@ class AsignacionAlumnosNotasController extends Controller
     {
         $asignaciones = Asignaciones::all();
         //$alumnos = Alumnos::all();
-         $alumnos = DB::table('alumnos')
+        $alumnos = DB::table('alumnos')
                 ->whereNotExists(function ($query)
                     {
                         $query->select(DB::raw(1))
@@ -168,6 +171,7 @@ class AsignacionAlumnosNotasController extends Controller
     public function show($id)
     {
         $asignacionAlumnoNota = AsignacionAlumnosNotas::find($id);
+        
       return view('asignacionAlumnosNotas.show',compact('asignacionAlumnoNota'));
     }
 
@@ -203,6 +207,17 @@ class AsignacionAlumnosNotasController extends Controller
         }
 
         return view('asignacionAlumnosNotas.edit',compact('asignacionAlumnoNota','asignaciones','alumnos','al','asi','asig_docente','asig_alumno','grado_actual','Y','grados_actual','asignacionAl'));
+    }
+
+    public function reasig($id)
+    {
+      $asignacionAlumnoNota = AsignacionAlumnosNotas::find($id);
+      $asig_Alumno_all =AsignacionAlumnosNotas::all();
+      $asignacion_alumnos = \Auth::user()->docente->asignacion;
+      $asignaciones = Asignaciones::all();
+      $alumnos = Alumnos::all();
+        
+      return view('asignacionAlumnosNotas.reasignar',compact('asignacionAlumnoNota','asig_Alumno_all','asignacion_alumnos','asignaciones','alumnos'));
     }
 
     /**
@@ -245,6 +260,46 @@ class AsignacionAlumnosNotasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+         public function apro_repro(Request $request)
+    {
+        $materias = Materias::all();
+        $trimestres = Trimestre::all();
+        $asignacionNotas=AsignacionNotas::all();
+        $trimestral =$request->get('trimestral');
+        $notas = AsignacionNotas::orderBy('id','ASC')->trimestral($trimestral)->paginate(10);
+
+        $asignaDocente=Asignaciones::all();
+        $Y= date("Y");
+        $asi = \Auth::user()->docente;
+        $asignacionAl = AsignacionAlumnosNotas::all();
+        $docentes= Docentes::all();
+        $grados = Grados::all();
+
+        //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
+        $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $Y )->first();
+        if ($asig_docente !== null){
+            $asig_alumno = $asignacionAl->where('id_asignacion', $asig_docente->id);
+            $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
+        }
+        elseif ($asig_docente == null) {
+           $asig_alumno = null;
+           $grado_actual = null;
+        }
+
+        return view('asignacionAlumnosNotas.aprobar_reprobar',compact('notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente','trimestres','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y'));
+    }
+
+         public function calc_aprobacion(Request $request)
+    {
+        try {
+            AsignacionAlumnosNotas::find($id)->delete();
+            return redirect()->route('asignacionAlumnosNotas.index')->with('success','Asignacion eliminada con exito');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('asignacionAlumnosNotas.index')
+            ->with('error','¡ERROR! La asignación Contiene notas asignadas, no se puede borrar!!');
+        }  
+    }
 
      public function destroy($id)
     {

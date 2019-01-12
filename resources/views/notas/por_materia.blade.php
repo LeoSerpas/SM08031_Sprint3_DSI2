@@ -63,14 +63,12 @@
                 </td>
                 <td>
                   <input  required type="number" min="0" max="10" step="0.01" id="t1" value="{{ is_null($notasAsignada) ? '0' : $notasAsignada->ActividadIntegradora->first()->activi_1  }}" onchange="Calcular({{ $key }})" class="t1 {{$key}}_t1 form-control required" name="notas[integradora][{{ $key  }}][activi_1]">
-
                 </td>
                 <td>
                   <input  required type="number" min="0" max="10" step="0.01" id="t2" value="{{ is_null($notasAsignada) ? '0' : $notasAsignada->ActividadIntegradora->first()->activi_2  }}" onchange="Calcular({{ $key }})" class="t2 {{$key}}_t2 form-control required" name="notas[integradora][{{ $key  }}][activi_2]">
                 </td>
                 <td>
                   <input  required readonly="readonly" type="number" min="0" max="10" step="0.01" id="promedio" value="{{ is_null($notasAsignada) ? '0' : $notasAsignada->ActividadIntegradora->first()->promedio_i }}" onchange="Calcular({{ $key }})" class="prom {{$key}}_prom form-control required" name="notas[integradora][{{ $key  }}][promedio_i]">
-
                 </td>
                 <td>
                   <input  required readonly="readonly" type="number" min="0" max="10" step="0.01" value="{{ is_null($notasAsignada) ? '0' : $notasAsignada->ActividadIntegradora->first()->prom_i_porcent  }}" onchange="Calcular_Prom({{ $key }})" class="prom_porcent {{$key}}_prom_porcent form-control required" name="notas[integradora][{{ $key  }}][prom_i_porcent]">
@@ -108,7 +106,7 @@
       <br>
       
   <div class="text-center">
-    @if ($asig_alumno == null)
+    @if ($asig_alumno !== null)
     <button class="btn btn-success" type="submit" name="button">Guardar Notas</button>
     @endif
     <a class="btn btn-primary" href="{{ route('notas.index') }}"> <i class="glyphicon glyphicon-arrow-left"> Regresar</i></a>
@@ -163,8 +161,8 @@
  var p4 = (parseFloat(vr1)+parseFloat(vr2))+parseFloat(vr3);
  console.log(p4)
  $(`.${idx}_prom_trimestral`).val( p4.toFixed(2) );
-
  }
+ 
  jQuery.extend(jQuery.validator.messages, {
     required: "Este campo es requerido",
     max: jQuery.validator.format("Por favor ingrese un valor menor o igual a {0}."),

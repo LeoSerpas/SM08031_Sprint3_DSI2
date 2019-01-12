@@ -67,7 +67,7 @@
 </div>
 <br>
 <div class="text-center">
-   @if ($asig_alumno == null)
+   @if ($asig_alumno !== null)
    <button class="btn btn-success" type="submit" name="button">Guardar conductas</button>
    @endif
    <a class="btn btn-primary" href="{{ route('notas.index') }}"> <i class="glyphicon glyphicon-arrow-left"> Regresar</i></a>

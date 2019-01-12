@@ -30,18 +30,30 @@
 </div>
 @endif
 <div>
+   <div class="container col-sm-12">
+   <div class="container col-sm-3">
    @if ($asig_alumno !== null)
    <a href="{{route('asignacionAlumnosNotas.create')}}" class="btn btn-success">
    <i class="glyphicon glyphicon-plus"> Asignacn. Alumnos Nuevos</i>
-   </a>
-   @endif
+   </a><br><br>
+   @endif   
+</div>
+   <div class ="col-sm-3 inline">         
+      <form class="calc_apro_repro">
+         @if ($grado_actual !== null || $asig_alumno !== null)
+         <button class="btn btn-primary" type="submit" name="button">Calcular Aprobados
+         </button>
+         @endif
+         <br><br>
+      </form>
+   </div>
    {!! Form::open(['route'=>'asignacionAlumnosNotas.index', 'method'=>'GET', 'class'=>'navbar-form pull-right', 'role'=>'search'])!!}
    <div class="input-group"> 
       {!! Form::text('nombre', null, ['class'=>'form-control', 'placeholder'=>'Buscar'])!!}
    </div>
    <button type="submit" class="glyphicon glyphicon-search btn-sm" data-toggle="tooltip" data-placement="top" title="Buscar"></button>
    {!! Form::close()!!}
-   <br><br>
+   </div>
    <h4>Seleccione la pestaña adecuada para gestionar las asignaciones de alumnos.</h4>
 </div>
 <br>
@@ -53,8 +65,8 @@
       @if($grado_actual !== null)
       <li class="active"><a data-toggle="tab" href="#home">Mis Asigns. Año {{$Y}} {{$grado_actual->nombre}} {{$grado_actual->seccion}}</a></li>
       @endif
-      <li><a data-toggle="tab" href="#menu">Reasignaciones alumnos Aprobados</a></li>
-      <li><a data-toggle="tab" href="#menu1">Reasignaciones alumnos Reprobados</a></li>
+      <li><a data-toggle="tab" href="#menu">Reasignaciones Aprobados {{$Y3}}</a></li>
+      <li><a data-toggle="tab" href="#menu1">Reasignaciones Reprobados {{$Y3}}</a></li>
       <li><a data-toggle="tab" href="#menu2">Todas las Asignaciones.</a></li>
    </ul>
    <div class="tab-content">
@@ -70,6 +82,7 @@
                            <th style="text-align:center">Docente</th>
                            <th style="text-align:center">Grado</th>
                            <th style="text-align:center">Año</th>
+                           <th style="text-align:center">Estado academico {{$Y}}</th>
                            <th style="text-align:center">Acciones</th>
                         </tr>
                      </thead>
@@ -92,6 +105,9 @@
                            </td>
                            <td>
                               {{ $asignacion_alumno->anio }} 
+                           </td>
+                           <td>
+                              {{ $asignacion_alumno->estado_academico }} 
                            </td>
                            <td>
                               <a class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Detalles" 
@@ -145,6 +161,7 @@
                            <th style="text-align:center">Docente</th>
                            <th style="text-align:center">Grado</th>
                            <th style="text-align:center">Año</th>
+                           <th style="text-align:center">Estado academico {{$Y3}}</th>
                            <th style="text-align:center">Acciones</th>
                         </tr>
                      </thead>
@@ -154,7 +171,7 @@
                         @foreach($grado_anterior as $key => $g_an)
                         @php ($asignacion_anterior = $asignaciones->where('id_grado', $g_an->id)->where('anio', $Y3 ))
                         @foreach($asignacion_anterior as $key => $as_an)
-                        @php ($asignacionAl_anterior = $asignacionAl->where('id_asignacion', $as_an->id))
+                        @php ($asignacionAl_anterior = $asignacionAl->where('id_asignacion', $as_an->id)->where('estado_academico', 'Aprobado'))
                         @foreach($asignacionAl_anterior as $key => $asAl_an)
                         <tr>
                            <td>
@@ -173,15 +190,16 @@
                               {{ $asAl_an->anio }} 
                            </td>
                            <td>
+                              {{ $asAl_an->estado_academico }} 
+                           </td>
+                           <td>
                               <a class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Detalles" 
                                  href="{{route('asignacionAlumnosNotas.show',$asAl_an->id)}}">
                               <i class="glyphicon glyphicon-list-alt"></i></a>
-                              <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar" 
-                                 href="{{route('asignacionAlumnosNotas.edit',$asAl_an->id)}}">
-                              <i class="glyphicon glyphicon-pencil"></i></a>
-                              {!! Form::open(['method' => 'DELETE','route' => ['asignacionAlumnosNotas.destroy', $asAl_an->id],'style'=>'display:inline']) !!}
-                              <button type="submit" data-toggle="tooltip" data-placement="top" title="Eliminar" style="display: inline;" class="btn btn-danger" onclick="return confirm('¿Esta seguro de eliminar este Registro?')"><i class="glyphicon glyphicon-trash" ></i></button>
-                              {!! Form::close() !!}<br>
+                              {!! Form::open(['method' => 'GET','route' => ['asignacionAlumnosNotas.reasignar', $asAl_an->id],'style'=>'display:inline']) !!}
+                              <button type="submit" data-toggle="tooltip" data-placement="top" title="Re-Inscribir" style="display: inline;" class="btn btn-primary"><i class="glyphicon glyphicon-repeat" ></i></button>
+                              {!! Form::close() !!}                             
+                              <br>
                            </td>
                         </tr>
                         @endforeach
@@ -226,6 +244,7 @@
                            <th style="text-align:center">Docente</th>
                            <th style="text-align:center">Grado</th>
                            <th style="text-align:center">Año</th>
+                           <th style="text-align:center">Estado academico {{$Y3}}</th>
                            <th style="text-align:center">Acciones</th>
                         </tr>
                      </thead>
@@ -235,7 +254,7 @@
                         @foreach($mismo_grado_año_anterior as $key => $g_an)
                         @php ($asignacion_anterior = $asignaciones->where('id_grado', $g_an->id)->where('anio', $Y3 ))
                         @foreach($asignacion_anterior as $key => $as_an)
-                        @php ($asignacionAl_anterior = $asignacionAl->where('id_asignacion', $as_an->id))
+                        @php ($asignacionAl_anterior = $asignacionAl->where('id_asignacion', $as_an->id)->where('estado_academico', 'Reprobado'))
                         @foreach($asignacionAl_anterior as $key => $asAl_an)
                         <tr>
                            <td>
@@ -254,15 +273,17 @@
                               {{ $asAl_an->anio }} 
                            </td>
                            <td>
+                              {{ $asAl_an->estado_academico }} 
+                           </td>
+                           <td>
                               <a class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Detalles" 
                                  href="{{route('asignacionAlumnosNotas.show',$asAl_an->id)}}">
                               <i class="glyphicon glyphicon-list-alt"></i></a>
-                              <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar" 
-                                 href="{{route('asignacionAlumnosNotas.edit',$asAl_an->id)}}">
-                              <i class="glyphicon glyphicon-pencil"></i></a>
-                              {!! Form::open(['method' => 'DELETE','route' => ['asignacionAlumnosNotas.destroy', $asAl_an->id],'style'=>'display:inline']) !!}
-                              <button type="submit" data-toggle="tooltip" data-placement="top" title="Eliminar" style="display: inline;" class="btn btn-danger" onclick="return confirm('¿Esta seguro de eliminar este Registro?')"><i class="glyphicon glyphicon-trash" ></i></button>
-                              {!! Form::close() !!}<br>
+
+                              {!! Form::open(['method' => 'GET','route' => ['asignacionAlumnosNotas.reasignar', $asAl_an->id],'style'=>'display:inline']) !!}
+                              <button type="submit" data-toggle="tooltip" data-placement="top" title="Re-Inscribir" style="display: inline;" class="btn btn-primary"><i class="glyphicon glyphicon-repeat" ></i></button>
+                              {!! Form::close() !!}
+                              <br>
                            </td>
                         </tr>
                         @endforeach
@@ -312,7 +333,10 @@
                <td>{{ $value->Alumnos->nombres }} {{ $value->Alumnos->apellidos }}<br></td>
                <td>{{$value->Asignaciones->Grados->nombre }} {{ $value->Asignaciones->Grados->seccion }}</td>
                <td>{{$value->Asignaciones->Docentes->User->name }}</td>
-               <td>{{ $value->anio }}<br></td>
+               <td>{{$value->anio}}<br></td>
+               <td>
+                  {{$value->estado_academico}} 
+               </td>
                <td>
                   <a class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Detalles" href="{{route('asignacionAlumnosNotas.show',$value->id)}}">
                   <i class="glyphicon glyphicon-list-alt"></i></a>
@@ -336,4 +360,15 @@
       </a>
    </div>
 </div>
+<script >
+   $('.calc_apro_repro').submit(function( event ) {
+     event.preventDefault();
+       window.location.href = "/asignacionAlumnosNotas/aprobar/reprobar";
+   }
+                            );
+    $('.calc_apro_repro').validate()
+   jQuery.extend(jQuery.validator.messages, {
+    required: "Este campo es requerido"
+   });
+</script>
 @endsection
