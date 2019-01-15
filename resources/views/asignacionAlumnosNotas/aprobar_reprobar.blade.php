@@ -60,13 +60,6 @@
       <div class="tab-content">
          @php($indice = 0)
          @foreach ($materias as $ids => $materia)
-         @foreach ($asig_alumno as $key => $asignacion_alumno)
-         @foreach ($asignacionNotas as $key => $asignacionNota)
-          @php ($notasAsignada1 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 1 )->first())
-         @endforeach
-         @endforeach
-         @endforeach
-         @foreach ($materias as $ids => $materia)
          <div role="tabpanel" class="tab-pane {{ $indice === 0 ? 'active' : ''}}" id="mat_{{ $materia->id }}">
             {!! Form::open(['method' => 'asignacionAlumnosNotas.calc_aprobacion', 'method'=>'POST', 'id', 'trimestre' => 'notasForm'])!!}
             <div class="table-responsive ">
@@ -95,13 +88,14 @@
                            {{ $key+1 }}
                         </td>
                         <td>
-                           @foreach ($asignacionNotas as $key => $asignacionNota)
-                           <input  required type="hidden" name="notas[asignacion][{{ $key  }}][id_materia]" value="{{ $materia->id }}">
-                           <input  required type="hidden" name="notas[asignacion][{{ $key  }}][id_materia]" value="{{ $ids }}">
+                           @foreach ($asignacionNotas as $key2 => $asignacionNota)
+                           <input  required type="hidden" name="notas[asignacion][{{ $key2  }}][id_materia]" value="{{ $materia->id }}">
+                           <input  required type="hidden" name="notas[asignacion][{{ $key2  }}][id_materia]" value="{{ $ids }}">
                            @endforeach
                            @php ($notasAsignada1 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 1 )->first())
                            @php ($notasAsignada2 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 2 )->first())
                            @php ($notasAsignada3 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 3 )->first())
+                           @php ($notasAsignada4 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 4 )->first())
                            
                            {{ $asignacion_alumno->alumno->nombres .' '. $asignacion_alumno->alumno->apellidos  }}
                         </td>
@@ -113,10 +107,11 @@
                            <input  required readonly="readonly" type="number" min="0" max="10" step="0.01" value="{{ is_null($notasAsignada2) ? '0' : $notasAsignada2->nota_trimestral }}" onchange="Calcular_Prom({{ $key }})" class="coti_porcent {{$key}}_coti_porcent form-control required" name="notas[cotidiana][{{ $key  }}][nota_porcent]">
                         </td>
                         <td>
-                        <input  required  type="number" min="0" max="10" step="0.01" value="{{ is_null($notasAsignada3) ? '0' : $notasAsignada3->nota_trimestral }}" onchange="Calcular_Prom({{ $key }})" class="prueba_porcent {{$key}}_prueba_porcent form-control required" name="notas[pruebas][{{ $key  }}][prom_p_porcent]">
+                        <input  required  readonly="readonly" type="number" min="0" max="10" step="0.01" value="{{ is_null($notasAsignada3) ? '0' : $notasAsignada3->nota_trimestral }}" onchange="Calcular_Prom({{ $key }})" class="prueba_porcent {{$key}}_prueba_porcent form-control required" name="notas[pruebas][{{ $key  }}][prom_p_porcent]">
                       </td>
                       <td>
-                        <input  required readonly="readonly" type="number" min="0" max="10" step="0.01" value="{{ is_null($notasAsignada3) ? '0' : $notasAsignada3->nota_trimestral }}" class="prom_trimestral {{$key}}_prom_trimestral form-control required" name="notas[asignacion][{{ $key  }}][nota_trimestral]">
+                        {{-- {{$asignacion_alumno}} --}}
+                        <input  required  readonly="readonly" type="number" min="0" max="10" step="0.01" value="{{ is_null($notasAsignada4) ? '0' : $notasAsignada4->nota_trimestral }}" onchange="Calcular_Prom({{ $key }})" class="prueba_porcent {{$key}}_prueba_porcent form-control required" name="notas[pruebas][{{ $key  }}][prom_p_porcent]">
                       </td>           
                      </tr>
                      @endforeach

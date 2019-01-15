@@ -22,7 +22,7 @@
             <div class="col-sm-8">
                <div class="form-group">
                   <i>
-                     <select name="id_asignacion" class="form-control">
+                     <select name="id_asignacion" class="form-control" readonly="readonly">
                         <option value="{{$asig_docente->id}}">{{$asig_docente->id}}. {{$asig_docente->docentes->User->name}} - {{$asig_docente->grados->nombre}} {{$asig_docente->grados->seccion}} - {{$asig_docente->anio}}</option>
                      </select>
                   </i>
@@ -36,8 +36,22 @@
             <div class="col-sm-8">
                <div class="form-group">
                   <i>
-                     <select name="id_alumno" class="form-control">
+                     <select name="id_alumno" class="form-control" readonly="readonly">
                         <option selected value="{{$asignacionAlumnoNota->alumno->id}}">{{$asignacionAlumnoNota->alumno->id}}. {{$asignacionAlumnoNota->alumno->nombres}} {{$asignacionAlumnoNota->alumno->apellidos}}</option>
+                     </select>
+                  </i>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-sm-4">
+               {!! form::label('Estado Academico') !!}
+            </div>
+            <div class="col-sm-5">
+               <div class="form-group">
+                  <i>
+                     <select name="estado_academico" class="form-control" readonly="readonly">
+                        <option selected value="En curso">En curso</option>
                      </select>
                   </i>
                </div>
@@ -50,7 +64,7 @@
             <div class="col-sm-5">
                <div class="form-group">
                   <i>
-                     <select name="anio" class="form-control">
+                     <select name="anio" class="form-control" readonly="readonly">
                         <option selected value="<?php echo date("Y");?>"><?php echo date("Y");?></option>
                         <!-- <option value="<?php echo $Y2;?>"><?php echo $Y2;?></option> ?-->
                      </select>

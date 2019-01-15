@@ -261,44 +261,74 @@ class AsignacionAlumnosNotasController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-         public function apro_repro(Request $request)
+    public function apro_repro(Request $request)
     {
-        $materias = Materias::all();
-        $trimestres = Trimestre::all();
-        $asignacionNotas=AsignacionNotas::all();
-        $trimestral =$request->get('trimestral');
-        $notas = AsignacionNotas::orderBy('id','ASC')->trimestral($trimestral)->paginate(10);
+      $materias = Materias::all();
+      $trimestres = Trimestre::all();
+      $asignacionNotas=AsignacionNotas::all();
+      $trimestral =$request->get('trimestral');
+      $notas = AsignacionNotas::orderBy('id','ASC')->trimestral($trimestral)->paginate(10);
 
-        $asignaDocente=Asignaciones::all();
-        $Y= date("Y");
-        $asi = \Auth::user()->docente;
-        $asignacionAl = AsignacionAlumnosNotas::all();
-        $docentes= Docentes::all();
-        $grados = Grados::all();
+      $asignaDocente=Asignaciones::all();
+      $Y= date("Y");
+      $asi = \Auth::user()->docente;
+      $asignacionAl = AsignacionAlumnosNotas::all();
+      $docentes= Docentes::all();
+      $grados = Grados::all();
 
-        //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
-        $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $Y )->first();
-        if ($asig_docente !== null){
-            $asig_alumno = $asignacionAl->where('id_asignacion', $asig_docente->id);
-            $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
+      //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
+      $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $Y )->first();
+      if ($asig_docente !== null){
+          $asig_alumno = $asignacionAl->where('id_asignacion', $asig_docente->id);
+          $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
+      }
+      elseif ($asig_docente == null) {
+         $asig_alumno = null;
+         $grado_actual = null;
+      }
+      foreach ($materias as $ids => $materia){
+        foreach ($asig_alumno as $key => $asignacion_alumno) {
+          $notasAsignada1 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 1 )->first();
+          $notasAsignada2 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 2 )->first();
+          $notasAsignada3 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 3 )->first();
+          $notasAsignada1 = is_null($notasAsignada1) ? '0' : $notasAsignada1->nota_trimestral;
+          $notasAsignada2 = is_null($notasAsignada2) ? '0' : $notasAsignada2->nota_trimestral;
+          $notasAsignada3 = is_null($notasAsignada3) ? '0' : $notasAsignada3->nota_trimestral;
+          $notasAsignada4 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 4 )->first();
+          
+          $prom = round(($notasAsignada1 + $notasAsignada2 + $notasAsignada3)/3, 2);
+          if (is_null($notasAsignada4) ) {
+            AsignacionNotas::create([  
+              'id_materia' => $materia->id,
+              'id_asignacion_alumno' => $asignacion_alumno->id,
+              'id_trimestre' => 4,
+              'nota_trimestral' => $prom,
+            ]);   
+          }
+          else{
+            $notasAsignada4->update(['nota_trimestral'=> $prom]);
+          }
+          //$estado = "Reprobado";
+          //if ($prom >=6) {
+          //  $estado = 'Aprobado';
+          //}
+          //$asignacion_alumno->update(['estado_academico' => $estado] );
         }
-        elseif ($asig_docente == null) {
-           $asig_alumno = null;
-           $grado_actual = null;
-        }
-
-        return view('asignacionAlumnosNotas.aprobar_reprobar',compact('notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente','trimestres','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y'));
-    }
-
-         public function calc_aprobacion(Request $request)
-    {
-        try {
-            AsignacionAlumnosNotas::find($id)->delete();
-            return redirect()->route('asignacionAlumnosNotas.index')->with('success','Asignacion eliminada con exito');
-        } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('asignacionAlumnosNotas.index')
-            ->with('error','¡ERROR! La asignación Contiene notas asignadas, no se puede borrar!!');
-        }  
+      }
+      foreach ($asig_alumno as $key => $asignacion_alumno){
+        $trimestre_promedio = $asignacion_alumno->AsignacionNotas->where('id_trimestre', 4);
+        $nota_prom = 0;
+        //$total_materias = count($trimestre_promedio);
+        $estado = "Aprobado";
+        foreach ($trimestre_promedio as $key => $value) {
+          $nota_prom = $value->nota_trimestral;
+          if ($nota_prom  <= 6) {
+            $estado = 'Reprobado';
+          }
+          $asignacion_alumno->update(['estado_academico' => $estado] );
+        }          
+      }
+      return redirect()->route('asignacionAlumnosNotas.index')->with('success','Cambio de estado academico: Aprobado/Reprobado Realizado Exitosamente');
     }
 
      public function destroy($id)

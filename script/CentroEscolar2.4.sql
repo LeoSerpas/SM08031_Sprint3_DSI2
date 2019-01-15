@@ -564,7 +564,8 @@ CREATE TABLE IF NOT EXISTS `trimestres` (
 INSERT INTO `trimestres` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
   (1, 'Primer', '2018-12-11 01:53:59', '2018-12-11 01:53:59'),
   (2, 'Segundo', '2018-12-11 01:54:05', '2018-12-11 01:54:05'),
-  (3, 'Tercer', '2018-12-11 01:54:15', '2018-12-11 01:54:15');
+  (3, 'Tercer', '2018-12-11 01:54:05', '2018-12-11 01:54:05'),
+  (4, 'Cuarto', '2018-12-11 01:54:45', '2018-12-11 01:54:45');
 /*!40000 ALTER TABLE `trimestres` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.users

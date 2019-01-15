@@ -34,7 +34,7 @@
    <div class="container col-sm-3">
    @if ($asig_alumno !== null)
    <a href="{{route('asignacionAlumnosNotas.create')}}" class="btn btn-success">
-   <i class="glyphicon glyphicon-plus"> Asignacn. Alumnos Nuevos</i>
+   <i class="glyphicon glyphicon-plus"> Asignacn. Nuevo Ingreso</i>
    </a><br><br>
    @endif   
 </div>
@@ -366,9 +366,5 @@
        window.location.href = "/asignacionAlumnosNotas/aprobar/reprobar";
    }
                             );
-    $('.calc_apro_repro').validate()
-   jQuery.extend(jQuery.validator.messages, {
-    required: "Este campo es requerido"
-   });
 </script>
 @endsection

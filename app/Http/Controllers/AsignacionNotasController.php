@@ -8,10 +8,15 @@ use App\Pruebas;
 use App\Conducta;
 use App\AsignacionNotas;
 use App\Materias;
+use App\Asignaciones;
+use App\Alumnos;
+use App\AsignacionAlumnosNotas;
 use asignacionNotas1\http\Request\AsignacionNotasRequest;
-use App\Conducta;
 use App\AsignacionConductas;
-
+use App\Grados;
+use App\Docentes;
+use App\Conductas;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class AsignacionNotasController extends Controller
 {
@@ -22,13 +27,27 @@ class AsignacionNotasController extends Controller
      */
     public function index(Request $request)
     {
-        $integradora = ActIntegradoras::all();
-        $cotidiana = ActCotidianas::all();
-        $prueba = Pruebas::all();
+        $Y= date("Y");
+        $asignaciones = Asignaciones::all();
+        $alumnos = Alumnos::all();
+        $nombre =$request->get('nombre');
+        $asi = \Auth::user()->docente;
+        $asignacionAl = AsignacionAlumnosNotas::all();
+        $asignacionAlumnosNotas = AsignacionAlumnosNotas::orderBy('id','desc')->nombre($nombre)->paginate(10);
         $materias = Materias::all();
-        $trimestre =$request->get('trimestre');  
-        $asignacionnotas = AsignacionNotas::orderBy('id','ASC')->trimestral($trimestre)->paginate(20);
-        return view('asignacionNotas.index',compact('asignacionnotas','integradora','cotidiana','prueba','materias'));
+        $grados = Grados::all();
+
+        //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
+        $asig_docente = $asignaciones->where('id_docente', $asi->id)->where('anio', $Y )->first();
+        if ($asig_docente !== null){
+            $asig_alumno = $asignacionAl->where('id_asignacion', $asig_docente->id);
+            $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
+        }
+        elseif ($asig_docente == null) {
+           $asig_alumno = null;
+           $grado_actual = null;
+        }
+        return view('asignacionNotas.index',compact('asignacionnotas','integradora','cotidiana','prueba','materias','Y','asig_docente','asi','asig_alumno','grado_actual'));
     }
 
     /**
@@ -73,6 +92,345 @@ class AsignacionNotasController extends Controller
       $asignacionnotas = AsignacionNotas::find($id);
       return view('asignacionNotas.show',compact('asignacionnotas'));
     }
+
+    public function repor1($id)
+    {
+        $materias = Materias::all();
+        $asignacionConductas = AsignacionConductas::all();
+        $asignacionNotas=AsignacionNotas::all();
+        $notas = AsignacionNotas::orderBy('id','ASC')->paginate(10);
+        
+        $conductas= Conductas::all();
+        $asignaDocente=Asignaciones::all();
+        $Y= date("Y");
+        $asi = \Auth::user()->docente;
+        $asignacionAl = AsignacionAlumnosNotas::all();
+        $docentes= Docentes::all();
+        $grados = Grados::all();
+        $mes= date("m");
+
+        //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
+        $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $Y )->first();
+        if ($asig_docente !== null){
+            $asig_alumno = $asignacionAl->where('id', $id);
+
+            $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
+        }
+        elseif ($asig_docente == null) {
+           $asig_alumno = null;
+           $grado_actual = null;
+        }
+        if ($mes==01) {
+            $mes_año = "ENERO";
+        }
+        if ($mes==2) {
+            $mes_año = "FEBRERO";
+        }
+        if ($mes==3) {
+            $mes_año = "MARZO";
+        }
+        if ($mes==4) {
+            $mes_año = "ABRIL";
+        }
+        if ($mes==5) {
+            $mes_año = "MAYO";
+        }
+        if ($mes==6) {
+            $mes_año = "JUNIO";
+        }
+        if ($mes==7) {
+            $mes_año = "JULIO";
+        }
+        if ($mes==8) {
+            $mes_año = "AGOSTO";
+        }
+        if ($mes==9) {
+            $mes_año = "SEPTIEMBRE";
+        }
+        if ($mes==10) {
+            $mes_año = "OCTUBRE";
+        }
+        if ($mes==11) {
+            $mes_año = "NOVIEMBRE";
+        }
+        if ($mes==12) {
+            $mes_año = "DICIEMBRE";
+        }
+
+        return view('asignacionNotas/reportes.trimestre1',compact('id','notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente','asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y','mes_año','conductas'));
+                
+    }
+    public function repor1PDF(request $request )
+    {
+        $materias = Materias::all();
+        $asignacionConductas = AsignacionConductas::all();
+        $asignacionNotas=AsignacionNotas::all();
+        $notas = AsignacionNotas::orderBy('id','ASC')->paginate(10);
+        
+        $conductas= Conductas::all();
+        $asignaDocente=Asignaciones::all();
+        $Y= date("Y");
+        $asi = \Auth::user()->docente;
+        $asignacionAl = AsignacionAlumnosNotas::all();
+        $docentes= Docentes::all();
+        $grados = Grados::all();
+        $mes= date("m");
+
+        //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
+        $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $Y )->first();
+        if ($asig_docente !== null){
+            $asig_alumno = $asignacionAl->where('id_asignacion', $asig_docente->id);
+
+            $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
+        }
+        elseif ($asig_docente == null) {
+           $asig_alumno = null;
+           $grado_actual = null;
+        }
+        if ($mes==01) {
+            $mes_año = "ENERO";
+        }
+        if ($mes==2) {
+            $mes_año = "FEBRERO";
+        }
+        if ($mes==3) {
+            $mes_año = "MARZO";
+        }
+        if ($mes==4) {
+            $mes_año = "ABRIL";
+        }
+        if ($mes==5) {
+            $mes_año = "MAYO";
+        }
+        if ($mes==6) {
+            $mes_año = "JUNIO";
+        }
+        if ($mes==7) {
+            $mes_año = "JULIO";
+        }
+        if ($mes==8) {
+            $mes_año = "AGOSTO";
+        }
+        if ($mes==9) {
+            $mes_año = "SEPTIEMBRE";
+        }
+        if ($mes==10) {
+            $mes_año = "OCTUBRE";
+        }
+        if ($mes==11) {
+            $mes_año = "NOVIEMBRE";
+        }
+        if ($mes==12) {
+            $mes_año = "DICIEMBRE";
+        }
+
+        
+    }
+        public function repor2($id)
+    {
+        $materias = Materias::all();
+        $asignacionConductas = AsignacionConductas::all();
+        $asignacionNotas=AsignacionNotas::all();
+        $notas = AsignacionNotas::orderBy('id','ASC')->paginate(10);
+        
+        $conductas= Conductas::all();
+        $asignaDocente=Asignaciones::all();
+        $Y= date("Y");
+        $asi = \Auth::user()->docente;
+        $asignacionAl = AsignacionAlumnosNotas::all();
+        $docentes= Docentes::all();
+        $grados = Grados::all();
+        $mes= date("m");
+
+        //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
+        $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $Y )->first();
+        if ($asig_docente !== null){
+            $asig_alumno = $asignacionAl->where('id', $id);
+
+            $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
+        }
+        elseif ($asig_docente == null) {
+           $asig_alumno = null;
+           $grado_actual = null;
+        }
+        if ($mes==01) {
+            $mes_año = "ENERO";
+        }
+        if ($mes==2) {
+            $mes_año = "FEBRERO";
+        }
+        if ($mes==3) {
+            $mes_año = "MARZO";
+        }
+        if ($mes==4) {
+            $mes_año = "ABRIL";
+        }
+        if ($mes==5) {
+            $mes_año = "MAYO";
+        }
+        if ($mes==6) {
+            $mes_año = "JUNIO";
+        }
+        if ($mes==7) {
+            $mes_año = "JULIO";
+        }
+        if ($mes==8) {
+            $mes_año = "AGOSTO";
+        }
+        if ($mes==9) {
+            $mes_año = "SEPTIEMBRE";
+        }
+        if ($mes==10) {
+            $mes_año = "OCTUBRE";
+        }
+        if ($mes==11) {
+            $mes_año = "NOVIEMBRE";
+        }
+        if ($mes==12) {
+            $mes_año = "DICIEMBRE";
+        }
+
+        return view('asignacionNotas/reportes.trimestre2',compact('id','notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente','asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y','mes_año','conductas'));
+                
+    }
+
+        public function repor3($id)
+    {
+        $materias = Materias::all();
+        $asignacionConductas = AsignacionConductas::all();
+        $asignacionNotas=AsignacionNotas::all();
+        $notas = AsignacionNotas::orderBy('id','ASC')->paginate(10);
+        
+        $conductas= Conductas::all();
+        $asignaDocente=Asignaciones::all();
+        $Y= date("Y");
+        $asi = \Auth::user()->docente;
+        $asignacionAl = AsignacionAlumnosNotas::all();
+        $docentes= Docentes::all();
+        $grados = Grados::all();
+        $mes= date("m");
+
+        //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
+        $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $Y )->first();
+        if ($asig_docente !== null){
+            $asig_alumno = $asignacionAl->where('id', $id);
+
+            $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
+        }
+        elseif ($asig_docente == null) {
+           $asig_alumno = null;
+           $grado_actual = null;
+        }
+        if ($mes==01) {
+            $mes_año = "ENERO";
+        }
+        if ($mes==2) {
+            $mes_año = "FEBRERO";
+        }
+        if ($mes==3) {
+            $mes_año = "MARZO";
+        }
+        if ($mes==4) {
+            $mes_año = "ABRIL";
+        }
+        if ($mes==5) {
+            $mes_año = "MAYO";
+        }
+        if ($mes==6) {
+            $mes_año = "JUNIO";
+        }
+        if ($mes==7) {
+            $mes_año = "JULIO";
+        }
+        if ($mes==8) {
+            $mes_año = "AGOSTO";
+        }
+        if ($mes==9) {
+            $mes_año = "SEPTIEMBRE";
+        }
+        if ($mes==10) {
+            $mes_año = "OCTUBRE";
+        }
+        if ($mes==11) {
+            $mes_año = "NOVIEMBRE";
+        }
+        if ($mes==12) {
+            $mes_año = "DICIEMBRE";
+        }
+
+        return view('asignacionNotas/reportes.trimestre3',compact('id','notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente','asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y','mes_año','conductas'));
+                
+    }
+
+        public function repor123($id)
+    {
+        $materias = Materias::all();
+        $asignacionConductas = AsignacionConductas::all();
+        $asignacionNotas=AsignacionNotas::all();
+        $notas = AsignacionNotas::orderBy('id','ASC')->paginate(10);
+        
+        $conductas= Conductas::all();
+        $asignaDocente=Asignaciones::all();
+        $Y= date("Y");
+        $asi = \Auth::user()->docente;
+        $asignacionAl = AsignacionAlumnosNotas::all();
+        $docentes= Docentes::all();
+        $grados = Grados::all();
+        $mes= date("m");
+
+        //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
+        $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $Y )->first();
+        if ($asig_docente !== null){
+            $asig_alumno = $asignacionAl->where('id', $id);
+
+            $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
+        }
+        elseif ($asig_docente == null) {
+           $asig_alumno = null;
+           $grado_actual = null;
+        }
+        if ($mes==01) {
+            $mes_año = "ENERO";
+        }
+        if ($mes==2) {
+            $mes_año = "FEBRERO";
+        }
+        if ($mes==3) {
+            $mes_año = "MARZO";
+        }
+        if ($mes==4) {
+            $mes_año = "ABRIL";
+        }
+        if ($mes==5) {
+            $mes_año = "MAYO";
+        }
+        if ($mes==6) {
+            $mes_año = "JUNIO";
+        }
+        if ($mes==7) {
+            $mes_año = "JULIO";
+        }
+        if ($mes==8) {
+            $mes_año = "AGOSTO";
+        }
+        if ($mes==9) {
+            $mes_año = "SEPTIEMBRE";
+        }
+        if ($mes==10) {
+            $mes_año = "OCTUBRE";
+        }
+        if ($mes==11) {
+            $mes_año = "NOVIEMBRE";
+        }
+        if ($mes==12) {
+            $mes_año = "DICIEMBRE";
+        }
+
+        return view('asignacionNotas/reportes.trimestre123',compact('id','notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente','asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y','mes_año','conductas'));
+                
+    }
+
+    
 
     /**
      * Show the form for editing the specified resource.

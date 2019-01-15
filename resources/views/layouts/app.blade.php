@@ -89,7 +89,7 @@
                                  <li><a href="{{ route('asignaciones.index') }}"><b>Asignacion Docente - Grado</b></a></li>
                                  <li><a href="{{ route('asignacionAlumnosNotas.index') }}"><b>Asignacion Alumno - Grado</b></a></li>
                                  <li><a href="{{ route('notas.index') }}"><b>Gestion / Asignacion Notas</b></a></li>
-                                 <!--<li><a href="{{ route('asignacionNotas.index') }}"><b>Asignacion Materia a Notas</b></a></li>-->
+                                 <li><a href="{{ route('asignacionNotas.index') }}"><b>Reporte de Notas</b></a></li>
                               </ul>
                            </div>
                         </div>

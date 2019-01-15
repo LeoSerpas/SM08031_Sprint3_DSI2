@@ -45,6 +45,12 @@ Route::post('asignacionAlumnosNotas/aprobar/reprobar', 'AsignacionAlumnosNotasCo
 
 Route::get('asignacionAlumnosNotas/reasignar/{id}', 'AsignacionAlumnosNotasController@reasig' )->name('asignacionAlumnosNotas.reasignar');
 
+Route::get('asignacionNotas/reporte1/{id}', 'AsignacionNotasController@repor1' )->name('asignacionNotas.reporte1');
+Route::get('asignacionNotas/reporte1PDF/{id}', 'AsignacionNotasController@repor1PDF' )->name('asignacionNotas.reporte1PDF');
+Route::get('asignacionNotas/reporte2/{id}', 'AsignacionNotasController@repor2' )->name('asignacionNotas.reporte2');
+Route::get('asignacionNotas/reporte3/{id}', 'AsignacionNotasController@repor3' )->name('asignacionNotas.reporte3');
+Route::get('asignacionNotas/reporte123/{id}', 'AsignacionNotasController@repor123' )->name('asignacionNotas.reporte123');
+
 Route::get('gestion', function()
 	{
     return view('gestion');

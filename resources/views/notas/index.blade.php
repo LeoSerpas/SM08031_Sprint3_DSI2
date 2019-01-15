@@ -30,6 +30,7 @@
          @endif
       </div>
    </div>
+
    <div class ="col-sm-12">
       <div class ="col-sm-5"><!-- Boton de seleccion de materia y Trimestre -->
          <form class="select_materia_trimestre">
@@ -44,11 +45,10 @@
             </select>
             <br>
             <select required name="trimestre" id='trimestre' class="form-control">
-               <option disabled selected>Seleccione el Trimestre del año {{$Y}} </option>
-               @foreach($trimestres as $trimestre)
-               <option value="{{$trimestre->id}}">{{$trimestre->nombre}}
-               </option>
-               @endforeach
+               <option disabled selected>Seleccione el Trimestre del año {{$Y}}</option>
+               <option value=1>Primer Trimestre</option>
+               <option value=2>Segundo Trimestre</option>
+               <option value=3>Tercer Trimestre</option>
             </select>
             <br>
             @if ($grado_actual !== null || $asig_alumno !== null)
@@ -63,10 +63,9 @@
             <h4>Seleccione Trimestre a ingresar Notas de Conducta</h4>
             <select required name="trim" id='trim' class="form-control">
                <option disabled selected>Seleccione el Trimestre del año {{$Y}}</option>
-               @foreach($trimestres as $trimestre)
-               <option value="{{$trimestre->id}}">{{$trimestre->nombre}}
-               </option>
-               @endforeach
+               <option value=1> Primer Trimestre</option>
+               <option value=2> Segundo Trimestre</option>
+               <option value=3> Tercer Trimestre</option>
             </select>
             <br>
             @if ($grado_actual !== null || $asig_alumno !== null)
@@ -85,6 +84,18 @@
          <li><a data-toggle="tab" href="#trim_2">Detalle Trimestre 2.</a></li>
          <li><a data-toggle="tab" href="#trim_3">Detalle Trimestre 3.</a></li>
          <li><a data-toggle="tab" href="#resumen_conducta">Detalle Conducta.</a></li>
+         <li>      
+            <form class="calc_apro_repro">
+               @if ($grado_actual !== null || $asig_alumno !== null)
+               <div class ="col-sm-5 inline">
+                  <h5>Promedios finales, Aprobar/Reprobar:</h5>
+               </div>
+                  <button class="btn btn-primary" type="submit" name="button">Calcular Promedios
+               </button>
+               @endif
+               <br><br>
+            </form>
+         </li>
       </ul>
    @if($asig_alumno !== null)
    <div class="tab-content">
@@ -391,8 +402,7 @@
          @endforeach
       </div>
    </div>
-<div id="resumen" class="tab-pane fade in active"><!-- Tabla Resumen de notas por materia para año lectivo -->
-   <ul class="nav nav-tabs" role="tablist">
+<div id="resumen" class="tab-pane fade in active"><!-- Tabla Resumen de notas por materia para año lectivo --><ul class="nav nav-tabs" role="tablist">
          @php($indice = 0)
          @foreach ($materias as $ids => $materia)
          <li role="presentation" class=" {{ $indice === 0 ? 'active' : ''}}"><a href="#mat_{{ $materia->id }}" aria-controls="#mat_{{ $materia->id }}" role="tab" data-toggle="tab">{{ $materia->nombre }}</a></li>
@@ -402,16 +412,10 @@
       <div class="tab-content">
          @php($indice = 0)
          @foreach ($materias as $ids => $materia)
-         @foreach ($asig_alumno as $key => $asignacion_alumno)
-         @foreach ($asignacionNotas as $key => $asignacionNota)
-          @php ($notasAsignada1 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 1 )->first())
-         @endforeach
-         @endforeach
-         @endforeach
-         @foreach ($materias as $ids => $materia)
          <div role="tabpanel" class="tab-pane {{ $indice === 0 ? 'active' : ''}}" id="mat_{{ $materia->id }}">
-            <div class="table-responsive ">
-               <table class="table table-striped" id= "{{ $materia->nombre }}" style="text-align:center" >
+            {!! Form::open(['method' => 'asignacionAlumnosNotas.calc_aprobacion', 'method'=>'POST', 'id', 'trimestre' => 'notasForm'])!!}
+            <div class="table-responsive">
+               <table class="table table-striped " id= "{{ $materia->nombre }}" style="text-align:center" >
                   <thead>
                      <tr>
                         <th with="80px">No
@@ -424,6 +428,9 @@
                         </th>
                         <th style="text-align:center">Promedio Trimestre 3
                         </th>
+                        <th style="text-align:center">Promedio Final {{ $materia->nombre}}, {{$Y}}
+                        </th>
+
                      </tr>
                   </thead>
                   <tbody>
@@ -433,13 +440,14 @@
                            {{ $key+1 }}
                         </td>
                         <td>
-                           @foreach ($asignacionNotas as $key => $asignacionNota)
-                           <input  required type="hidden" name="notas[asignacion][{{ $key  }}][id_materia]" value="{{ $materia->id }}">
-                           <input  required type="hidden" name="notas[asignacion][{{ $key  }}][id_materia]" value="{{ $ids }}">
+                           @foreach ($asignacionNotas as $key2 => $asignacionNota)
+                           <input  required type="hidden" name="notas[asignacion][{{ $key2  }}][id_materia]" value="{{ $materia->id }}">
+                           <input  required type="hidden" name="notas[asignacion][{{ $key2  }}][id_materia]" value="{{ $ids }}">
                            @endforeach
                            @php ($notasAsignada1 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 1 )->first())
                            @php ($notasAsignada2 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 2 )->first())
                            @php ($notasAsignada3 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 3 )->first())
+                           @php ($notasAsignada4 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 4 )->first())
                            
                            {{ $asignacion_alumno->alumno->nombres .' '. $asignacion_alumno->alumno->apellidos  }}
                         </td>
@@ -452,7 +460,9 @@
                         <td>
                            {{ is_null($notasAsignada3) ? '0' : $notasAsignada3->nota_trimestral }}
                         </td>
-            
+                        <td>
+                           {{ is_null($notasAsignada4) ? '0' : $notasAsignada4->nota_trimestral }}
+                        </td>           
                      </tr>
                      @endforeach
                   </tbody>
@@ -578,5 +588,12 @@
    jQuery.extend(jQuery.validator.messages, {
     required: "Este campo es requerido"
    });
+</script>
+<script >
+   $('.calc_apro_repro').submit(function( event ) {
+     event.preventDefault();
+       window.location.href = "/notas/aprobar/reprobar";
+   }
+                            );
 </script>
 @endsection
