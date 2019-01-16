@@ -1,3 +1,15 @@
+## Cambios 16/1/2019 02:36 AM
+##1-)Alumnos Agregados los atributos extra y los reportes de la inscripcion
+Se agregaron todos los atributos que se creyeron pertinentes agregar, otros atributos no sabia cual era su definicion y por eso no los agrege, son como 2 que yo recuerde, pero esta la ficha solicitada del alumno. Se agregaron las validaciones que se creyeron pertinentes. 
+##2-)Cambios en el calculo de Promedios finales de notas y el calculo de Aprobado/Reprobado del alumno
+Se crearon 2 botones que en si, hacen lo mismo, uno se puso el el menu: Gestion/Asignacion Notas Que es para calcular el promedio final, una vez se ingresen todas las notas, el otro boton esta en Asignacion Alumno-Grado, que es para calcular los que aprobaron o reprobaron el grado, ambos botones hacen las dos acciones, solo es necesario accionar uno u otro boton una vez, para saber los promedios finales y si aprobo o reprobo.
+##3-) Reportes
+Los reportes de consolidaos de notas estan creados en el menu de reportes, se muestran 4 reportes del trimesdtre 1 al 3 y el final, Lastimosamente, no pude hacer que se viera en PDF, y ni se el porque la libreria domPDF no me funciona, intente con otras dos librerias pero me dan errores raros, en fin, es lo unico que me quede corto en hacer.
+
+##5-) Final del proyecto.
+No se si reviso, o si vio los cambios que se hicieron, pero Gracias por tomarce el tiempo de ver, y preocuparse por mi, y mi tarea, se le agradece.
+
+
 ## Cambios 7/1/2019 02:32 AM
 ## Se Han Modificado las asignaciones ambas, Docente-Grado y Alumno-Grado
 ##1-) Validaciones en Asignaciones
