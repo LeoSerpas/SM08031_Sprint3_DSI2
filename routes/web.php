@@ -51,6 +51,8 @@ Route::get('asignacionNotas/reporte2/{id}', 'AsignacionNotasController@repor2' )
 Route::get('asignacionNotas/reporte3/{id}', 'AsignacionNotasController@repor3' )->name('asignacionNotas.reporte3');
 Route::get('asignacionNotas/reporte123/{id}', 'AsignacionNotasController@repor123' )->name('asignacionNotas.reporte123');
 
+Route::get('/notas/aprobar/reprobar', 'NotasController@apro_repro' )->name('notas.aprobar_reprobar');
+
 Route::get('gestion', function()
 	{
     return view('gestion');

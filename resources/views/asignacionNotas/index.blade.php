@@ -31,7 +31,7 @@
       </div>
    </div>
    <div class="table-responsive">
-  <table class="table table-striped" style="text-align:center; width: 700px" >
+  <table class="table table-striped" style="text-align:center; width: 900px" >
     <tr>
       <th with="80px">No</th>
       <th style="text-align:center">Alumnos</th>
@@ -41,6 +41,7 @@
       <th style="text-align:center">Ver Reporte Final</th>
     </tr>
     <?php $no=1;?>
+    @if($grado_actual !== null || $asig_alumno !== null)
     @foreach ($asig_alumno as $key => $asignacion_alumno)
       <tr>
         <td>{{$no++}}</td>
@@ -60,7 +61,7 @@
               {!! Form::close() !!}
         </td>
         <td>
-              {!! Form::open(['method' => 'GET','route' => ['asignacionNotas.reporte2', $asignacion_alumno->id],'style'=>'display:inline']) !!}
+              {!! Form::open(['method' => 'GET','route' => ['asignacionNotas.reporte3', $asignacion_alumno->id],'style'=>'display:inline']) !!}
               <button type="submit" data-toggle="tooltip" data-placement="top" title="Reporte Trimestre 3" style="display: inline;" class="btn btn-info"><i class="glyphicon glyphicon-list-alt" ></i></button>
               {!! Form::close() !!}
         </td>
@@ -73,6 +74,7 @@
         </td>
       </tr>
     @endforeach
+    @endif
 
   </table>
   </div>

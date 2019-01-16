@@ -17,6 +17,7 @@ use App\Grados;
 use App\Docentes;
 use App\Conductas;
 use Barryvdh\DomPDF\Facade as PDF;
+use App;
 
 class AsignacionNotasController extends Controller
 {
@@ -224,7 +225,8 @@ class AsignacionNotasController extends Controller
             $mes_año = "DICIEMBRE";
         }
 
-        
+        $pdf = PDF::loadView('asignacionNotas/reportes.trimestre1', compact('id','notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente','asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y','mes_año','conductas'));
+        return $pdf->download('listado.pdf');
     }
         public function repor2($id)
     {

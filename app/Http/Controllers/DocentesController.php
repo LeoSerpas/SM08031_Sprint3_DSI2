@@ -124,17 +124,13 @@ class DocentesController extends Controller
      */
     public function destroy($id)
     {
-
          try {
             Docentes::find($id)->delete();
             return redirect()->route('docentes.index')->with('success','Docente eliminado con exito');
         } catch (\Illuminate\Database\QueryException $e) {
             return redirect()->route('docentes.index')
             ->with('error','¡ERROR! El Docente esta asignado a un grado, no se puede borrar!!');
-        } 
-
-        
-        
+        }        
     }
 }
  

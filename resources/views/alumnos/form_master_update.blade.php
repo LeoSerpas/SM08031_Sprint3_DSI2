@@ -64,7 +64,7 @@
          <div class="form-group {{ $errors->has('parvularia') ? 'has-error' : "" }}">
          <i>
             <select name="parvularia" class="form-control">
-               <option disabled selected>Seleccione opcion</option>
+               <option selected value={{$alumno->parvularia}}>{{$alumno->parvularia}}</option>
                <option value="Si">Si</option>
                <option value="No">No</option>
             </select>
@@ -83,7 +83,7 @@
       <div class="form-group {{ $errors->has('enfermedad') ? 'has-error' : "" }}">
       <i>
          <select name="enfermedad" class="form-control">
-            <option disabled selected>Seleccione opcion</option>
+            <option selected value={{$alumno->enfermedad}}>{{$alumno->enfermedad}}</option>
             <option value="Si">Si</option>
             <option value="No">No</option>
          </select>
@@ -213,7 +213,7 @@
       </div>
       <div class="col-sm-0">
          <div class="form-group {{ $errors->has('tel_padre') ? 'has-error' : "" }}">
-         <i>{{ Form::text('tel_padre',NULL, ['class'=>'form-control', 'id'=>'tel_padre', 'placeholder'=>'Teléfono de la Madre.', 'maxlength' => 8]) }}</i> 
+         <i>{{ Form::text('tel_padre',NULL, ['class'=>'form-control', 'id'=>'tel_padre', 'placeholder'=>'Teléfono del Padre.', 'maxlength' => 8]) }}</i> 
          <div class="help-block" > 
             <strong>{{ $errors->first('tel_padre', '**Ingrese datos válidos 1-9') }}</strong>
          </div>
@@ -235,7 +235,7 @@
       <div class="form-group {{ $errors->has('vive_con') ? 'has-error' : "" }}">
       <i>
          <select name="vive_con" class="form-control">
-            <option disabled selected>Seleccione opcion</option>
+            <option selected value={{$alumno->vive_con}}>{{$alumno->vive_con}}</option>
             <option value="Ambos Padres">Ambos Padres</option>
             <option value="Madre">Madre</option>
             <option value="Padre">Padre</option>
@@ -256,7 +256,7 @@
       <div class="form-group {{ $errors->has('carta_compro') ? 'has-error' : "" }}">
       <i>
          <select name="carta_compro" class="form-control">
-            <option disabled selected>Seleccione opcion</option>
+            <option selected value={{$alumno->carta_compro}}>{{$alumno->carta_compro}}</option>
             <option value="Si">Si</option>
             <option value="No">No</option>
          </select>
@@ -275,7 +275,7 @@
       <div class="form-group {{ $errors->has('rendimiento') ? 'has-error' : "" }}">
       <i>
          <select name="rendimiento" class="form-control">
-            <option disabled selected>Seleccione opcion</option>
+            <option selected value={{$alumno->rendimiento}}>{{$alumno->rendimiento}}</option>
             <option value="Excelente">Excelente</option>
                   <option value="Muy bueno">Muy bueno</option>
                   <option value="Bueno">Bueno</option>
@@ -301,7 +301,7 @@
       <div class="form-group {{ $errors->has('nuevo_in') ? 'has-error' : "" }}">
       <i>
          <select name="nuevo_in" class="form-control">
-            <option disabled selected>Seleccione opcion</option>
+            <option selected value={{$alumno->nuevo_in}}>{{$alumno->nuevo_in}}</option>
             <option value="Si">Si</option>
             <option value="No">No</option>
          </select>
@@ -341,7 +341,6 @@
 <br>
 </div>
 </div>
-
 <div class="form-group text-center" >
    {{ Form::button(isset($model)? 'Update' : 'Guardar' , ['class'=>'btn btn-success ','type'=>'submit']) }}
    <a class="btn btn-danger " href="{{ route('alumnos.index') }}">Cancelar</a>

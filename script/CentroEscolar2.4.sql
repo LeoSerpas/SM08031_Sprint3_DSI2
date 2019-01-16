@@ -13,7 +13,7 @@
 
 
 -- Volcando estructura de base de datos para centroescolar
-CREATE DATABASE IF NOT EXISTS `centroescolar` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish2_ci */;
+CREATE DATABASE IF NOT EXISTS `centroescolar` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci */;
 USE `centroescolar`;
 
 -- Volcando estructura para tabla centroescolar.act_cotidianas
@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS `act_cotidianas` (
   PRIMARY KEY (`id`),
   KEY `id_asignacion_notas` (`id_asignacion_notas`),
   CONSTRAINT `act_cotidianas_ibfk_1` FOREIGN KEY (`id_asignacion_notas`) REFERENCES `asignacion_notas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.act_cotidianas: ~34 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.act_cotidianas: ~79 rows (aproximadamente)
 /*!40000 ALTER TABLE `act_cotidianas` DISABLE KEYS */;
 INSERT INTO `act_cotidianas` (`id`, `id_asignacion_notas`, `nota_cotidiana`, `nota_porcent`, `created_at`, `updated_at`) VALUES
   (1, 1, 0, 0, '2018-12-30 06:29:48', '2018-12-30 06:29:48'),
@@ -66,7 +66,57 @@ INSERT INTO `act_cotidianas` (`id`, `id_asignacion_notas`, `nota_cotidiana`, `no
   (32, 32, 7, 2.45, '2019-01-11 18:24:00', '2019-01-11 18:24:00'),
   (33, 33, 8, 2.8, '2019-01-11 18:24:00', '2019-01-11 18:24:00'),
   (34, 34, 7, 2.45, '2019-01-11 18:24:00', '2019-01-11 18:24:00'),
-  (35, 35, 8, 2.8, '2019-01-11 18:24:00', '2019-01-11 18:24:00');
+  (35, 35, 8, 2.8, '2019-01-11 18:24:00', '2019-01-11 18:24:00'),
+  (36, 36, 7, 2.45, '2019-01-13 00:59:48', '2019-01-13 04:55:59'),
+  (37, 37, 6, 2.1, '2019-01-13 00:59:49', '2019-01-13 00:59:49'),
+  (38, 38, 7, 2.45, '2019-01-13 00:59:49', '2019-01-13 00:59:49'),
+  (39, 39, 7, 2.45, '2019-01-13 00:59:49', '2019-01-13 00:59:49'),
+  (40, 40, 9, 3.15, '2019-01-13 00:59:49', '2019-01-13 00:59:49'),
+  (41, 61, 9, 3.15, '2019-01-13 02:08:55', '2019-01-13 02:08:55'),
+  (42, 62, 8, 2.8, '2019-01-13 02:08:55', '2019-01-13 05:41:00'),
+  (43, 63, 0, 0, '2019-01-13 02:08:55', '2019-01-13 02:08:55'),
+  (44, 64, 0, 0, '2019-01-13 02:08:55', '2019-01-13 02:08:55'),
+  (45, 65, 0, 0, '2019-01-13 02:08:56', '2019-01-13 02:08:56'),
+  (46, 66, 8, 2.8, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (47, 67, 0, 0, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (48, 68, 0, 0, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (49, 69, 0, 0, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (50, 70, 0, 0, '2019-01-13 02:09:36', '2019-01-13 02:09:36'),
+  (51, 71, 8, 2.8, '2019-01-13 02:14:03', '2019-01-13 02:14:03'),
+  (52, 72, 8, 2.8, '2019-01-13 02:14:03', '2019-01-13 05:41:38'),
+  (53, 73, 0, 0, '2019-01-13 02:14:03', '2019-01-13 02:14:03'),
+  (54, 74, 0, 0, '2019-01-13 02:14:03', '2019-01-13 02:14:03'),
+  (55, 75, 0, 0, '2019-01-13 02:14:03', '2019-01-13 02:14:03'),
+  (56, 76, 7, 2.45, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (57, 77, 0, 0, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (58, 78, 0, 0, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (59, 79, 0, 0, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (60, 80, 0, 0, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (61, 81, 9, 3.15, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (62, 82, 0, 0, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (63, 83, 0, 0, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (64, 84, 0, 0, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (65, 85, 0, 0, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (66, 86, 8, 2.8, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (67, 87, 0, 0, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (68, 88, 0, 0, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (69, 89, 0, 0, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (70, 90, 0, 0, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (71, 96, 9, 3.15, '2019-01-13 03:46:11', '2019-01-13 03:46:11'),
+  (72, 97, 8, 2.8, '2019-01-13 03:46:11', '2019-01-13 04:10:16'),
+  (73, 98, 0, 0, '2019-01-13 03:46:11', '2019-01-13 03:46:11'),
+  (74, 99, 0, 0, '2019-01-13 03:46:11', '2019-01-13 03:46:11'),
+  (75, 100, 0, 0, '2019-01-13 03:46:11', '2019-01-13 03:46:11'),
+  (76, 101, 6, 2.1, '2019-01-13 03:46:36', '2019-01-13 03:46:36'),
+  (77, 102, 8, 2.8, '2019-01-13 03:46:36', '2019-01-16 07:43:26'),
+  (78, 103, 0, 0, '2019-01-13 03:46:36', '2019-01-13 03:46:36'),
+  (79, 104, 0, 0, '2019-01-13 03:46:36', '2019-01-13 03:46:36'),
+  (80, 105, 0, 0, '2019-01-13 03:46:36', '2019-01-13 03:46:36'),
+  (81, 106, 7, 2.45, '2019-01-13 03:47:27', '2019-01-13 03:47:27'),
+  (82, 107, 0, 0, '2019-01-13 03:47:28', '2019-01-13 03:47:28'),
+  (83, 108, 0, 0, '2019-01-13 03:47:28', '2019-01-13 03:47:28'),
+  (84, 109, 0, 0, '2019-01-13 03:47:28', '2019-01-13 03:47:28'),
+  (85, 110, 0, 0, '2019-01-13 03:47:28', '2019-01-13 03:47:28');
 /*!40000 ALTER TABLE `act_cotidianas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.act_integradoras
@@ -82,9 +132,9 @@ CREATE TABLE IF NOT EXISTS `act_integradoras` (
   PRIMARY KEY (`id`),
   KEY `id_asignacion_notas` (`id_asignacion_notas`),
   CONSTRAINT `act_integradoras_ibfk_1` FOREIGN KEY (`id_asignacion_notas`) REFERENCES `asignacion_notas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.act_integradoras: ~33 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.act_integradoras: ~79 rows (aproximadamente)
 /*!40000 ALTER TABLE `act_integradoras` DISABLE KEYS */;
 INSERT INTO `act_integradoras` (`id`, `id_asignacion_notas`, `activi_1`, `activi_2`, `promedio_i`, `prom_i_porcent`, `created_at`, `updated_at`) VALUES
   (1, 1, 0.01, 1, 0.51, 0.18, '2018-12-30 01:40:48', '2019-01-02 07:30:06'),
@@ -121,7 +171,57 @@ INSERT INTO `act_integradoras` (`id`, `id_asignacion_notas`, `activi_1`, `activi
   (32, 32, 7, 8, 7.5, 2.63, '2019-01-11 18:24:00', '2019-01-11 18:24:00'),
   (33, 33, 8, 7, 7.5, 2.63, '2019-01-11 18:24:00', '2019-01-11 18:24:00'),
   (34, 34, 7, 8, 7.5, 2.63, '2019-01-11 18:24:00', '2019-01-11 18:24:00'),
-  (35, 35, 7, 8, 7.5, 2.63, '2019-01-11 18:24:00', '2019-01-11 18:24:00');
+  (35, 35, 7, 8, 7.5, 2.63, '2019-01-11 18:24:00', '2019-01-11 18:24:00'),
+  (36, 36, 10, 6, 8, 2.8, '2019-01-13 00:59:48', '2019-01-13 04:55:59'),
+  (37, 37, 4, 5, 4.5, 1.57, '2019-01-13 00:59:49', '2019-01-13 00:59:49'),
+  (38, 38, 7, 6, 6.5, 2.27, '2019-01-13 00:59:49', '2019-01-13 00:59:49'),
+  (39, 39, 7, 5, 6, 2.1, '2019-01-13 00:59:49', '2019-01-13 00:59:49'),
+  (40, 40, 8, 8, 8, 2.8, '2019-01-13 00:59:49', '2019-01-13 00:59:49'),
+  (41, 61, 9, 9, 9, 3.15, '2019-01-13 02:08:55', '2019-01-13 02:08:55'),
+  (42, 62, 6, 7, 6.5, 2.27, '2019-01-13 02:08:55', '2019-01-13 05:41:00'),
+  (43, 63, 0, 0, 0, 0, '2019-01-13 02:08:55', '2019-01-13 02:08:55'),
+  (44, 64, 0, 0, 0, 0, '2019-01-13 02:08:55', '2019-01-13 02:08:55'),
+  (45, 65, 0, 0, 0, 0, '2019-01-13 02:08:56', '2019-01-13 02:08:56'),
+  (46, 66, 8, 7, 7.5, 2.63, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (47, 67, 0, 0, 0, 0, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (48, 68, 0, 0, 0, 0, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (49, 69, 0, 0, 0, 0, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (50, 70, 0, 0, 0, 0, '2019-01-13 02:09:36', '2019-01-13 02:09:36'),
+  (51, 71, 6, 7, 6.5, 2.27, '2019-01-13 02:14:03', '2019-01-13 02:14:03'),
+  (52, 72, 5, 6, 5.5, 1.92, '2019-01-13 02:14:03', '2019-01-13 05:41:38'),
+  (53, 73, 0, 0, 0, 0, '2019-01-13 02:14:03', '2019-01-13 02:14:03'),
+  (54, 74, 0, 0, 0, 0, '2019-01-13 02:14:03', '2019-01-13 02:14:03'),
+  (55, 75, 0, 0, 0, 0, '2019-01-13 02:14:03', '2019-01-13 02:14:03'),
+  (56, 76, 9, 9, 9, 3.15, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (57, 77, 0, 0, 0, 0, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (58, 78, 0, 0, 0, 0, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (59, 79, 0, 0, 0, 0, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (60, 80, 0, 0, 0, 0, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (61, 81, 7, 8, 7.5, 2.63, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (62, 82, 0, 0, 0, 0, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (63, 83, 0, 0, 0, 0, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (64, 84, 0, 0, 0, 0, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (65, 85, 0, 0, 0, 0, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (66, 86, 9, 9, 9, 3.15, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (67, 87, 0, 0, 0, 0, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (68, 88, 0, 0, 0, 0, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (69, 89, 0, 0, 0, 0, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (70, 90, 0, 0, 0, 0, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (71, 96, 9, 9, 9, 3.15, '2019-01-13 03:46:11', '2019-01-13 03:46:11'),
+  (72, 97, 9, 9, 9, 3.15, '2019-01-13 03:46:11', '2019-01-13 04:10:16'),
+  (73, 98, 0, 0, 0, 0, '2019-01-13 03:46:11', '2019-01-13 03:46:11'),
+  (74, 99, 0, 0, 0, 0, '2019-01-13 03:46:11', '2019-01-13 03:46:11'),
+  (75, 100, 0, 0, 0, 0, '2019-01-13 03:46:11', '2019-01-13 03:46:11'),
+  (76, 101, 8, 6, 7, 2.45, '2019-01-13 03:46:36', '2019-01-13 03:46:36'),
+  (77, 102, 6, 7, 6.5, 2.27, '2019-01-13 03:46:36', '2019-01-16 07:43:26'),
+  (78, 103, 0, 0, 0, 0, '2019-01-13 03:46:36', '2019-01-13 03:46:36'),
+  (79, 104, 0, 0, 0, 0, '2019-01-13 03:46:36', '2019-01-13 03:46:36'),
+  (80, 105, 0, 0, 0, 0, '2019-01-13 03:46:36', '2019-01-13 03:46:36'),
+  (81, 106, 9, 8, 8.5, 2.97, '2019-01-13 03:47:27', '2019-01-13 03:47:27'),
+  (82, 107, 0, 0, 0, 0, '2019-01-13 03:47:27', '2019-01-13 03:47:27'),
+  (83, 108, 0, 0, 0, 0, '2019-01-13 03:47:28', '2019-01-13 03:47:28'),
+  (84, 109, 0, 0, 0, 0, '2019-01-13 03:47:28', '2019-01-13 03:47:28'),
+  (85, 110, 0, 0, 0, 0, '2019-01-13 03:47:28', '2019-01-13 03:47:28');
 /*!40000 ALTER TABLE `act_integradoras` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.alumnos
@@ -132,29 +232,46 @@ CREATE TABLE IF NOT EXISTS `alumnos` (
   `no_nie` int(11) NOT NULL,
   `f_nacimiento` date NOT NULL,
   `edad` int(11) DEFAULT NULL,
+  `parvularia` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `enfermedad` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `nombre_enfermedad` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `nombre_madre` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `dui_madre` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `ocupacion_madre` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `tel_madre` int(11) DEFAULT NULL,
+  `nombre_padre` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `dui_padre` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `ocupacion_padre` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `tel_padre` int(11) DEFAULT NULL,
+  `vive_con` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `carta_compro` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `conducta` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `rendimiento` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `nuevo_in` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `esc_procedencia` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `municipio` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.alumnos: ~11 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.alumnos: ~15 rows (aproximadamente)
 /*!40000 ALTER TABLE `alumnos` DISABLE KEYS */;
-INSERT INTO `alumnos` (`id`, `nombres`, `apellidos`, `no_nie`, `f_nacimiento`, `edad`, `created_at`, `updated_at`) VALUES
-  (1, 'Emely Valeria', 'Martinez', 1111111, '2002-02-15', NULL, '2018-12-30 06:25:11', '2018-12-30 06:25:11'),
-  (2, 'Denis Alejandro', 'Martinez', 3333333, '2003-03-26', NULL, '2018-12-30 06:27:50', '2018-12-30 06:27:50'),
-  (3, 'Alexander Bladimir', 'Sanchez', 2222666, '2003-12-18', NULL, '2018-12-30 07:35:21', '2018-12-30 07:35:21'),
-  (4, 'Alexander Bladimir', 'Sosa', 3457678, '2004-01-22', NULL, '2019-01-02 10:22:18', '2019-01-02 10:22:18'),
-  (5, 'Manuel Antonio', 'Rivas', 8908463, '2019-01-24', NULL, '2019-01-02 10:23:12', '2019-01-02 10:23:12'),
-  (6, 'Milton Alexander', 'Sosa', 3437999, '2008-07-10', NULL, '2019-01-04 06:20:52', '2019-01-04 06:20:52'),
-  (7, 'Marcela Beatriz', 'Leiva', 8878684, '2006-09-29', NULL, '2019-01-05 04:31:02', '2019-01-05 04:31:02'),
-  (8, 'Magaly', 'Castillo', 5454345, '2007-10-25', NULL, '2019-01-05 06:34:02', '2019-01-05 06:34:02'),
-  (9, 'Karla Maria', 'Alvarez', 6654654, '2015-12-19', NULL, '2019-01-05 06:38:29', '2019-01-05 06:38:29'),
-  (10, 'Rosa Maria', 'Velazco', 8658858, '2014-07-16', NULL, '2019-01-05 06:39:09', '2019-01-05 06:39:09'),
-  (11, 'Zulma Azucena', 'Aguilar', 5675899, '2009-08-20', NULL, '2019-01-05 07:28:08', '2019-01-05 07:28:08'),
-  (12, 'Marina Alejandra', 'Sanchez', 5545455, '2003-05-16', NULL, '2019-01-06 05:50:00', '2019-01-06 05:50:00'),
-  (13, 'Arnoldo Gausiano', 'Pérez', 6666666, '2012-12-12', NULL, '2019-01-06 08:22:32', '2019-01-06 21:54:43'),
-  (14, 'Kathya Alejandra', 'Figueroa', 6665656, '2009-05-14', NULL, '2019-01-07 07:08:07', '2019-01-07 07:08:07'),
-  (15, 'Julia Antonia', 'Corena', 4342526, '2008-04-25', NULL, '2019-01-08 22:29:50', '2019-01-08 22:29:50');
+INSERT INTO `alumnos` (`id`, `nombres`, `apellidos`, `no_nie`, `f_nacimiento`, `edad`, `parvularia`, `enfermedad`, `nombre_enfermedad`, `nombre_madre`, `dui_madre`, `ocupacion_madre`, `tel_madre`, `nombre_padre`, `dui_padre`, `ocupacion_padre`, `tel_padre`, `vive_con`, `carta_compro`, `conducta`, `rendimiento`, `nuevo_in`, `esc_procedencia`, `municipio`, `created_at`, `updated_at`) VALUES
+  (1, 'Emely Valeria', 'Martinez', 1111111, '2002-02-15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-12-30 06:25:11', '2018-12-30 06:25:11'),
+  (2, 'Denis Alejandro', 'Martinez', 3333333, '2003-03-26', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-12-30 06:27:50', '2018-12-30 06:27:50'),
+  (3, 'Alexander Bladimir', 'Sanchez', 2222666, '2003-12-18', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-12-30 07:35:21', '2018-12-30 07:35:21'),
+  (4, 'Alexander Bladimir', 'Sosa', 3457678, '2004-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-02 10:22:18', '2019-01-02 10:22:18'),
+  (5, 'Manuel Antonio', 'Rivas', 8908463, '2019-01-24', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-02 10:23:12', '2019-01-02 10:23:12'),
+  (6, 'Milton Alexander', 'Sosa', 3437999, '2008-07-10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-04 06:20:52', '2019-01-04 06:20:52'),
+  (7, 'Marcela Beatriz', 'Leiva', 8878684, '2006-09-29', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-05 04:31:02', '2019-01-05 04:31:02'),
+  (8, 'Magaly', 'Castillo', 5454345, '2007-10-25', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-05 06:34:02', '2019-01-05 06:34:02'),
+  (9, 'Karla Maria', 'Alvarez', 6654654, '2015-12-19', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-05 06:38:29', '2019-01-05 06:38:29'),
+  (10, 'Rosa Maria', 'Velazco', 8658858, '2014-07-16', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-05 06:39:09', '2019-01-05 06:39:09'),
+  (11, 'Zulma Azucena', 'Aguilar', 5675899, '2009-08-20', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-05 07:28:08', '2019-01-05 07:28:08'),
+  (12, 'Marina Alejandra', 'Sanchez', 5545455, '2003-05-16', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-06 05:50:00', '2019-01-06 05:50:00'),
+  (14, 'Kathya Alejandra', 'Figueroa', 6665656, '2009-05-14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-07 07:08:07', '2019-01-07 07:08:07'),
+  (17, 'Ana Maria', 'Juarez Perez', 4567864, '2010-01-08', NULL, 'Si', 'Si', 'Enfermedad Cambio', 'Ana Juearez', NULL, NULL, 72781466, 'Juan Pérez', NULL, NULL, NULL, 'Ambos', 'Si', NULL, 'Excelente', 'No', 'Otra escuela', 'Santo Tomas', '2019-01-16 03:47:01', '2019-01-16 04:34:28');
 /*!40000 ALTER TABLE `alumnos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.asignaciones
@@ -172,10 +289,10 @@ CREATE TABLE IF NOT EXISTS `asignaciones` (
   CONSTRAINT `asignaciones_ibfk_2` FOREIGN KEY (`id_docente`) REFERENCES `docentes` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.asignaciones: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.asignaciones: ~9 rows (aproximadamente)
 /*!40000 ALTER TABLE `asignaciones` DISABLE KEYS */;
 INSERT INTO `asignaciones` (`id`, `id_docente`, `id_grado`, `anio`, `created_at`, `updated_at`) VALUES
-  (1, 1, 2, 2018, '2018-12-30 06:27:14', '2018-12-30 06:27:14'),
+  (1, 1, 1, 2018, '2018-12-30 06:27:14', '2018-12-30 06:27:14'),
   (2, 2, 3, 2019, '2019-01-02 10:27:29', '2019-01-02 10:27:29'),
   (3, 1, 1, 2019, '2019-01-04 06:19:57', '2019-01-04 06:19:57'),
   (4, 3, 5, 2018, '2019-01-05 06:36:07', '2019-01-05 07:14:14'),
@@ -200,7 +317,7 @@ CREATE TABLE IF NOT EXISTS `asignacion_alumnos_notas` (
   KEY `id_alumno` (`id_alumno`),
   CONSTRAINT `asignacion_alumnos_notas_ibfk_1` FOREIGN KEY (`id_asignacion`) REFERENCES `asignaciones` (`id`),
   CONSTRAINT `asignacion_alumnos_notas_ibfk_2` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- Volcando datos para la tabla centroescolar.asignacion_alumnos_notas: ~14 rows (aproximadamente)
 /*!40000 ALTER TABLE `asignacion_alumnos_notas` DISABLE KEYS */;
@@ -210,15 +327,14 @@ INSERT INTO `asignacion_alumnos_notas` (`id`, `id_asignacion`, `id_alumno`, `ani
   (3, 1, 3, 2018, 'Aprobado', '2018-12-30 07:35:38', '2018-12-30 07:35:38'),
   (4, 2, 5, 2019, 'En curso', '2019-01-02 10:28:17', '2019-01-02 10:28:17'),
   (5, 2, 4, 2019, 'En curso', '2019-01-02 10:28:25', '2019-01-02 10:28:25'),
-  (6, 3, 6, 2019, 'En curso', '2019-01-04 07:10:55', '2019-01-04 07:10:55'),
-  (7, 3, 7, 2019, 'En curso', '2019-01-05 04:31:59', '2019-01-05 04:31:59'),
+  (6, 3, 6, 2019, 'Aprobado', '2019-01-04 07:10:55', '2019-01-13 03:47:41'),
+  (7, 3, 7, 2019, 'Reprobado', '2019-01-05 04:31:59', '2019-01-16 07:43:56'),
   (8, 4, 9, 2018, 'Aprobado', '2019-01-05 06:39:45', '2019-01-05 06:39:45'),
   (9, 4, 10, 2018, 'Reprobado', '2019-01-05 06:39:55', '2019-01-05 06:39:55'),
   (10, 5, 11, 2018, 'Aprobado', '2019-01-05 07:33:03', '2019-01-05 07:33:03'),
-  (14, 3, 8, 2019, 'En curso', '2019-01-06 08:41:08', '2019-01-06 08:41:08'),
-  (15, 3, 14, 2019, 'En curso', '2019-01-07 07:09:49', '2019-01-07 07:11:34'),
-  (16, 3, 12, 2019, 'En curso', '2019-01-07 07:23:34', '2019-01-07 07:23:34'),
-  (19, 3, 9, 2019, NULL, '2019-01-12 07:20:53', '2019-01-12 07:20:53');
+  (14, 3, 8, 2019, 'Reprobado', '2019-01-06 08:41:08', '2019-01-16 07:43:56'),
+  (15, 3, 14, 2019, 'Reprobado', '2019-01-07 07:09:49', '2019-01-16 07:43:56'),
+  (16, 3, 12, 2019, 'Reprobado', '2019-01-07 07:23:34', '2019-01-16 07:43:56');
 /*!40000 ALTER TABLE `asignacion_alumnos_notas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.asignacion_conductas
@@ -287,9 +403,9 @@ CREATE TABLE IF NOT EXISTS `asignacion_notas` (
   CONSTRAINT `asignacion_notas_ibfk_1` FOREIGN KEY (`id_asignacion_alumno`) REFERENCES `asignacion_alumnos_notas` (`id`),
   CONSTRAINT `asignacion_notas_ibfk_2` FOREIGN KEY (`id_materia`) REFERENCES `materias` (`id`),
   CONSTRAINT `asignacion_notas_ibfk_3` FOREIGN KEY (`id_trimestre`) REFERENCES `trimestres` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.asignacion_notas: ~33 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.asignacion_notas: ~107 rows (aproximadamente)
 /*!40000 ALTER TABLE `asignacion_notas` DISABLE KEYS */;
 INSERT INTO `asignacion_notas` (`id`, `id_materia`, `id_asignacion_alumno`, `id_trimestre`, `nota_trimestral`, `trimestre`, `created_at`, `updated_at`) VALUES
   (1, 1, 1, 1, 0.18, NULL, '2018-12-30 06:29:48', '2019-01-02 07:30:06'),
@@ -326,7 +442,82 @@ INSERT INTO `asignacion_notas` (`id`, `id_materia`, `id_asignacion_alumno`, `id_
   (32, 4, 7, 1, 7.33, NULL, '2019-01-11 18:24:00', '2019-01-11 18:24:00'),
   (33, 4, 14, 1, 7.68, NULL, '2019-01-11 18:24:00', '2019-01-11 18:24:00'),
   (34, 4, 15, 1, 7.33, NULL, '2019-01-11 18:24:00', '2019-01-11 18:24:00'),
-  (35, 4, 16, 1, 7.53, NULL, '2019-01-11 18:24:00', '2019-01-11 18:24:00');
+  (35, 4, 16, 1, 7.53, NULL, '2019-01-11 18:24:00', '2019-01-11 18:24:00'),
+  (36, 1, 6, 3, 5.4, NULL, '2019-01-13 00:59:48', '2019-01-13 04:55:59'),
+  (37, 1, 7, 3, 6.07, NULL, '2019-01-13 00:59:49', '2019-01-13 00:59:49'),
+  (38, 1, 14, 3, 5.92, NULL, '2019-01-13 00:59:49', '2019-01-13 00:59:49'),
+  (39, 1, 15, 3, 6.8, NULL, '2019-01-13 00:59:49', '2019-01-13 00:59:49'),
+  (40, 1, 16, 3, 8.35, NULL, '2019-01-13 00:59:49', '2019-01-13 00:59:49'),
+  (41, 1, 6, 4, 7.36, NULL, '2019-01-13 02:05:51', '2019-01-13 04:56:12'),
+  (42, 1, 7, 4, 7.28, NULL, '2019-01-13 02:05:51', '2019-01-13 02:05:51'),
+  (43, 1, 14, 4, 7.33, NULL, '2019-01-13 02:05:51', '2019-01-13 02:05:51'),
+  (44, 1, 15, 4, 7.51, NULL, '2019-01-13 02:05:51', '2019-01-13 02:05:51'),
+  (45, 1, 16, 4, 7.48, NULL, '2019-01-13 02:05:51', '2019-01-13 02:05:51'),
+  (46, 2, 6, 4, 8.21, NULL, '2019-01-13 02:05:51', '2019-01-13 02:15:43'),
+  (47, 2, 7, 4, 7.18, NULL, '2019-01-13 02:05:51', '2019-01-13 05:41:54'),
+  (48, 2, 14, 4, 2.67, NULL, '2019-01-13 02:05:51', '2019-01-13 02:05:51'),
+  (49, 2, 15, 4, 2.67, NULL, '2019-01-13 02:05:51', '2019-01-13 02:05:51'),
+  (50, 2, 16, 4, 2.67, NULL, '2019-01-13 02:05:51', '2019-01-13 02:05:51'),
+  (51, 3, 6, 4, 7.14, NULL, '2019-01-13 02:05:51', '2019-01-13 02:20:47'),
+  (52, 3, 7, 4, 2.33, NULL, '2019-01-13 02:05:51', '2019-01-13 02:05:51'),
+  (53, 3, 14, 4, 2.33, NULL, '2019-01-13 02:05:51', '2019-01-13 02:05:51'),
+  (54, 3, 15, 4, 2.33, NULL, '2019-01-13 02:05:51', '2019-01-13 02:05:51'),
+  (55, 3, 16, 4, 2.33, NULL, '2019-01-13 02:05:51', '2019-01-13 02:05:51'),
+  (56, 4, 6, 4, 7.49, NULL, '2019-01-13 02:05:51', '2019-01-13 02:15:43'),
+  (57, 4, 7, 4, 2.44, NULL, '2019-01-13 02:05:51', '2019-01-13 02:05:51'),
+  (58, 4, 14, 4, 2.56, NULL, '2019-01-13 02:05:51', '2019-01-13 02:05:51'),
+  (59, 4, 15, 4, 2.44, NULL, '2019-01-13 02:05:51', '2019-01-13 02:05:51'),
+  (60, 4, 16, 4, 2.51, NULL, '2019-01-13 02:05:51', '2019-01-13 02:05:51'),
+  (61, 2, 6, 2, 9, NULL, '2019-01-13 02:08:55', '2019-01-13 02:08:55'),
+  (62, 2, 7, 2, 6.12, NULL, '2019-01-13 02:08:55', '2019-01-13 05:41:00'),
+  (63, 2, 14, 2, 0, NULL, '2019-01-13 02:08:55', '2019-01-13 02:08:55'),
+  (64, 2, 15, 2, 0, NULL, '2019-01-13 02:08:55', '2019-01-13 02:08:55'),
+  (65, 2, 16, 2, 0, NULL, '2019-01-13 02:08:56', '2019-01-13 02:08:56'),
+  (66, 4, 6, 3, 7.68, NULL, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (67, 4, 7, 3, 0, NULL, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (68, 4, 14, 3, 0, NULL, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (69, 4, 15, 3, 0, NULL, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (70, 4, 16, 3, 0, NULL, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (71, 2, 6, 3, 7.62, NULL, '2019-01-13 02:14:03', '2019-01-13 02:14:03'),
+  (72, 2, 7, 3, 7.42, NULL, '2019-01-13 02:14:03', '2019-01-13 05:41:38'),
+  (73, 2, 14, 3, 0, NULL, '2019-01-13 02:14:03', '2019-01-13 02:14:03'),
+  (74, 2, 15, 3, 0, NULL, '2019-01-13 02:14:03', '2019-01-13 02:14:03'),
+  (75, 2, 16, 3, 0, NULL, '2019-01-13 02:14:03', '2019-01-13 02:14:03'),
+  (76, 4, 6, 2, 7.1, NULL, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (77, 4, 7, 2, 0, NULL, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (78, 4, 14, 2, 0, NULL, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (79, 4, 15, 2, 0, NULL, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (80, 4, 16, 2, 0, NULL, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (81, 3, 6, 2, 8.48, NULL, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (82, 3, 7, 2, 0, NULL, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (83, 3, 14, 2, 0, NULL, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (84, 3, 15, 2, 0, NULL, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (85, 3, 16, 2, 0, NULL, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (86, 3, 6, 3, 5.95, NULL, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (87, 3, 7, 3, 0, NULL, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (88, 3, 14, 3, 0, NULL, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (89, 3, 15, 3, 0, NULL, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (90, 3, 16, 3, 0, NULL, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (91, 5, 6, 4, 7.17, NULL, '2019-01-13 03:11:51', '2019-01-13 03:47:41'),
+  (92, 5, 7, 4, 5.17, NULL, '2019-01-13 03:11:51', '2019-01-16 07:43:56'),
+  (93, 5, 14, 4, 0, NULL, '2019-01-13 03:11:51', '2019-01-13 03:11:51'),
+  (94, 5, 15, 4, 0, NULL, '2019-01-13 03:11:51', '2019-01-13 03:11:51'),
+  (95, 5, 16, 4, 0, NULL, '2019-01-13 03:11:51', '2019-01-13 03:11:51'),
+  (96, 5, 6, 1, 8.4, NULL, '2019-01-13 03:46:11', '2019-01-13 03:46:11'),
+  (97, 5, 7, 1, 7.9, NULL, '2019-01-13 03:46:11', '2019-01-13 04:10:16'),
+  (98, 5, 14, 1, 0, NULL, '2019-01-13 03:46:11', '2019-01-13 03:46:11'),
+  (99, 5, 15, 1, 0, NULL, '2019-01-13 03:46:11', '2019-01-13 03:46:11'),
+  (100, 5, 16, 1, 0, NULL, '2019-01-13 03:46:11', '2019-01-13 03:46:11'),
+  (101, 5, 6, 2, 5.9, NULL, '2019-01-13 03:46:36', '2019-01-13 03:46:36'),
+  (102, 5, 7, 2, 7.62, NULL, '2019-01-13 03:46:36', '2019-01-16 07:43:26'),
+  (103, 5, 14, 2, 0, NULL, '2019-01-13 03:46:36', '2019-01-13 03:46:36'),
+  (104, 5, 15, 2, 0, NULL, '2019-01-13 03:46:36', '2019-01-13 03:46:36'),
+  (105, 5, 16, 2, 0, NULL, '2019-01-13 03:46:36', '2019-01-13 03:46:36'),
+  (106, 5, 6, 3, 7.22, NULL, '2019-01-13 03:47:27', '2019-01-13 03:47:27'),
+  (107, 5, 7, 3, 0, NULL, '2019-01-13 03:47:27', '2019-01-13 03:47:27'),
+  (108, 5, 14, 3, 0, NULL, '2019-01-13 03:47:28', '2019-01-13 03:47:28'),
+  (109, 5, 15, 3, 0, NULL, '2019-01-13 03:47:28', '2019-01-13 03:47:28'),
+  (110, 5, 16, 3, 0, NULL, '2019-01-13 03:47:28', '2019-01-13 03:47:28');
 /*!40000 ALTER TABLE `asignacion_notas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.conductas
@@ -372,9 +563,9 @@ CREATE TABLE IF NOT EXISTS `docentes` (
   PRIMARY KEY (`id`),
   KEY `id_usuario` (`id_usuario`),
   CONSTRAINT `docentes_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.docentes: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.docentes: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `docentes` DISABLE KEYS */;
 INSERT INTO `docentes` (`id`, `id_usuario`, `no_escalafon`, `no_dui`, `telefono`, `direccion`, `created_at`, `updated_at`) VALUES
   (1, 1, 1458799, '1234565498', '72781466', 'Km. 11.5, casa  4,  El Porvenir, Caserío Cuesta de la Cruz.', '2018-12-30 06:24:44', '2018-12-30 06:24:44'),
@@ -396,7 +587,7 @@ CREATE TABLE IF NOT EXISTS `grados` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.grados: ~12 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.grados: ~14 rows (aproximadamente)
 /*!40000 ALTER TABLE `grados` DISABLE KEYS */;
 INSERT INTO `grados` (`id`, `nombre`, `seccion`, `capacidad`, `created_at`, `updated_at`) VALUES
   (1, 'Primero', 'A', 30, '2018-12-30 06:25:28', '2018-12-30 06:25:28'),
@@ -422,7 +613,7 @@ CREATE TABLE IF NOT EXISTS `materias` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- Volcando datos para la tabla centroescolar.materias: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `materias` DISABLE KEYS */;
@@ -430,7 +621,8 @@ INSERT INTO `materias` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
   (1, 'Matemática', '2018-12-30 06:26:07', '2018-12-30 06:26:07'),
   (2, 'Ciencias Naturales', '2018-12-30 06:26:12', '2018-12-30 06:26:12'),
   (3, 'Lenguaje', '2018-12-30 06:26:21', '2018-12-30 06:26:21'),
-  (4, 'Ciencias Sociales', '2018-12-30 06:26:34', '2018-12-30 06:26:34');
+  (4, 'Ciencias Sociales', '2018-12-30 06:26:34', '2018-12-30 06:26:34'),
+  (5, 'Educación Física', '2019-01-13 03:10:45', '2019-01-13 03:10:45');
 /*!40000 ALTER TABLE `materias` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.permisos
@@ -477,9 +669,9 @@ CREATE TABLE IF NOT EXISTS `pruebas` (
   PRIMARY KEY (`id`),
   KEY `id_asignacion_notas` (`id_asignacion_notas`),
   CONSTRAINT `pruebas_ibfk_1` FOREIGN KEY (`id_asignacion_notas`) REFERENCES `asignacion_notas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.pruebas: ~35 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.pruebas: ~79 rows (aproximadamente)
 /*!40000 ALTER TABLE `pruebas` DISABLE KEYS */;
 INSERT INTO `pruebas` (`id`, `id_asignacion_notas`, `laboratorio`, `examen`, `promedio_p`, `prom_p_porcent`, `created_at`, `updated_at`) VALUES
   (1, 1, 0, 0, 0, 0, '2018-12-30 06:29:48', '2018-12-30 06:29:48'),
@@ -516,7 +708,57 @@ INSERT INTO `pruebas` (`id`, `id_asignacion_notas`, `laboratorio`, `examen`, `pr
   (32, 32, 8, 7, 7.5, 2.25, '2019-01-11 18:24:00', '2019-01-11 18:24:00'),
   (33, 33, 7, 8, 7.5, 2.25, '2019-01-11 18:24:00', '2019-01-11 18:24:00'),
   (34, 34, 8, 7, 7.5, 2.25, '2019-01-11 18:24:00', '2019-01-11 18:24:00'),
-  (35, 35, 7, 7, 7, 2.1, '2019-01-11 18:24:00', '2019-01-11 18:24:00');
+  (35, 35, 7, 7, 7, 2.1, '2019-01-11 18:24:00', '2019-01-11 18:24:00'),
+  (36, 36, 1, 0, 0.5, 0.15, '2019-01-13 00:59:48', '2019-01-13 04:55:59'),
+  (37, 37, 7, 9, 8, 2.4, '2019-01-13 00:59:49', '2019-01-13 00:59:49'),
+  (38, 38, 6, 2, 4, 1.2, '2019-01-13 00:59:49', '2019-01-13 00:59:49'),
+  (39, 39, 7, 8, 7.5, 2.25, '2019-01-13 00:59:49', '2019-01-13 00:59:49'),
+  (40, 40, 7, 9, 8, 2.4, '2019-01-13 00:59:49', '2019-01-13 00:59:49'),
+  (41, 61, 9, 9, 9, 2.7, '2019-01-13 02:08:55', '2019-01-13 02:08:55'),
+  (42, 62, 3, 4, 3.5, 1.05, '2019-01-13 02:08:55', '2019-01-13 05:41:00'),
+  (43, 63, 0, 0, 0, 0, '2019-01-13 02:08:55', '2019-01-13 02:08:55'),
+  (44, 64, 0, 0, 0, 0, '2019-01-13 02:08:55', '2019-01-13 02:08:55'),
+  (45, 65, 0, 0, 0, 0, '2019-01-13 02:08:56', '2019-01-13 02:08:56'),
+  (46, 66, 7, 8, 7.5, 2.25, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (47, 67, 0, 0, 0, 0, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (48, 68, 0, 0, 0, 0, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (49, 69, 0, 0, 0, 0, '2019-01-13 02:09:35', '2019-01-13 02:09:35'),
+  (50, 70, 0, 0, 0, 0, '2019-01-13 02:09:36', '2019-01-13 02:09:36'),
+  (51, 71, 8, 9, 8.5, 2.55, '2019-01-13 02:14:03', '2019-01-13 02:14:03'),
+  (52, 72, 9, 9, 9, 2.7, '2019-01-13 02:14:03', '2019-01-13 05:41:38'),
+  (53, 73, 0, 0, 0, 0, '2019-01-13 02:14:03', '2019-01-13 02:14:03'),
+  (54, 74, 0, 0, 0, 0, '2019-01-13 02:14:03', '2019-01-13 02:14:03'),
+  (55, 75, 0, 0, 0, 0, '2019-01-13 02:14:03', '2019-01-13 02:14:03'),
+  (56, 76, 5, 5, 5, 1.5, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (57, 77, 0, 0, 0, 0, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (58, 78, 0, 0, 0, 0, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (59, 79, 0, 0, 0, 0, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (60, 80, 0, 0, 0, 0, '2019-01-13 02:14:56', '2019-01-13 02:14:56'),
+  (61, 81, 9, 9, 9, 2.7, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (62, 82, 0, 0, 0, 0, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (63, 83, 0, 0, 0, 0, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (64, 84, 0, 0, 0, 0, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (65, 85, 0, 0, 0, 0, '2019-01-13 02:15:37', '2019-01-13 02:15:37'),
+  (66, 86, 0, 0, 0, 0, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (67, 87, 0, 0, 0, 0, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (68, 88, 0, 0, 0, 0, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (69, 89, 0, 0, 0, 0, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (70, 90, 0, 0, 0, 0, '2019-01-13 02:20:24', '2019-01-13 02:20:24'),
+  (71, 96, 7, 7, 7, 2.1, '2019-01-13 03:46:11', '2019-01-13 03:46:11'),
+  (72, 97, 7, 6, 6.5, 1.95, '2019-01-13 03:46:11', '2019-01-13 04:10:16'),
+  (73, 98, 0, 0, 0, 0, '2019-01-13 03:46:11', '2019-01-13 03:46:11'),
+  (74, 99, 0, 0, 0, 0, '2019-01-13 03:46:11', '2019-01-13 03:46:11'),
+  (75, 100, 0, 0, 0, 0, '2019-01-13 03:46:11', '2019-01-13 03:46:11'),
+  (76, 101, 5, 4, 4.5, 1.35, '2019-01-13 03:46:36', '2019-01-13 03:46:36'),
+  (77, 102, 9, 8, 8.5, 2.55, '2019-01-13 03:46:36', '2019-01-16 07:43:26'),
+  (78, 103, 0, 0, 0, 0, '2019-01-13 03:46:36', '2019-01-13 03:46:36'),
+  (79, 104, 0, 0, 0, 0, '2019-01-13 03:46:36', '2019-01-13 03:46:36'),
+  (80, 105, 0, 0, 0, 0, '2019-01-13 03:46:36', '2019-01-13 03:46:36'),
+  (81, 106, 6, 6, 6, 1.8, '2019-01-13 03:47:27', '2019-01-13 03:47:27'),
+  (82, 107, 0, 0, 0, 0, '2019-01-13 03:47:28', '2019-01-13 03:47:28'),
+  (83, 108, 0, 0, 0, 0, '2019-01-13 03:47:28', '2019-01-13 03:47:28'),
+  (84, 109, 0, 0, 0, 0, '2019-01-13 03:47:28', '2019-01-13 03:47:28'),
+  (85, 110, 0, 0, 0, 0, '2019-01-13 03:47:28', '2019-01-13 03:47:28');
 /*!40000 ALTER TABLE `pruebas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla centroescolar.roles
@@ -557,9 +799,9 @@ CREATE TABLE IF NOT EXISTS `trimestres` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.trimestres: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.trimestres: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `trimestres` DISABLE KEYS */;
 INSERT INTO `trimestres` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
   (1, 'Primer', '2018-12-11 01:53:59', '2018-12-11 01:53:59'),
@@ -579,17 +821,18 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- Volcando datos para la tabla centroescolar.users: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla centroescolar.users: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `usuario`, `name`, `password`, `email`, `remember_token`, `created_at`, `updated_at`) VALUES
-  (1, 'LeoSerpas', 'Leonardo Serpas', '$2y$10$jSBFR7EyhToLmz3OlLZnrOZXN34ZdOZzgLBAwNFAQZahqOAcehcU.', 'leon_s054@hotmail.com', '68VLpHeVtJDx9mX1d7mQZOXiUniCciSHjJYqL07IisVcCAsntxYihNdhZoix', '2018-12-30 06:23:36', '2018-12-30 06:23:36'),
+  (1, 'LeoSerpas', 'Leonardo Serpas', '$2y$10$jSBFR7EyhToLmz3OlLZnrOZXN34ZdOZzgLBAwNFAQZahqOAcehcU.', 'leon_s054@hotmail.com', 'xyqdOtnW6KaGKxubGpLhDIqvyRZDzXeMuI6D8uxNHTlltuddllIBCCT2dB4h', '2018-12-30 06:23:36', '2018-12-30 06:23:36'),
   (2, 'Karen Elvira Peñate', 'Karen Elvira Peñate Aviles', '$2y$10$ASHxsXpE8/rG.6C3zQYdrepzpw7KyTp37Om0p0XI/4dfTA3jdl0CW', 'karen.penate@ues.edu.sv', 'Kc4Atzo0izRA2PeopI0zsNuByQxpaTpQ2HHm38dyVzLFIjlYirTkYksBY0np', '2019-01-02 10:20:56', '2019-01-02 10:20:56'),
   (3, 'MarthaCorena', 'Martha Julia Corena', '$2y$10$tsFyg3bksGo0.DtyDh6E.uELBPQPYTEiXMdzbR.Stkv46ThLREwe2', 'martha123@hotmail.com', 'Dy0xyBvdCaf1kNUocLmLdDkkxFXfZt3qYBSE0ZRTFGOF4q2Zpit14wWjy9YX', '2019-01-05 06:33:27', '2019-01-05 06:33:27'),
   (4, 'CVeronica', 'Claudia Veronica Campos', '$2y$10$nuEJyB4NK0B79ejHCWjsTe0Vre0Ii7Ryk0rr1CoOwzxA2GRfOMd8.', 'veronica123@hotmail.com', 'KHJ1BokO0lbW3hE4V0Lim0LL8Qsnvqt3KHqXVv1LSB92ToKDghU1vSwsBdf6', '2019-01-05 07:26:57', '2019-01-05 07:26:57'),
   (5, 'Hernandez', 'Karla Maria', '$2y$10$b.0MV5C.R6wNAwAUjzMO9Orjsy3g.rHKe8yTTMV1xu1ev0O4k5IX.', 'karla123@hotmail.com', 'D2YG0KdQyN29ACkbtqMrHfGgrdpI3yi1GoU4pGGlm6pdCGfoNVCBen2QYW38', '2019-01-07 01:43:36', '2019-01-07 01:43:36'),
-  (6, 'Mejía Hernandez', 'Christopher Alexander', '$2y$10$6J..wSjEqrfe.sqUvDNsFeCqvOKRZFFVjKrynFS.beNTSkhMp9.uG', 'alexander123@hotmail.com', 'NLvpn79WrY5MpUZ2KajbtMRwxwezCbIsgzNz1uBHzAk17BTssZDVl1uYMGNS', '2019-01-08 20:06:48', '2019-01-08 20:06:48');
+  (6, 'Mejía Hernandez', 'Christopher Alexander', '$2y$10$6J..wSjEqrfe.sqUvDNsFeCqvOKRZFFVjKrynFS.beNTSkhMp9.uG', 'alexander123@hotmail.com', 'NLvpn79WrY5MpUZ2KajbtMRwxwezCbIsgzNz1uBHzAk17BTssZDVl1uYMGNS', '2019-01-08 20:06:48', '2019-01-08 20:06:48'),
+  (7, 'DocentePrueba', 'Docente de Prueba', '$2y$10$087DinEBw8Zjs2Iep7..aeBRD06GZAwakWb0rR6hXjEo0wTwXCuPC', 'docente_prueba@hotmail.com', NULL, '2019-01-16 07:59:04', '2019-01-16 07:59:04');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
