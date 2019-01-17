@@ -69,7 +69,7 @@
                </th>
                <th style="text-align:center">Prom. Trimestre 2
                </th>
-               <th style="text-align:center">Prom. Trimestre 4
+               <th style="text-align:center">Prom. Trimestre 3
                </th>
                <th style="text-align:center">Promedio Final
                </th>
@@ -118,7 +118,7 @@
                         </th>
                         <th with="80px" style="text-align:center">TM Trim. 1
                         </th>
-                        <th with="80px" style="text-align:center">TM Trim. 3
+                        <th with="80px" style="text-align:center">TM Trim. 2
                         </th>
                         <th with="80px" style="text-align:center">TM Trim. 3
                         </th>

@@ -178,7 +178,7 @@
         </div>        
 
 <div class="text-center">
-<a class="btn btn-primary" href="{{ url('/asignacionNotas.index') }}">Regresar</a>
+<a class="btn btn-primary" href="{{ url('/asignacionNotas') }}">Regresar</a>
 </div>
 
 @endsection

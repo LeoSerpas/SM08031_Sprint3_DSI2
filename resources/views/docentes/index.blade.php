@@ -30,6 +30,7 @@
    {!! Form::close()!!}
 </div>
 <br>
+<div class="table-responsive">
 <table class="table table-striped" style="text-align:center" >
    <tr>
       <th with="80px">No</th>
@@ -63,6 +64,7 @@
    </tr>
    @endforeach
 </table>
+</div>
 {!!$docentes->render()!!}
 <div class="text-center">
    <a href="{{ url('/gestion') }}" class="btn btn-primary ">

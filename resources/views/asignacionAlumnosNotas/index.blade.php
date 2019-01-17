@@ -324,6 +324,7 @@
                <th style="text-align:center">Grado</th>
                <th style="text-align:center">Docente</th>
                <th style="text-align:center">Año</th>
+               <th style="text-align:center">Estado academico</th>
                <th style="text-align:center">Acciones</th>
             </tr>
             <?php $no=1; ?>
