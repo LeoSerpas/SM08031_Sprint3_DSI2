@@ -1,13 +1,13 @@
 <?php
 namespace App\Http\Controllers;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\AsignacionAlumnosNotas;
 use App\Asignaciones;
 use App\Alumnos;
 use App\Docentes;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Grados;
 use App\Materias;
 use App\AsignacionNotas;
@@ -28,11 +28,12 @@ class AsignacionAlumnosNotasController extends Controller
         $asignaciones = Asignaciones::all();
         $alumnos = Alumnos::all();
         $nombre =$request->get('nombre');
-        $asi = \Auth::user()->docente;
+        $asi = Auth::user()->docente;
         $asignacionAl = AsignacionAlumnosNotas::all();
         $asignacionAlumnosNotas = AsignacionAlumnosNotas::orderBy('id','desc')->nombre($nombre)->paginate(10);
         $docentes= Docentes::all();
         $grados = Grados::all();
+        $asignacion_alumnos = Auth::user()->docente->asignacion;
 
         //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
         $asig_docente = $asignaciones->where('id_docente', $asi->id)->where('anio', $Y )->first();
@@ -87,21 +88,21 @@ class AsignacionAlumnosNotasController extends Controller
           $mismo_grado_año_anterior = $grados->where('nombre', 'Preparatoria');
         if ($grado_actual->nombre == 'Primero')
           $mismo_grado_año_anterior = $grados->where('nombre', 'Primero');
-        if($grado_actual->nombre == 'Segundo') 
+        if($grado_actual->nombre == 'Segundo')
           $mismo_grado_año_anterior = $grados->where('nombre', 'Segundo'); 
         if($grado_actual->nombre == 'Tercero') 
           $mismo_grado_año_anterior = $grados->where('nombre', 'Tercero');
         if($grado_actual->nombre == 'Cuarto') 
           $mismo_grado_año_anterior = $grados->where('nombre', 'Cuarto');
-        if($grado_actual->nombre == 'Quinto') 
+        if($grado_actual->nombre == 'Quinto')
           $mismo_grado_año_anterior = $grados->where('nombre', 'Quinto');
-        if($grado_actual->nombre == 'Sexto') 
+        if($grado_actual->nombre == 'Sexto')
           $mismo_grado_año_anterior = $grados->where('nombre', 'Sexto');
-        if($grado_actual->nombre == 'Séptimo') 
+        if($grado_actual->nombre == 'Séptimo')
           $mismo_grado_año_anterior = $grados->where('nombre', 'Séptimo');
-        if($grado_actual->nombre == 'Octavo') 
+        if($grado_actual->nombre == 'Octavo')
           $mismo_grado_año_anterior = $grados->where('nombre', 'Octavo');
-        if($grado_actual->nombre == 'Noveno') 
+        if($grado_actual->nombre == 'Noveno')
           $mismo_grado_año_anterior = $grados->where('nombre', 'Noveno');
                   } 
         return view('asignacionAlumnosNotas.index',compact('asignacionAlumnosNotas','asignaciones','alumnos','asignacion_alumnos','docentes','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior'));
@@ -117,16 +118,12 @@ class AsignacionAlumnosNotasController extends Controller
         $asignaciones = Asignaciones::all();
         //$alumnos = Alumnos::all();
         $alumnos = DB::table('alumnos')
-                ->whereNotExists(function ($query)
-                    {
-                        $query->select(DB::raw(1))
-                        ->from('asignacion_alumnos_notas')
-                        ->whereRaw('asignacion_alumnos_notas.id_alumno = alumnos.id');
-                    })
-                    ->get();
+        ->leftJoin('asignacion_alumnos_notas', 'alumnos.id', '=', 'asignacion_alumnos_notas.id_alumno')
+        ->whereNull('asignacion_alumnos_notas.id_alumno')
+        ->get();
 
         $asig_Alumno_all =AsignacionAlumnosNotas::all();
-        $asignacion_alumnos = \Auth::user()->docente->asignacion;
+        $asignacion_alumnos = Auth::user()->docente->asignacion;
         return view('asignacionAlumnosNotas.create', compact('asignaciones','alumnos','asignacion_alumnos','asig_Alumno_all'));
     }
 
@@ -139,7 +136,7 @@ class AsignacionAlumnosNotasController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-          'id_asignacion'=>'required|numeric',  
+          'id_asignacion'=>'required|numeric',
           'id_alumno'=>'required|numeric',
           'anio'=>'required|numeric',
           ]);
@@ -147,8 +144,7 @@ class AsignacionAlumnosNotasController extends Controller
         ->where('anio', $request->anio)->exists(); //true or false
         if($asignacionAlumno)
         {
-          return redirect()->route('asignacionAlumnosNotas.index')
-          ->with('error','ERROR!. El Alumno ya ha sido asignado en otro grado en este año!');
+
         }
         //$asignacionAlumno2 = AsignacionAlumnosNotas::where('id_asignacion', $request->id_asignacion)
         //->where('anio', $request->anio)
@@ -158,8 +154,7 @@ class AsignacionAlumnosNotasController extends Controller
         //  return redirect()->route('asignacionAlumnosNotas.index')
         //  ->with('error','ERROR!. El Alumno ya ha sido asignado en un grado que imparte otro Docente!');
         //}
-        AsignacionAlumnosNotas::create($request->all());
-        return redirect()->route('asignacionAlumnosNotas.index')->with('success','Asignacion guardada con éxito');
+
     }
 
     /**
@@ -189,7 +184,7 @@ class AsignacionAlumnosNotasController extends Controller
         $al = Alumnos::find($id);
         $asignacionAlumnoNota = AsignacionAlumnosNotas::find($id);
         $asignacionAl = AsignacionAlumnosNotas::all();
-        $asi = \Auth::user()->docente;
+        $asi = Auth::user()->docente;
         $docentes= Docentes::all();
         $grados = Grados::all();
          //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
@@ -213,7 +208,7 @@ class AsignacionAlumnosNotasController extends Controller
     {
       $asignacionAlumnoNota = AsignacionAlumnosNotas::find($id);
       $asig_Alumno_all =AsignacionAlumnosNotas::all();
-      $asignacion_alumnos = \Auth::user()->docente->asignacion;
+      $asignacion_alumnos = Auth::user()->docente->asignacion;
       $asignaciones = Asignaciones::all();
       $alumnos = Alumnos::all();
         
@@ -249,7 +244,7 @@ class AsignacionAlumnosNotasController extends Controller
     public function alumnosGrado($id)
     {
       AsignacionAlumnosNotas::all();
-      $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
+      $asignacion_alumnos = Auth::user()->docente->asignacion->AsignacionesAlumnos;
 
       return view('asignacionAlumnosNotas.index',compact('nota','id','integradora','cotidiana','asignacion_alumnos'));
     }
@@ -271,7 +266,7 @@ class AsignacionAlumnosNotasController extends Controller
 
       $asignaDocente=Asignaciones::all();
       $Y= date("Y");
-      $asi = \Auth::user()->docente;
+      $asi = Auth::user()->docente;
       $asignacionAl = AsignacionAlumnosNotas::all();
       $docentes= Docentes::all();
       $grados = Grados::all();
@@ -326,7 +321,7 @@ class AsignacionAlumnosNotasController extends Controller
             $estado = 'Reprobado';
           }
           $asignacion_alumno->update(['estado_academico' => $estado] );
-        }          
+        }
       }
       return redirect()->route('asignacionAlumnosNotas.index')->with('success','Cambio de estado academico: Aprobado/Reprobado Realizado Exitosamente');
     }
@@ -339,7 +334,7 @@ class AsignacionAlumnosNotasController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {
             return redirect()->route('asignacionAlumnosNotas.index')
             ->with('error','¡ERROR! La asignación Contiene notas asignadas, no se puede borrar!!');
-        }  
+        }
     }
 }
  

@@ -18,6 +18,7 @@ use App\Conductas;
 use App\Docentes;
 use App\Grados;
 use App\AsignacionConductas;
+use Illuminate\Support\Facades\Auth;
 
 class NotasController extends Controller
 {
@@ -35,10 +36,11 @@ class NotasController extends Controller
         $asignacionNotas=AsignacionNotas::all();
         $trimestral =$request->get('trimestral');
         $notas = AsignacionNotas::orderBy('id','ASC')->trimestral($trimestral)->paginate(10);
+        $asignacion_alumnos = Auth::user()->docente->asignacion;
 
         $asignaDocente=Asignaciones::all();
         $Y= date("Y");
-        $asi = \Auth::user()->docente;
+        $asi = Auth::user()->docente;
         $asignacionAl = AsignacionAlumnosNotas::all();
         $docentes= Docentes::all();
         $grados = Grados::all();
@@ -54,7 +56,7 @@ class NotasController extends Controller
            $grado_actual = null;
         }
 
-        return view('notas.index',compact('notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente','trimestres', 'asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y'));
+        return view('notas.index',compact('notas', 'materias','asignacionNotas','asignaDocente','trimestres', 'asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_actual','Y'));
     }
 
     /**
@@ -199,7 +201,7 @@ class NotasController extends Controller
 
       $asignaDocente=Asignaciones::all();
       $Y= date("Y");
-      $asi = \Auth::user()->docente;
+      $asi = Auth::user()->docente;
       $asignacionAl = AsignacionAlumnosNotas::all();
       $docentes= Docentes::all();
       $grados = Grados::all();
@@ -214,7 +216,7 @@ class NotasController extends Controller
          $asig_alumno = null;
          $grado_actual = null;
       }
-      return view('notas.por_materia',compact('nota','id','trimestre','trimestres','asignacion_alumnos','materias','asignacionNota','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y'));
+      return view('notas.por_materia',compact('id','trimestre','trimestres','materias','asignacionNota','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_actual','Y'));
     }
 
     public function bulk(Request $request, $id, $trimestre)
@@ -291,7 +293,7 @@ class NotasController extends Controller
 
       $asignaDocente=Asignaciones::all();
       $Y= date("Y");
-      $asi = \Auth::user()->docente;
+      $asi = Auth::user()->docente;
       $asignacionAl = AsignacionAlumnosNotas::all();
       $docentes= Docentes::all();
       $grados = Grados::all();
@@ -307,7 +309,7 @@ class NotasController extends Controller
          $grado_actual = null;
       }
       
-      return view('notas.conductas',compact('nota','trimestre','trimestres','asignacion_alumnos','asignacionNota','conductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y'));
+      return view('notas.conductas',compact('trimestre','trimestres','asignacionNota','conductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_actual','Y'));
     }
 
         public function cond(Request $request, $trimestre)
@@ -347,7 +349,7 @@ class NotasController extends Controller
 
       $asignaDocente=Asignaciones::all();
       $Y= date("Y");
-      $asi = \Auth::user()->docente;
+      $asi = Auth::user()->docente;
       $asignacionAl = AsignacionAlumnosNotas::all();
       $docentes= Docentes::all();
       $grados = Grados::all();

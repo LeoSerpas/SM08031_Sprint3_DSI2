@@ -17,6 +17,7 @@ use App\Grados;
 use App\Docentes;
 use App\Conductas;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Auth;
 use App;
 
 class AsignacionNotasController extends Controller
@@ -32,7 +33,7 @@ class AsignacionNotasController extends Controller
         $asignaciones = Asignaciones::all();
         $alumnos = Alumnos::all();
         $nombre =$request->get('nombre');
-        $asi = \Auth::user()->docente;
+        $asi = Auth::user()->docente;
         $asignacionAl = AsignacionAlumnosNotas::all();
         $asignacionAlumnosNotas = AsignacionAlumnosNotas::orderBy('id','desc')->nombre($nombre)->paginate(10);
         $materias = Materias::all();
@@ -48,7 +49,7 @@ class AsignacionNotasController extends Controller
            $asig_alumno = null;
            $grado_actual = null;
         }
-        return view('asignacionNotas.index',compact('asignacionnotas','integradora','cotidiana','prueba','materias','Y','asig_docente','asi','asig_alumno','grado_actual'));
+        return view('asignacionNotas.index',compact('materias','Y','asig_docente','asi','asig_alumno','grado_actual'));
     }
 
     /**
@@ -104,7 +105,7 @@ class AsignacionNotasController extends Controller
         $conductas= Conductas::all();
         $asignaDocente=Asignaciones::all();
         $Y= date("Y");
-        $asi = \Auth::user()->docente;
+        $asi = Auth::user()->docente;
         $asignacionAl = AsignacionAlumnosNotas::all();
         $docentes= Docentes::all();
         $grados = Grados::all();
@@ -158,7 +159,7 @@ class AsignacionNotasController extends Controller
             $mes_año = "DICIEMBRE";
         }
 
-        return view('asignacionNotas/reportes.trimestre1',compact('id','notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente','asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y','mes_año','conductas'));
+        return view('asignacionNotas/reportes.trimestre1',compact('id','notas', 'materias','asignacionNotas','asignaDocente','asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_actual','Y','mes_año','conductas'));
                 
     }
     public function repor1PDF(request $request )
@@ -171,7 +172,7 @@ class AsignacionNotasController extends Controller
         $conductas= Conductas::all();
         $asignaDocente=Asignaciones::all();
         $Y= date("Y");
-        $asi = \Auth::user()->docente;
+        $asi = Auth::user()->docente;
         $asignacionAl = AsignacionAlumnosNotas::all();
         $docentes= Docentes::all();
         $grados = Grados::all();
@@ -238,7 +239,7 @@ class AsignacionNotasController extends Controller
         $conductas= Conductas::all();
         $asignaDocente=Asignaciones::all();
         $Y= date("Y");
-        $asi = \Auth::user()->docente;
+        $asi = Auth::user()->docente;
         $asignacionAl = AsignacionAlumnosNotas::all();
         $docentes= Docentes::all();
         $grados = Grados::all();
@@ -292,7 +293,7 @@ class AsignacionNotasController extends Controller
             $mes_año = "DICIEMBRE";
         }
 
-        return view('asignacionNotas/reportes.trimestre2',compact('id','notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente','asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y','mes_año','conductas'));
+        return view('asignacionNotas/reportes.trimestre2',compact('id','notas', 'materias','asignacionNotas','asignaDocente','asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_actual','Y','mes_año','conductas'));
                 
     }
 
@@ -306,7 +307,7 @@ class AsignacionNotasController extends Controller
         $conductas= Conductas::all();
         $asignaDocente=Asignaciones::all();
         $Y= date("Y");
-        $asi = \Auth::user()->docente;
+        $asi = Auth::user()->docente;
         $asignacionAl = AsignacionAlumnosNotas::all();
         $docentes= Docentes::all();
         $grados = Grados::all();
@@ -360,7 +361,7 @@ class AsignacionNotasController extends Controller
             $mes_año = "DICIEMBRE";
         }
 
-        return view('asignacionNotas/reportes.trimestre3',compact('id','notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente','asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y','mes_año','conductas'));
+        return view('asignacionNotas/reportes.trimestre3',compact('id','notas', 'materias','asignacionNotas','asignaDocente','asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_actual','Y','mes_año','conductas'));
                 
     }
 
@@ -374,7 +375,7 @@ class AsignacionNotasController extends Controller
         $conductas= Conductas::all();
         $asignaDocente=Asignaciones::all();
         $Y= date("Y");
-        $asi = \Auth::user()->docente;
+        $asi = Auth::user()->docente;
         $asignacionAl = AsignacionAlumnosNotas::all();
         $docentes= Docentes::all();
         $grados = Grados::all();
@@ -428,7 +429,7 @@ class AsignacionNotasController extends Controller
             $mes_año = "DICIEMBRE";
         }
 
-        return view('asignacionNotas/reportes.trimestre123',compact('id','notas', 'materias','asignacion_alumnos','asignacionNotas','asignaDocente','asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_anterior','grado_actual','mismo_grado_año_anterior','Y','mes_año','conductas'));
+        return view('asignacionNotas/reportes.trimestre123',compact('id','notas', 'materias','asignacionNotas','asignaDocente','asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_actual','Y','mes_año','conductas'));
                 
     }
 

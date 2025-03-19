@@ -52,6 +52,11 @@ return [
             'prefix' => '',
             'strict' => true,
             'engine' => null,
+            'modes' => [
+        'STRICT_TRANS_TABLES',
+        'ERROR_FOR_DIVISION_BY_ZERO',
+        'NO_ENGINE_SUBSTITUTION',
+    ],
         ],
 
         'pgsql' => [
