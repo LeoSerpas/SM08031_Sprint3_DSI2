@@ -11,8 +11,8 @@ use App\AsignacionNotas;
 use App\Materias;
 use App\AsignacionAlumnosNotas;
 use App\Asignaciones;
-Use App\Alumnos;
-Use App\Trimestre;
+use App\Alumnos;
+use App\Trimestre;
 use notas1\http\Request\NotasRequest;
 use App\Conductas;
 use App\Docentes;
@@ -36,17 +36,16 @@ class NotasController extends Controller
         $asignacionNotas=AsignacionNotas::all();
         $trimestral =$request->get('trimestral');
         $notas = AsignacionNotas::orderBy('id','ASC')->trimestral($trimestral)->paginate(10);
-        $asignacion_alumnos = Auth::user()->docente->asignacion;
 
         $asignaDocente=Asignaciones::all();
-        $Y= date("Y");
+        $year= date("Y");
         $asi = Auth::user()->docente;
         $asignacionAl = AsignacionAlumnosNotas::all();
-        $docentes= Docentes::all();
+        
         $grados = Grados::all();
 
         //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
-        $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $Y )->first();
+        $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $year )->first();
         if ($asig_docente !== null){
             $asig_alumno = $asignacionAl->where('id_asignacion', $asig_docente->id);
             $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
@@ -56,7 +55,7 @@ class NotasController extends Controller
            $grado_actual = null;
         }
 
-        return view('notas.index',compact('notas', 'materias','asignacionNotas','asignaDocente','trimestres', 'asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_actual','Y'));
+        return view('notas.index',compact('notas', 'materias','asignacionNotas','asignaDocente','trimestres', 'asignacionConductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_actual','year'));
     }
 
     /**
@@ -200,14 +199,14 @@ class NotasController extends Controller
       
 
       $asignaDocente=Asignaciones::all();
-      $Y= date("Y");
+      $year= date("Y");
       $asi = Auth::user()->docente;
       $asignacionAl = AsignacionAlumnosNotas::all();
-      $docentes= Docentes::all();
+      
       $grados = Grados::all();
 
       //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
-      $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $Y )->first();
+      $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $year )->first();
       if ($asig_docente !== null){
           $asig_alumno = $asignacionAl->where('id_asignacion', $asig_docente->id);
           $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
@@ -216,7 +215,7 @@ class NotasController extends Controller
          $asig_alumno = null;
          $grado_actual = null;
       }
-      return view('notas.por_materia',compact('id','trimestre','trimestres','materias','asignacionNota','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_actual','Y'));
+      return view('notas.por_materia',compact('id','trimestre','trimestres','materias','asignacionNota','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_actual','year'));
     }
 
     public function bulk(Request $request, $id, $trimestre)
@@ -251,8 +250,8 @@ class NotasController extends Controller
         $filter = array(
           'id_asignacion_notas' => $valor->id,
         );
-        $valor1 = '';
-        $valor1 = ActIntegradoras::updateOrCreate($filter, $inputs);
+        
+        ActIntegradoras::updateOrCreate($filter, $inputs);
 
         $cotidiana=$notas['cotidiana'][$key];
         $inputs = array(
@@ -262,8 +261,8 @@ class NotasController extends Controller
         $filter = array(
           'id_asignacion_notas' => $valor->id,
         );
-        $valor2 = '';
-        $valor2= ActCotidianas::updateOrCreate($filter, $inputs);
+        
+        ActCotidianas::updateOrCreate($filter, $inputs);
 
         $pruebas=$notas['pruebas'][$key];
         $inputs = array(
@@ -276,8 +275,8 @@ class NotasController extends Controller
         $filter = array(
           'id_asignacion_notas' => $valor->id,
         );
-        $valor3 = '';
-        $valor3= Pruebas::updateOrCreate($filter, $inputs);
+        
+        Pruebas::updateOrCreate($filter, $inputs);
 
       }
       return redirect()->route('notas.index')->with('success','Notas ingresadas con éxito');
@@ -292,14 +291,14 @@ class NotasController extends Controller
       $conductas= Conductas::all();
 
       $asignaDocente=Asignaciones::all();
-      $Y= date("Y");
+      $year= date("Y");
       $asi = Auth::user()->docente;
       $asignacionAl = AsignacionAlumnosNotas::all();
-      $docentes= Docentes::all();
+      
       $grados = Grados::all();
 
       //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
-      $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $Y )->first();
+      $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $year )->first();
       if ($asig_docente !== null){
           $asig_alumno = $asignacionAl->where('id_asignacion', $asig_docente->id);
           $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
@@ -309,7 +308,7 @@ class NotasController extends Controller
          $grado_actual = null;
       }
       
-      return view('notas.conductas',compact('trimestre','trimestres','asignacionNota','conductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_actual','Y'));
+      return view('notas.conductas',compact('trimestre','trimestres','asignacionNota','conductas','asi','asignacionAl','grados','asig_alumno', 'asig_docente','grado_actual','year'));
     }
 
         public function cond(Request $request, $trimestre)
@@ -333,80 +332,71 @@ class NotasController extends Controller
         $filter = array(
           'id_asignacion_conductas' => $valor->id,
         );
-        $valor1 = '';
-        $valor1 = Conductas::updateOrCreate($filter, $inputs);
+        
+        Conductas::updateOrCreate($filter, $inputs);
       }
       return redirect()->route('notas.index')->with('success','Notas de Conducta ingresadas con éxito');
     }
 
     public function apro_repro(Request $request)
     {
-      $materias = Materias::all();
-      $trimestres = Trimestre::all();
-      $asignacionNotas=AsignacionNotas::all();
-      $trimestral =$request->get('trimestral');
-      $notas = AsignacionNotas::orderBy('id','ASC')->trimestral($trimestral)->paginate(10);
+        $materias = Materias::all();
+        $trimestral = $request->get('trimestral');
+        AsignacionNotas::orderBy('id', 'ASC')->trimestral($trimestral)->paginate(10);
 
-      $asignaDocente=Asignaciones::all();
-      $Y= date("Y");
-      $asi = Auth::user()->docente;
-      $asignacionAl = AsignacionAlumnosNotas::all();
-      $docentes= Docentes::all();
-      $grados = Grados::all();
+        $asignaDocente = Asignaciones::all();
+        $year = date("Y");
+        $asi = Auth::user()->docente;
+        $asignacionAl = AsignacionAlumnosNotas::all();
 
-      //Para mostrar las asignaciones de alumnos del año Actual del docente logeado
-      $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $Y )->first();
-      if ($asig_docente !== null){
-          $asig_alumno = $asignacionAl->where('id_asignacion', $asig_docente->id);
-          $grado_actual = $grados->where('id', $asig_docente->id_grado)->first();
-      }
-      elseif ($asig_docente == null) {
-         $asig_alumno = null;
-         $grado_actual = null;
-      }
-      foreach ($materias as $ids => $materia){
-        foreach ($asig_alumno as $key => $asignacion_alumno) {
-          $notasAsignada1 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 1 )->first();
-          $notasAsignada2 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 2 )->first();
-          $notasAsignada3 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 3 )->first();
-          $notasAsignada1 = is_null($notasAsignada1) ? '0' : $notasAsignada1->nota_trimestral;
-          $notasAsignada2 = is_null($notasAsignada2) ? '0' : $notasAsignada2->nota_trimestral;
-          $notasAsignada3 = is_null($notasAsignada3) ? '0' : $notasAsignada3->nota_trimestral;
-          $notasAsignada4 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id )->where('id_trimestre', 4 )->first();
-          
-          $prom = round(($notasAsignada1 + $notasAsignada2 + $notasAsignada3)/3, 2);
-          if (is_null($notasAsignada4) ) {
-            AsignacionNotas::create([  
-              'id_materia' => $materia->id,
-              'id_asignacion_alumno' => $asignacion_alumno->id,
-              'id_trimestre' => 4,
-              'nota_trimestral' => $prom,
-            ]);   
-          }
-          else{
-            $notasAsignada4->update(['nota_trimestral'=> $prom]);
-          }
-          //$estado = "Reprobado";
-          //if ($prom >=6) {
-          //  $estado = 'Aprobado';
-          //}
-          //$asignacion_alumno->update(['estado_academico' => $estado] );
+        // Para mostrar las asignaciones de alumnos del año Actual del docente logeado
+        $asig_docente = $asignaDocente->where('id_docente', $asi->id)->where('anio', $year)->first();
+        $asig_alumno = $asig_docente ? $asignacionAl->where('id_asignacion', $asig_docente->id) : null;
+
+        foreach ($materias as $materia) {
+            if ($asig_alumno) {
+                $this->calcularPromedioTrimestral($asig_alumno, $materia);
+            }
         }
-      }
-      foreach ($asig_alumno as $key => $asignacion_alumno){
-        $trimestre_promedio = $asignacion_alumno->AsignacionNotas->where('id_trimestre', 4);
-        $nota_prom = 0;
-        //$total_materias = count($trimestre_promedio);
-        $estado = "Aprobado";
-        foreach ($trimestre_promedio as $key => $value) {
-          $nota_prom = $value->nota_trimestral;
-          if ($nota_prom  <= 6) {
-            $estado = 'Reprobado';
-          }
-          $asignacion_alumno->update(['estado_academico' => $estado] );
-        }          
-      }
-      return redirect()->route('notas.index')->with('success','Promedios Finales Calculados con Éxito.');
+
+        foreach ($asig_alumno as $asignacion_alumno) {
+            $trimestre_promedio = $asignacion_alumno->AsignacionNotas->where('id_trimestre', 4);
+            $estado = "Aprobado";
+
+            foreach ($trimestre_promedio as $value) {
+                if ($value->nota_trimestral <= 6) {
+                    $estado = 'Reprobado';
+                }
+                $asignacion_alumno->update(['estado_academico' => $estado]);
+            }
+        }
+
+        return redirect()->route('notas.index')->with('success', 'Promedios Finales Calculados con Éxito.');
+    }
+
+    private function calcularPromedioTrimestral($asig_alumno, $materia)
+    {
+        foreach ($asig_alumno as $asignacion_alumno) {
+            $notas = [];
+            for ($i = 1; $i <= 3; $i++) {
+                $nota = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id)->where('id_trimestre', $i)->first();
+                $notas[] = is_null($nota) ? 0 : $nota->nota_trimestral;
+            }
+            
+            $prom = round(array_sum($notas) / 3, 2);
+            $notasAsignada4 = $asignacion_alumno->AsignacionNotas->where('id_materia', $materia->id)->where('id_trimestre', 4)->first();
+
+            if (is_null($notasAsignada4)) {
+                AsignacionNotas::create([
+                    'id_materia' => $materia->id,
+                    'id_asignacion_alumno' => $asignacion_alumno->id,
+                    'id_trimestre' => 4,
+                    'nota_trimestral' => $prom,
+                ]);
+            } else {
+                $notasAsignada4->update(['nota_trimestral' => $prom]);
+            }
+        }
     }
 
     /**

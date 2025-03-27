@@ -5,18 +5,18 @@
       <div class ="col-sm-12">
          <div class="full.right">
          @if($grado_actual == null || $asig_alumno == null)
-         <h2>Gestion de Asignacion de Notas, año {{$Y}}.</h2>
+         <h2>Gestion de Asignacion de Notas, año {{$year}}.</h2>
          @endif
          @if ($grado_actual !== null || $asig_alumno !== null)
-         <h2>Gestion de Asignacion de Notas, año {{$Y}}, {{$grado_actual->nombre}} {{$grado_actual->seccion}}</h2>
+         <h2>Gestion de Asignacion de Notas, año {{$year}}, {{$grado_actual->nombre}} {{$grado_actual->seccion}}</h2>
          <br>
          @endif
          @if ($grado_actual == null)
-         <h3>Usted no tiene un grado asignado para el año {{$Y}}. </h3>
+         <h3>Usted no tiene un grado asignado para el año {{$year}}. </h3>
          <h4>Para poder gestionar sus alumnos, solicite un Grado al administrador</h4>
          @endif
          @if ($asig_alumno == [])
-         <h3>Usted no tiene Alumnos en su grado para el año {{$Y}}. </h3>
+         <h3>Usted no tiene Alumnos en su grado para el año {{$year}}. </h3>
          <h4>Inscriba alumnos en el menu asignacion Alumnos-Grado</h4>
          <br>
          @endif
@@ -45,7 +45,7 @@
             </select>
             <br>
             <select required name="trimestre" id='trimestre' class="form-control">
-               <option disabled selected>Seleccione el Trimestre del año {{$Y}}</option>
+               <option disabled selected>Seleccione el Trimestre del año {{$year}}</option>
                <option value=1>Primer Trimestre</option>
                <option value=2>Segundo Trimestre</option>
                <option value=3>Tercer Trimestre</option>
@@ -62,7 +62,7 @@
          <form class="select_conducta_trimestre">
             <h4>Seleccione Trimestre a ingresar Notas de Conducta</h4>
             <select required name="trim" id='trim' class="form-control">
-               <option disabled selected>Seleccione el Trimestre del año {{$Y}}</option>
+               <option disabled selected>Seleccione el Trimestre del año {{$year}}</option>
                <option value=1> Primer Trimestre</option>
                <option value=2> Segundo Trimestre</option>
                <option value=3> Tercer Trimestre</option>
@@ -428,7 +428,7 @@
                         </th>
                         <th style="text-align:center">Promedio Trimestre 3
                         </th>
-                        <th style="text-align:center">Promedio Final {{ $materia->nombre}}, {{$Y}}
+                        <th style="text-align:center">Promedio Final {{ $materia->nombre}}, {{$year}}
                         </th>
 
                      </tr>
