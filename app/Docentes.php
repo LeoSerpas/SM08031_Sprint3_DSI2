@@ -25,5 +25,9 @@ class Docentes extends Model
   public function AsignacionesAlumnos(){
     return $this->hasOne('App\AsignacionAlumnosNotas', 'id_asignacion');
   }
+  public function Usuario()
+  {
+      return $this->belongsTo('App\User', 'id_usuario');
+  }
 
 }

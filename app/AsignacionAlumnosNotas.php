@@ -52,5 +52,9 @@ class AsignacionAlumnosNotas extends Model
   public function Grados(){
     return $this->belongsTo('App\Grados', 'id_grado');
   }
+  public function Asignacion()
+  {
+      return $this->belongsTo('App\Asignaciones', 'id_asignacion');
+  }
 
 }

@@ -28,5 +28,13 @@ class Asignaciones extends Model
   public function Users(){
       return $this->belongsTo('App\Users', 'id_user');
   }
+  public function Grado()
+  {
+      return $this->belongsTo('App\Grados', 'id_grado');
+  }
+  public function Docente()
+  {
+      return $this->belongsTo('App\Docentes', 'id_docente');
+  }
 
 }

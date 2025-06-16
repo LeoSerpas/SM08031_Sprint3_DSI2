@@ -18,7 +18,8 @@ use App\Docentes;
 use App\Conductas;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
-use App;
+use Carbon\Carbon;
+
 
 class AsignacionNotasController extends Controller
 {
@@ -477,5 +478,118 @@ class AsignacionNotasController extends Controller
         AsignacionNotas::find($id)->delete();
         return redirect()->route('asignacionNotas.index')->with('success','Asignacion de Notas eliminada con exito');
     }
+
+    public function reporteAPI(string $nie, int $anio, int $trimestre)
+    {
+        $error = null;
+        $httpCode = 404;
+
+        if (!in_array($trimestre, [1, 2, 3])) {
+            $error = 'Trimestre inválido';
+        } else {
+            $alumno = Alumnos::where('no_nie', $nie)
+                ->first(['id', 'nombres', 'apellidos', 'no_nie']);
+
+            if (!$alumno) {
+                $error = 'Alumno no encontrado';
+            } else {
+                $reporte = $this->buildReporteData($alumno->id, $anio, $trimestre);
+
+                if (!$reporte) {
+                    $error = "No hay asignación del alumno para el año $anio";
+                }
+            }
+        }
+
+        if ($error) {
+            return response()->json(['error' => $error], $httpCode);
+        }
+
+        $data = ['alumno' => $alumno] + $reporte;
+
+        return response()->json($data);
+    }
+
+
+    private function buildReporteData(int $idAlumno, int $anio, int $trimestre): array
+    {
+        // 1. Obtener asignación del alumno (incluye grado mediante la relación en cadena)
+        $asigAlumno = AsignacionAlumnosNotas::where('id_alumno', $idAlumno)
+            ->where('anio', $anio)
+            ->with(['Asignacion.Grado']) // importante: carga la relación del grado
+            ->first();
+
+        if (!$asigAlumno) {
+            return [];
+        }
+
+        // 2. Obtener notas del trimestre
+        $asigNotas = AsignacionNotas::where('id_asignacion_alumno', $asigAlumno->id)
+            ->where('id_trimestre', $trimestre)
+            ->get();
+
+        $materias = Materias::whereIn('id', $asigNotas->pluck('id_materia'))->get()->keyBy('id');
+
+        // 3. Construir estructura por materia
+        $filas = $asigNotas->map(function ($nota) use ($materias) {
+            $inte = ActIntegradoras::where('id_asignacion_notas', $nota->id)->first();
+            $coti = ActCotidianas::where('id_asignacion_notas', $nota->id)->first();
+            $prue = Pruebas::where('id_asignacion_notas', $nota->id)->first();
+
+            return [
+                'materia'             => $materias[$nota->id_materia]->nombre ?? 'Sin nombre',
+                'act_integradora'     => $inte->promedio_i ?? null,
+                'integradora_35'      => $inte->prom_i_porcent ?? null,
+                'act_cotidiana'       => $coti->nota_cotidiana ?? null,
+                'cotidiana_35'        => $coti->nota_porcent ?? null,
+                'pruebas'             => $prue->promedio_p ?? null,
+                'pruebas_30'          => $prue->prom_p_porcent ?? null,
+                'promedio_trimestral' => $nota->nota_trimestral,
+            ];
+        })->values();
+
+        // 4. Conducta
+        $conducta = null;
+        if ($asigCond = AsignacionConductas::where('id_asignacion_alumno', $asigAlumno->id)
+            ->where('id_trimestre', $trimestre)->first()) {
+            $conducta = Conductas::where('id_asignacion_conductas', $asigCond->id)
+                ->first(['moral_civica', 'nota_conducta', 'observaciones']);
+        }
+
+        // 5. Nombre del mes (en español)
+        setlocale(LC_TIME, 'Spanish_Spain.1252');
+        $mesActual = Carbon::now()->month;
+        $mesNombre = strtoupper(strftime('%B'));
+
+        // 6. Obtener nombre del grado
+        $grado = null;
+        $seccion = null;
+
+        if ($asigAlumno->Asignacion && $asigAlumno->Asignacion->Grado) {
+            $grado = $asigAlumno->Asignacion->Grado->nombre;
+            $seccion = $asigAlumno->Asignacion->Grado->seccion;
+        } else {
+            $grado = 'Sin grado asignado';
+            $seccion = '';
+        }
+        
+        // 7. Docente
+        $docente = null;
+
+        $docente = $asigAlumno->Asignacion->Docente->Usuario->name ?? 'Sin nombre';
+
+        // 7. Devolver datos
+        return [
+            'grado'      => $grado,
+            'seccion'    => $seccion,
+            'trimestre'  => $trimestre,
+            'anio'       => $anio,
+            'mesActual'  => $mesActual,
+            'mesNombre'  => $mesNombre,
+            'docente'    => $docente,
+            'notas'      => $filas,
+            'conductas'  => $conducta
+        ];
+    }
+
 }
- 
