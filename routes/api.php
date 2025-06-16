@@ -13,11 +13,7 @@ Route::get('test-reporte', function () {
     return 'Funciona correctamente';
 });
 
-Route::get(
-    'alumnos/nie/{nie}/reporte/{anio}/{trimestre}',
-    'AsignacionNotasController@reporteAPI'
-)->where([
-    'nie'       => '[0-9]+',
-    'anio'      => '[0-9]+',
-    'trimestre' => '[0-9]+'
-]);
+Route::post(
+    'alumnos/reporte',
+    'AsignacionNotasController@reporteAPIJson'
+);

@@ -19,6 +19,7 @@ use App\Conductas;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 
 class AsignacionNotasController extends Controller
@@ -479,35 +480,36 @@ class AsignacionNotasController extends Controller
         return redirect()->route('asignacionNotas.index')->with('success','Asignacion de Notas eliminada con exito');
     }
 
-    public function reporteAPI(string $nie, int $anio, int $trimestre)
+    public function reporteAPIJson(Request $request): \Illuminate\Http\JsonResponse
     {
-        $error = null;
-        $httpCode = 404;
+        $response = null;
 
-        if (!in_array($trimestre, [1, 2, 3])) {
-            $error = 'Trimestre inválido';
+        $validator = Validator::make($request->all(), [
+            'nie'       => ['bail', 'required', 'numeric', 'digits:7'],
+            'anio'      => ['bail', 'required', 'numeric', 'digits:4'],
+            'trimestre' => ['bail', 'required', 'integer', 'in:1,2,3'],
+        ]);
+
+        if ($validator->fails()) {
+            $response = response()->json(['errors' => $validator->errors()], 422);
         } else {
-            $alumno = Alumnos::where('no_nie', $nie)
+            $validated = $request->only(['nie', 'anio', 'trimestre']);
+
+            $alumno = Alumnos::where('no_nie', $validated['nie'])
                 ->first(['id', 'nombres', 'apellidos', 'no_nie']);
 
             if (!$alumno) {
-                $error = 'Alumno no encontrado';
+                $response = response()->json(['error' => 'Alumno no encontrado'], 404);
             } else {
-                $reporte = $this->buildReporteData($alumno->id, $anio, $trimestre);
+                $reporte = $this->buildReporteData($alumno->id, $validated['anio'], $validated['trimestre']);
 
-                if (!$reporte) {
-                    $error = "No hay asignación del alumno para el año $anio";
-                }
+                $response = !$reporte
+                    ? response()->json(['error' => "No hay asignación del alumno para el año {$validated['anio']}"], 404)
+                    : response()->json(['alumno' => $alumno] + $reporte);
             }
         }
 
-        if ($error) {
-            return response()->json(['error' => $error], $httpCode);
-        }
-
-        $data = ['alumno' => $alumno] + $reporte;
-
-        return response()->json($data);
+        return $response;
     }
 
 
