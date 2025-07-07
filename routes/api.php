@@ -13,7 +13,11 @@ Route::get('test-reporte', function () {
     return 'Funciona correctamente';
 });
 
-Route::post(
-    'alumnos/reporte',
-    'AsignacionNotasController@reporteAPIJson'
-);
+
+
+Route::group(['middleware' => 'auth.token'], function () {
+    Route::post('/alumnos/reporte', 'AsignacionNotasController@reporteAPIJson');
+});
+
+
+Route::post('/login', 'Api\AuthController@login');
