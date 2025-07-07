@@ -15,7 +15,8 @@
         "fzaninotto/faker": "~1.4",
         "laravel-lang/lang": "^12.17",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.7"
+        "phpunit/php-code-coverage": "5.3",
+        "phpunit/phpunit": "6.5"
     },
     "autoload": {
         "classmap": [
