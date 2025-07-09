@@ -37,7 +37,7 @@ class AuthController extends Controller
 
         // Generar token personalizado con expiración
         $token = Str::random(60);
-        $expiresAt = Carbon::now()->addMinutes(90);
+        $expiresAt = Carbon::now()->addMinutes(60); // Token válido por 60 minutos
 
         // Guardar token en tabla personalizada api_tokens
         DB::table('api_tokens')->insert([
