@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ReporteNotasTest extends DuskTestCase
 {
-    public function test_ver_reporte_trimestre1()
+    public function test_ver_notas_por_materia()
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('http://127.0.0.1:8080/login')
