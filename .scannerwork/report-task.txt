@@ -1,0 +1,6 @@
+projectKey=api-notas
+serverUrl=http://localhost:9000
+serverVersion=25.7.0.110598
+dashboardUrl=http://localhost:9000/dashboard?id=api-notas
+ceTaskId=c51473f1-a649-4ddc-9269-8c4e14a85c3a
+ceTaskUrl=http://localhost:9000/api/ce/task?id=c51473f1-a649-4ddc-9269-8c4e14a85c3a
